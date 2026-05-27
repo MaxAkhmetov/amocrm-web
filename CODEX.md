@@ -305,3 +305,16 @@ For any third-party integration:
 - Use server-side functions for API calls that require secrets.
 - Store secrets only in environment variables.
 - If credentials are missing, return a clear error instead of fake success.
+
+## Continuation and recovery
+
+If the session is interrupted, context is lost, or the task is continued later:
+
+1. Read CODEX.md, SITE_SPEC.md, AMOCRM_INTEGRATION.md and WORKLOG.md first.
+2. Always run git status before making changes.
+3. Inspect existing files before coding or editing documentation.
+4. Continue from the current repository state.
+5. Do not restart the task from scratch unless explicitly requested.
+6. Before large changes, first explain what is already implemented and what remains.
+7. After each completed logical stage, suggest exact git commands for commit and push.
+8. Do not run git push without explicit user permission.
