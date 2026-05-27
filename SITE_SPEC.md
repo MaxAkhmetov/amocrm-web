@@ -912,3 +912,19 @@ The approved amoCRM service page defines the first version of the design system:
 - reusable CTA/form/FAQ blocks.
 
 Future pages should extend this system, not reinvent it.
+
+## UI correction requirements for amoCRM service page
+
+The first version of the page should be refined before publication.
+
+Required corrections:
+- Reduce heavy font feeling across the page.
+- Use font-weight 700 for major headings instead of extra-bold weights.
+- Improve readability of body and secondary text.
+- Make section labels less aggressive and less visually noisy.
+- Keep the dark premium style, but reduce visual heaviness.
+- Make the background grid more subtle.
+- Avoid identical card-grid rhythm in every section.
+- Make desktop tables fit without horizontal scroll.
+- Keep motion restrained, but make it more polished and less template-like.
+

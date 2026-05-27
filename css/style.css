@@ -4,8 +4,8 @@
   --bg-3: #162033;
   --card: rgba(255, 255, 255, 0.045);
   --card-strong: rgba(255, 255, 255, 0.075);
-  --line: rgba(226, 232, 240, 0.14);
-  --line-strong: rgba(232, 160, 32, 0.42);
+  --line: rgba(226, 232, 240, 0.105);
+  --line-strong: rgba(232, 160, 32, 0.3);
   --text: #f8fafc;
   --muted: #cbd5e1;
   --dim: #94a3b8;
@@ -15,7 +15,8 @@
   --blue-2: #2d7dd2;
   --danger: #f87171;
   --success: #34d399;
-  --shadow: 0 22px 70px rgba(0, 0, 0, 0.28);
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow: 0 18px 55px rgba(0, 0, 0, 0.2);
 }
 
 * {
@@ -41,10 +42,10 @@ body::before {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: linear-gradient(to bottom, black, transparent 72%);
+    linear-gradient(rgba(255, 255, 255, 0.014) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 64%);
   z-index: -1;
 }
 
@@ -102,7 +103,7 @@ a {
   justify-content: center;
   border: 1px solid var(--line-strong);
   color: var(--gold-2);
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .brand strong,
@@ -112,6 +113,7 @@ a {
 
 .brand strong {
   font-size: 17px;
+  font-weight: 700;
 }
 
 .brand small {
@@ -138,7 +140,7 @@ a {
 }
 
 .nav-cta {
-  padding: 10px 14px;
+  padding: 10px 15px;
   border: 1px solid var(--line-strong);
   color: var(--gold-2) !important;
 }
@@ -183,7 +185,7 @@ a {
 .hero {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 80px 24px 76px;
+  padding: 86px 24px 84px;
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
   gap: 58px;
@@ -195,6 +197,7 @@ a {
   max-width: 790px;
   font-size: clamp(38px, 4.4vw, 56px);
   line-height: 1.1;
+  font-weight: 700;
   letter-spacing: 0;
 }
 
@@ -217,14 +220,15 @@ a {
   display: inline-flex;
   align-items: center;
   margin: 0 0 18px;
-  padding: 7px 11px;
-  border: 1px solid rgba(232, 160, 32, 0.24);
-  background: rgba(232, 160, 32, 0.07);
+  padding: 6px 10px;
+  border: 1px solid rgba(232, 160, 32, 0.16);
+  background: rgba(232, 160, 32, 0.045);
   color: var(--gold-2);
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 650;
   letter-spacing: 0;
-  text-transform: uppercase;
+  text-transform: none;
+  border-radius: 999px;
 }
 
 .hero-actions,
@@ -242,19 +246,19 @@ a {
   min-height: 50px;
   padding: 14px 20px;
   border: 1px solid transparent;
-  border-radius: 6px;
-  font-weight: 800;
+  border-radius: 8px;
+  font-weight: 700;
   line-height: 1.2;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  transition: border-color 220ms var(--ease-premium), background-color 220ms var(--ease-premium), color 220ms var(--ease-premium), transform 220ms var(--ease-premium), box-shadow 220ms var(--ease-premium);
 }
 
 .button-primary {
   background: var(--gold);
   color: #111827;
-  box-shadow: 0 12px 30px rgba(232, 160, 32, 0.22);
+  box-shadow: 0 10px 24px rgba(232, 160, 32, 0.16);
 }
 
 .button-primary:hover {
@@ -282,6 +286,7 @@ a {
   border: 1px solid var(--line);
   background: var(--card);
   box-shadow: var(--shadow);
+  border-radius: 10px;
 }
 
 .dashboard-card {
@@ -293,7 +298,8 @@ a {
   content: "";
   position: absolute;
   inset: 10px;
-  border: 1px solid rgba(232, 160, 32, 0.15);
+  border: 1px solid rgba(232, 160, 32, 0.1);
+  border-radius: 8px;
   pointer-events: none;
 }
 
@@ -313,6 +319,7 @@ a {
 
 .dashboard-top strong {
   font-size: 22px;
+  font-weight: 700;
 }
 
 .dashboard-top > span {
@@ -321,7 +328,7 @@ a {
   border: 1px solid rgba(52, 211, 153, 0.38);
   color: var(--success);
   font-size: 14px;
-  text-transform: uppercase;
+  text-transform: none;
   animation: metricPulse 2800ms ease-in-out infinite;
 }
 
@@ -338,8 +345,9 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: rgba(13, 27, 42, 0.72);
+  background: rgba(13, 27, 42, 0.58);
   border: 1px solid var(--line);
+  border-radius: 8px;
 }
 
 .metric.wide {
@@ -354,6 +362,7 @@ a {
 .metric strong {
   color: var(--text);
   font-size: 28px;
+  font-weight: 700;
 }
 
 .metric.danger strong {
@@ -377,18 +386,19 @@ a {
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.035);
   color: var(--muted);
-  font-weight: 700;
+  font-weight: 650;
+  border-radius: 8px;
 }
 
 .section,
 .footer {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 106px 24px;
+  padding: 116px 24px;
 }
 
 .section:nth-of-type(even) {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.012), rgba(255, 255, 255, 0));
 }
 
 .section-heading {
@@ -401,7 +411,8 @@ a {
 .final-cta h2 {
   margin: 0;
   font-size: clamp(30px, 3.3vw, 42px);
-  line-height: 1.16;
+  line-height: 1.18;
+  font-weight: 700;
   letter-spacing: 0;
 }
 
@@ -438,15 +449,15 @@ a {
 
 .card {
   padding: 28px;
-  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  transition: border-color 220ms var(--ease-premium), background-color 220ms var(--ease-premium), transform 220ms var(--ease-premium), box-shadow 220ms var(--ease-premium);
 }
 
 .card:hover,
 .price-card:hover,
 .compare-card:hover {
-  border-color: rgba(56, 189, 248, 0.32);
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.24);
+  background: rgba(255, 255, 255, 0.052);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(56, 189, 248, 0.055);
   transform: translateY(-2px);
 }
 
@@ -458,6 +469,7 @@ a {
   margin: 0;
   font-size: 21px;
   line-height: 1.25;
+  font-weight: 650;
 }
 
 .card p,
@@ -489,7 +501,8 @@ a {
   position: relative;
   padding: 26px 26px 26px 86px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.032);
+  border-radius: 10px;
 }
 
 .flow span,
@@ -504,7 +517,8 @@ a {
   justify-content: center;
   border: 1px solid var(--line-strong);
   color: var(--gold-2);
-  font-weight: 800;
+  font-weight: 700;
+  border-radius: 8px;
 }
 
 .flow p {
@@ -521,9 +535,10 @@ a {
   position: relative;
   padding: 18px 18px 18px 46px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(255, 255, 255, 0.028);
   color: var(--muted);
   line-height: 1.45;
+  border-radius: 8px;
 }
 
 .check-grid span::before {
@@ -557,12 +572,12 @@ a {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  transition: border-color 220ms var(--ease-premium), background-color 220ms var(--ease-premium), transform 220ms var(--ease-premium), box-shadow 220ms var(--ease-premium);
 }
 
 .price-card.recommended {
-  border-color: var(--line-strong);
-  background: linear-gradient(180deg, rgba(232, 160, 32, 0.12), rgba(255, 255, 255, 0.05));
+  border-color: rgba(232, 160, 32, 0.24);
+  background: linear-gradient(180deg, rgba(232, 160, 32, 0.085), rgba(255, 255, 255, 0.042));
 }
 
 .badge {
@@ -571,15 +586,16 @@ a {
   background: var(--gold);
   color: #111827;
   font-size: 14px;
-  font-weight: 800;
-  text-transform: uppercase;
+  font-weight: 700;
+  text-transform: none;
+  border-radius: 999px;
 }
 
 .price {
   margin: 0;
   color: var(--gold-2) !important;
   font-size: 30px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .price-card ul {
@@ -592,7 +608,7 @@ a {
 .term {
   margin: 0;
   color: var(--text) !important;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .price-card .button {
@@ -607,7 +623,7 @@ a {
 
 .compare-card {
   padding: 28px;
-  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  transition: border-color 220ms var(--ease-premium), background-color 220ms var(--ease-premium), transform 220ms var(--ease-premium), box-shadow 220ms var(--ease-premium);
 }
 
 .compare-card.after {
@@ -626,13 +642,13 @@ a {
 .source-table {
   align-self: stretch;
   padding: 22px;
-  overflow-x: auto;
+  overflow: visible;
 }
 
 .table-row {
-  min-width: 410px;
+  min-width: 0;
   display: grid;
-  grid-template-columns: 1.45fr 0.65fr 0.65fr 0.75fr 0.65fr;
+  grid-template-columns: minmax(118px, 1.25fr) repeat(4, minmax(48px, 0.62fr));
   gap: 10px;
   padding: 13px 0;
   border-bottom: 1px solid var(--line);
@@ -642,7 +658,7 @@ a {
 
 .table-row.head {
   color: var(--gold-2);
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .table-row:last-child {
@@ -658,8 +674,9 @@ a {
   position: relative;
   padding: 28px 28px 28px 92px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.035);
-  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+  background: rgba(255, 255, 255, 0.028);
+  border-radius: 10px;
+  transition: border-color 220ms var(--ease-premium), background-color 220ms var(--ease-premium), transform 220ms var(--ease-premium);
 }
 
 .process-list p {
@@ -704,7 +721,7 @@ input,
 textarea {
   width: 100%;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.06);
   color: var(--text);
   font: inherit;
@@ -756,10 +773,12 @@ textarea:focus {
 .related-grid a {
   padding: 18px 20px;
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(255, 255, 255, 0.028);
   color: var(--muted);
   line-height: 1.45;
   text-decoration: none;
+  border-radius: 8px;
+  transition: border-color 220ms var(--ease-premium), color 220ms var(--ease-premium), background-color 220ms var(--ease-premium), transform 220ms var(--ease-premium);
 }
 
 .related-grid a:hover {
@@ -769,8 +788,9 @@ textarea:focus {
 
 details {
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.04);
-  transition: border-color 180ms ease, background-color 180ms ease;
+  background: rgba(255, 255, 255, 0.032);
+  border-radius: 10px;
+  transition: border-color 220ms var(--ease-premium), background-color 220ms var(--ease-premium);
   overflow: hidden;
 }
 
@@ -783,7 +803,7 @@ summary {
   cursor: pointer;
   padding: 22px 24px;
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 650;
 }
 
 details p {
@@ -792,37 +812,59 @@ details p {
   color: var(--muted);
   line-height: 1.6;
   overflow: hidden;
-  transition: height 220ms ease, opacity 220ms ease;
+  transition: height 260ms var(--ease-premium), opacity 260ms var(--ease-premium);
 }
 
 [data-animate="reveal"] {
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 520ms ease, transform 520ms ease;
+  transform: translate3d(0, 10px, 0) scale(0.992);
+  transition: opacity 760ms var(--ease-premium), transform 760ms var(--ease-premium);
 }
 
 [data-animate="reveal"].is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 [data-animate="reveal-list"] > * {
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 460ms ease, transform 460ms ease;
+  transform: translate3d(0, 8px, 0) scale(0.994);
+  transition: opacity 720ms var(--ease-premium), transform 720ms var(--ease-premium);
 }
 
 [data-animate="reveal-list"].is-visible > * {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 [data-animate="reveal-list"].is-visible > *:nth-child(2) {
-  transition-delay: 70ms;
+  transition-delay: 100ms;
 }
 
 [data-animate="reveal-list"].is-visible > *:nth-child(3) {
+  transition-delay: 180ms;
+}
+
+.cards-grid [data-animate="reveal"]:nth-child(2),
+.price-grid [data-animate="reveal"]:nth-child(2),
+.process-list [data-animate="reveal"]:nth-child(2) {
+  transition-delay: 90ms;
+}
+
+.cards-grid [data-animate="reveal"]:nth-child(3),
+.price-grid [data-animate="reveal"]:nth-child(3),
+.process-list [data-animate="reveal"]:nth-child(3) {
   transition-delay: 140ms;
+}
+
+.cards-grid [data-animate="reveal"]:nth-child(4),
+.process-list [data-animate="reveal"]:nth-child(4) {
+  transition-delay: 80ms;
+}
+
+.cards-grid [data-animate="reveal"]:nth-child(5),
+.process-list [data-animate="reveal"]:nth-child(5) {
+  transition-delay: 130ms;
 }
 
 @keyframes metricPulse {
@@ -1003,6 +1045,11 @@ details p {
   .source-table {
     margin-left: -8px;
     margin-right: -8px;
+    overflow-x: auto;
+  }
+
+  .table-row {
+    min-width: 410px;
   }
 }
 

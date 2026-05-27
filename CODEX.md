@@ -222,3 +222,62 @@ When creating any new page:
 - Do not add custom cursor animations.
 - Use restrained premium motion only: fade-up, hover lift, soft border glow, smooth accordion, number counters where useful.
 - Before coding, propose the page URL, page type, SEO intent, H1, title, description and reused blocks.
+
+## Approved typography rules
+
+The website must not use overly heavy typography.
+
+Use a calm premium B2B hierarchy:
+- H1: large but not aggressive, font-weight 700, line-height 1.08-1.12.
+- H2: font-weight 700, line-height 1.15-1.2.
+- H3/card titles: font-weight 650-700.
+- Body text: 17-18px on desktop, line-height 1.55-1.7.
+- Secondary text: minimum 14px, readable contrast.
+- Avoid making all headings and buttons extra-bold.
+- Avoid visual shouting through excessive uppercase, heavy weight and tight line-height.
+
+The page should feel expensive, calm and readable, not loud or heavy.
+
+## Approved motion rules
+
+Use restrained premium motion.
+
+Do not add:
+- custom cursor animation;
+- bouncing effects;
+- aggressive parallax;
+- excessive scroll effects;
+- animations that make every section behave the same way.
+
+Use:
+- slower fade-up on scroll;
+- staggered reveal for card groups;
+- smooth hover lift on cards;
+- soft border/glow transition on cards;
+- button hover transitions;
+- number counters in dashboard metrics;
+- subtle pulse only for selected dashboard metrics;
+- smooth accordion transitions.
+
+Animation timing:
+- reveal duration: 600-900ms;
+- stagger delay: 80-140ms;
+- easing: cubic-bezier(0.22, 1, 0.36, 1);
+- hover transitions: 180-260ms.
+
+Always support prefers-reduced-motion.
+
+## Visual rhythm rules
+
+Avoid making every section look like the same dark card grid.
+
+Use controlled variation:
+- alternate section layouts;
+- split text + visual blocks;
+- dashboard/mockup sections;
+- compact list sections;
+- card grids only where they improve scanning;
+- stronger spacing between major sections;
+- softer borders and less aggressive grid background.
+
+The visual system must stay consistent, but the page should not feel monotonous.

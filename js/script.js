@@ -51,7 +51,7 @@
 
     countedNodes.add(node);
 
-    var duration = 900;
+    var duration = 1100;
     var start = performance.now();
 
     function tick(now) {
@@ -113,7 +113,7 @@
       });
       window.setTimeout(function () {
         content.style.height = "auto";
-      }, 240);
+      }, 290);
     } else {
       content.style.height = content.scrollHeight + "px";
       content.style.opacity = "1";
@@ -125,7 +125,7 @@
         details.open = false;
         content.style.height = "";
         content.style.opacity = "";
-      }, 230);
+      }, 290);
     }
   }
 
