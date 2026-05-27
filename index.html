@@ -2,39 +2,573 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>Внедрение amoCRM для малого бизнеса</title>
-  <meta name="description" content="Настройка amoCRM, автоматизация продаж, воронки, интеграции и контроль заявок для малого бизнеса.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Внедрение amoCRM за 2-3 дня - настройка CRM для контроля продаж</title>
+  <meta name="description" content="Настрою amoCRM для малого бизнеса: заявки из сайта, звонков, WhatsApp, Telegram и рекламы, задачи менеджерам, контроль просрочек, источники и отчеты собственника.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="TODO_CANONICAL_URL">
+
+  <meta property="og:title" content="Внедрение amoCRM за 2-3 дня - настройка CRM для контроля продаж">
+  <meta property="og:description" content="Заявки, менеджеры, просрочки, источники и потери денег под контролем собственника.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="TODO_OG_URL">
+  <meta property="og:image" content="TODO_OG_IMAGE">
+
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Граф Порядков",
+  "description": "Внедрение amoCRM для малого и среднего бизнеса",
+  "areaServed": "Russia",
+  "serviceType": "Внедрение amoCRM",
+  "url": "TODO_CANONICAL_URL",
+  "email": "TODO_EMAIL"
+}
+  </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Можно ли внедрить amoCRM за 2-3 дня?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Да, если задача - быстро собрать рабочий порядок: воронка, поля, задачи, источники, базовые интеграции и контроль. Сложные кастомные интеграции и разработка виджетов считаются отдельно."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Что нужно от нас для старта?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Доступ в amoCRM, описание процесса продаж, список менеджеров, источники заявок, доступы к сайту/формам/телефонии/интеграциям, если они нужны."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Вы работаете только с новыми CRM или можете доработать существующую?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Можно и с нуля, и с уже созданной amoCRM. Часто задача как раз в том, чтобы разобрать старую CRM, убрать хаос и сделать понятную систему."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Можно ли подключить сайт, WhatsApp, Telegram, телефонию и рекламу?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Да, через готовые интеграции и доступные API/виджеты. Конкретный состав зависит от вашего сайта, телефонии и каналов связи."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Сколько стоит внедрение?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Быстрый старт - от 69 000 ₽, полноценное внедрение для отдела продаж - от 149 000 ₽, управленческая система для собственника - от 250 000 ₽. Точная стоимость зависит от количества воронок, пользователей и интеграций."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Вы обучаете менеджеров?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Да. После настройки проводится короткое обучение: как вести сделку, ставить задачи, фиксировать результат и не ломать аналитику."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Что будет после внедрения?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Можно оставить сопровождение: доработки, контроль ошибок, новые автоматизации, ежемесячный разбор воронки и рекомендации по улучшению продаж."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
-  <header>
-    <h1>Внедрение amoCRM для малого бизнеса</h1>
-    <p>Настрою CRM так, чтобы заявки не терялись, менеджеры работали по процессу, а собственник видел продажи в цифрах.</p>
-    <a href="#contact">Получить консультацию</a>
+  
+  <header class="site-header">
+    <nav class="nav" aria-label="Основная навигация">
+      <a class="brand" href="#top" aria-label="Граф Порядков">
+        <span class="brand-mark" aria-hidden="true">ГП</span>
+        <span>
+          <strong>Граф Порядков</strong>
+          <small>amoCRM для собственников</small>
+        </span>
+      </a>
+      <button class="nav-toggle" type="button" aria-controls="nav-menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span class="sr-only">Открыть меню</span>
+      </button>
+      <div class="nav-menu" id="nav-menu">
+        <a href="#problems">Проблемы</a>
+<a href="#solution">Решение</a>
+<a href="#setup">Что настроим</a>
+<a href="#packages">Тарифы</a>
+<a href="#process">Процесс</a>
+<a href="#faq">FAQ</a>
+        <a class="nav-cta" href="#lead">Получить разбор</a>
+      </div>
+    </nav>
+    
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow">Порядок в продажах за дни, не месяцы</p>
+        <h1>Внедрение amoCRM за 2-3 дня: заявки, менеджеры и потери денег под контролем</h1>
+        <p class="hero-lead">Настраиваю amoCRM так, чтобы собственник видел все заявки, источники, просрочки, задачи менеджеров и места, где бизнес теряет деньги. Без долгих внедрений и абстрактной автоматизации.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#lead">Получить экспресс-разбор</a>
+          <a class="button button-ghost" href="#setup">Что будет настроено</a>
+        </div>
+        <p class="hero-note">Для компаний, где заявки приходят из сайта, звонков, WhatsApp, Telegram, Авито, ВК и рекламы.</p>
+      </div>
+
+      <div class="dashboard-card" aria-label="Mockup CRM-дашборда">
+        <div class="dashboard-top">
+          <div>
+            <p class="dashboard-label">Контроль сегодня</p>
+            <strong>amoCRM порядок</strong>
+          </div>
+          <span>live</span>
+        </div>
+        <div class="metric-grid">
+          <div class="metric"><span>Новые заявки</span><strong>18</strong></div>
+<div class="metric danger"><span>Без ответа</span><strong>3</strong></div>
+<div class="metric warning"><span>Просроченные задачи</span><strong>7</strong></div>
+<div class="metric"><span>Сделки без шага</span><strong>11</strong></div>
+<div class="metric warning wide"><span>Потери на этапе КП</span><strong>24%</strong></div>
+<div class="metric wide"><span>Лучший источник</span><strong>Яндекс Директ</strong></div>
+        </div>
+      </div>
+
+      <div class="hero-benefits" aria-label="Преимущества">
+        <span>Быстрый запуск: 2-3 дня</span>
+<span>Фокус на деньгах, а не на кнопках</span>
+<span>Контроль менеджеров и источников заявок</span>
+      </div>
+    </section>
   </header>
 
   <main>
-    <section>
-      <h2>Что делаю</h2>
-      <ul>
-        <li>Настройка воронок продаж</li>
-        <li>Интеграция сайта, мессенджеров и телефонии</li>
-        <li>Автоматизация задач и уведомлений</li>
-        <li>Настройка прав, ролей и отчетности</li>
-        <li>Обучение менеджеров</li>
-      </ul>
+    
+    <section class="section" id="problems">
+      <div class="section-heading">
+        <p class="eyebrow">Проблемы</p>
+        <h2>CRM уже есть или нужна, но порядок в продажах все равно не появился?</h2>
+      </div>
+      <div class="cards-grid six">
+        
+        <article class="card">
+          <h3>Заявки теряются</h3>
+          <p>Сайт, звонки, мессенджеры и реклама живут отдельно. Менеджеры отвечают не всем, а собственник узнает об этом слишком поздно.</p>
+        </article>
+
+        <article class="card">
+          <h3>Менеджеры работают без контроля</h3>
+          <p>Нет понятной картины: кто перезвонил, кто забыл, у кого сделки висят без следующего шага.</p>
+        </article>
+
+        <article class="card">
+          <h3>Реклама есть, аналитики нет</h3>
+          <p>Деньги уходят в Директ, ВК и другие каналы, но не видно, какие заявки дошли до денег.</p>
+        </article>
+
+        <article class="card">
+          <h3>CRM превращается в склад сделок</h3>
+          <p>Сделки заведены, но нет правил, задач, причин отказов и нормальной управленческой логики.</p>
+        </article>
+
+        <article class="card">
+          <h3>Собственник смотрит в Excel</h3>
+          <p>Данные приходится собирать вручную, а CRM не отвечает на главный вопрос: где теряются деньги.</p>
+        </article>
+
+        <article class="card">
+          <h3>Внедрение растягивают</h3>
+          <p>Интеграторы продают длинный проект, хотя базовый порядок можно собрать намного быстрее.</p>
+        </article>
+      </div>
     </section>
 
-    <section>
-      <h2>Для кого</h2>
-      <p>Для малого бизнеса, где заявки приходят из сайта, рекламы, Авито, WhatsApp, Telegram, звонков и соцсетей.</p>
+    <section class="section split-section" id="solution">
+      <div class="section-heading">
+        <p class="eyebrow">Решение</p>
+        <h2>Я собираю amoCRM как систему контроля продаж, а не как набор полей</h2>
+        <p>Сначала разбираю вашу реальную схему продаж: откуда приходят заявки, кто их обрабатывает, где менеджеры тормозят, какие этапы влияют на деньги. Потом настраиваю amoCRM так, чтобы каждый лид, задача, источник и отказ были видны собственнику.</p>
+      </div>
+      <div class="flow">
+        
+        <article>
+          <span>1</span>
+          <h3>Заявка попадает в CRM</h3>
+          <p>Сайт, формы, звонки, WhatsApp, Telegram, Авито, ВК, реклама.</p>
+        </article>
+
+        <article>
+          <span>2</span>
+          <h3>Менеджер получает задачу</h3>
+          <p>Автоматические задачи, сроки, напоминания, контроль просрочек.</p>
+        </article>
+
+        <article>
+          <span>3</span>
+          <h3>Сделка движется по понятной воронке</h3>
+          <p>Этапы, обязательные поля, причины отказов, шаблоны коммуникаций.</p>
+        </article>
+
+        <article>
+          <span>4</span>
+          <h3>Собственник видит цифры</h3>
+          <p>Источники, конверсия, потери, просрочки, работа менеджеров, прогноз продаж.</p>
+        </article>
+      </div>
     </section>
 
-    <section id="contact">
-      <h2>Оставить заявку</h2>
-      <p>Напишите в Telegram или WhatsApp. Контакты добавим позже.</p>
+    <section class="section" id="setup">
+      <div class="section-heading">
+        <p class="eyebrow">Что настроим</p>
+        <h2>Что можно настроить уже на первом внедрении</h2>
+      </div>
+      <div class="check-grid">
+        <span>Воронка продаж под ваш процесс</span>
+<span>Поля сделки, контакта и компании</span>
+<span>Источники заявок и UTM-метки</span>
+<span>Интеграция сайта с amoCRM</span>
+<span>Заявки из форм в сделки</span>
+<span>Подключение телефонии, если есть</span>
+<span>WhatsApp/Telegram через готовые интеграции, если есть</span>
+<span>Автоматические задачи менеджерам</span>
+<span>Уведомления о просрочках</span>
+<span>Причины отказов</span>
+<span>Шаблоны сообщений</span>
+<span>Контроль сделок без следующего шага</span>
+<span>Базовый отчет для собственника</span>
+<span>Обучение менеджеров</span>
+<span>Инструкция по работе в CRM</span>
+      </div>
+      <p class="note-box">Состав зависит от текущей ситуации: кому-то достаточно быстро собрать порядок, кому-то нужно связать сайт, рекламу, мессенджеры, телефонию и аналитику.</p>
+    </section>
+
+    <section class="section" id="industries">
+      <div class="section-heading">
+        <p class="eyebrow">Ниши</p>
+        <h2>Лучше всего подходит бизнесам, где нельзя терять заявки</h2>
+      </div>
+      <div class="cards-grid industries">
+        
+        <article class="card">
+          <h3>Оконные компании и ремонт окон</h3>
+          <p>Заявки из сайта, звонков, мессенджеров и рекламы собираются в одну воронку: от обращения до замера, КП, оплаты и выполнения работ.</p>
+        </article>
+
+        <article class="card">
+          <h3>Ремонт, строительство, отделка</h3>
+          <p>Контроль этапов от первичного обращения до сметы, договора, оплаты и завершения работ.</p>
+        </article>
+
+        <article class="card">
+          <h3>Выездные мастера и сервисные службы</h3>
+          <p>Назначение ответственных, сроки выезда, повторные заявки и контроль просрочек в одном месте.</p>
+        </article>
+
+        <article class="card">
+          <h3>Клиники и медицинские услуги</h3>
+          <p>Заявки из рекламы и мессенджеров не теряются, администраторы видят следующий шаг по каждому пациенту.</p>
+        </article>
+
+        <article class="card">
+          <h3>Образовательные центры и курсы</h3>
+          <p>Воронка от заявки до консультации, оплаты и повторного касания с понятной аналитикой источников.</p>
+        </article>
+
+        <article class="card">
+          <h3>Мебель, кухни, двери</h3>
+          <p>Контроль замеров, КП, согласований, оплат и причин отказа после расчета.</p>
+        </article>
+
+        <article class="card">
+          <h3>Франшизы и сети услуг</h3>
+          <p>Единые правила обработки лидов, контроль филиалов и сравнение источников заявок.</p>
+        </article>
+
+        <article class="card">
+          <h3>B2B-продажи и оптовые компании</h3>
+          <p>Прозрачные этапы сделки, задачи менеджерам, история коммуникаций и прогноз продаж.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="packages">
+      <div class="section-heading">
+        <p class="eyebrow">Тарифы</p>
+        <h2>Пакеты внедрения</h2>
+      </div>
+      <div class="price-grid">
+        
+        <article class="price-card">
+          
+          <h3>Быстрый старт</h3>
+          <p class="price">от 69 000 ₽</p>
+          <p>Для малого бизнеса, которому нужно быстро навести порядок в заявках и воронке.</p>
+          <ul>
+            <li>1 воронка продаж</li>
+<li>базовые поля и этапы</li>
+<li>источники заявок</li>
+<li>причины отказов</li>
+<li>базовые задачи</li>
+<li>обучение 1 команды</li>
+<li>инструкция</li>
+          </ul>
+          <p class="term">Срок: 1-2 дня</p>
+          <a class="button button-ghost" href="#lead">Обсудить быстрый старт</a>
+        </article>
+
+        <article class="price-card recommended">
+          <span class="badge">Рекомендуемый</span>
+          <h3>Отдел продаж под контролем</h3>
+          <p class="price">от 149 000 ₽</p>
+          <p>Для компаний, где есть несколько менеджеров, реклама, сайт, звонки и мессенджеры.</p>
+          <ul>
+            <li>1-2 воронки</li>
+<li>сайт → amoCRM</li>
+<li>формы → сделки</li>
+<li>UTM-метки</li>
+<li>задачи и контроль просрочек</li>
+<li>шаблоны сообщений</li>
+<li>базовая аналитика по источникам</li>
+<li>отчет собственника</li>
+<li>обучение менеджеров</li>
+          </ul>
+          <p class="term">Срок: 3-5 дней</p>
+          <a class="button button-primary" href="#lead">Получить расчет</a>
+        </article>
+
+        <article class="price-card">
+          
+          <h3>Собственник видит все</h3>
+          <p class="price">от 250 000 ₽</p>
+          <p>Для бизнеса, где CRM должна стать управленческой системой, а не просто списком сделок.</p>
+          <ul>
+            <li>глубокий разбор процесса продаж</li>
+<li>расширенная логика воронок</li>
+<li>контроль менеджеров</li>
+<li>управленческие отчеты</li>
+<li>аналитика потерь</li>
+<li>правила ведения CRM</li>
+<li>регламенты и инструкции</li>
+<li>повторный аудит через 2 недели</li>
+          </ul>
+          <p class="term">Срок: 5-10 дней</p>
+          <a class="button button-ghost" href="#lead">Запросить аудит</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section result-section" id="result">
+      <div class="section-heading">
+        <p class="eyebrow">Результат</p>
+        <h2>Как выглядит результат</h2>
+      </div>
+      <div class="before-after">
+        <article class="compare-card">
+          <h3>До</h3>
+          <ul>
+            <li>заявки в WhatsApp, на почте и в звонках;</li>
+<li>часть обращений не заведена в CRM;</li>
+<li>менеджеры забывают перезвонить;</li>
+<li>собственник не видит, какие источники дают деньги;</li>
+<li>сделки закрываются без причин отказа.</li>
+          </ul>
+        </article>
+        <article class="compare-card after">
+          <h3>После</h3>
+          <ul>
+            <li>все заявки попадают в amoCRM;</li>
+<li>на каждую заявку назначается ответственный;</li>
+<li>просрочки видны руководителю;</li>
+<li>сделки нельзя закрыть без причины;</li>
+<li>источники и UTM сохраняются;</li>
+<li>собственник видит ежедневную картину продаж.</li>
+          </ul>
+        </article>
+        <div class="source-table" role="img" aria-label="Mockup таблицы эффективности источников">
+          <div class="table-row head"><span>Источник</span><span>Заявки</span><span>КП</span><span>Продажи</span><span>Потери</span></div>
+          <div class="table-row"><span>Яндекс Директ</span><span>42</span><span>21</span><span>8</span><span>14</span></div>
+<div class="table-row"><span>Сайт SEO</span><span>18</span><span>11</span><span>5</span><span>3</span></div>
+<div class="table-row"><span>WhatsApp</span><span>25</span><span>14</span><span>6</span><span>5</span></div>
+<div class="table-row"><span>Авито</span><span>31</span><span>9</span><span>2</span><span>12</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="process">
+      <div class="section-heading">
+        <p class="eyebrow">Процесс</p>
+        <h2>Как проходит внедрение</h2>
+      </div>
+      <div class="process-list">
+        
+        <article>
+          <span>01</span>
+          <h3>Экспресс-разбор</h3>
+          <p>30-45 минут: смотрим источники заявок, текущую CRM/Excel, менеджеров, этапы и хаос.</p>
+        </article>
+
+        <article>
+          <span>02</span>
+          <h3>Схема будущей CRM</h3>
+          <p>Фиксируем воронку, поля, этапы, задачи, источники и правила.</p>
+        </article>
+
+        <article>
+          <span>03</span>
+          <h3>Настройка amoCRM</h3>
+          <p>Собираю систему: воронки, поля, задачи, интеграции, шаблоны, отчеты.</p>
+        </article>
+
+        <article>
+          <span>04</span>
+          <h3>Проверка на реальных сценариях</h3>
+          <p>Прогоняем заявки из сайта, звонка, мессенджера, рекламы и проверяем, что ничего не теряется.</p>
+        </article>
+
+        <article>
+          <span>05</span>
+          <h3>Обучение и запуск</h3>
+          <p>Показываю менеджерам, как работать, а собственнику - где смотреть контрольные цифры.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="why">
+      <div class="section-heading">
+        <p class="eyebrow">Почему я</p>
+        <h2>Почему это можно сделать быстро</h2>
+      </div>
+      <div class="cards-grid four">
+        
+        <article class="card">
+          <h3>Бизнес-анализ до настройки</h3>
+          <p>Сначала процесс, потом CRM. Иначе автоматизируется хаос.</p>
+        </article>
+
+        <article class="card">
+          <h3>Скорость без потери логики</h3>
+          <p>Типовые решения собираются быстро, потому что используются готовые паттерны воронок, задач и отчетов.</p>
+        </article>
+
+        <article class="card">
+          <h3>Фокус на собственнике</h3>
+          <p>Главный результат - не заполненная CRM, а управляемые заявки, менеджеры и источники.</p>
+        </article>
+
+        <article class="card">
+          <h3>Без лишней бюрократии</h3>
+          <p>Минимум сложных документов на старте. Максимум практического результата.</p>
+        </article>
+      </div>
+      <p class="section-after-text">Я работаю как бизнес-аналитик: сначала понимаю процесс и деньги, потом настраиваю инструмент. Поэтому не растягиваю базовое внедрение на недели там, где можно быстро собрать рабочую систему.</p>
+    </section>
+
+    <section class="section lead-section" id="lead">
+      <div class="lead-copy">
+        <p class="eyebrow">Лид-магнит</p>
+        <h2>Получите чек-лист: 25 ошибок в amoCRM, из-за которых теряются заявки</h2>
+        <p>Оставьте контакты - отправлю чек-лист и предложу короткий разбор вашей схемы продаж.</p>
+      </div>
+      <form class="lead-form" id="lead-form" novalidate>
+        <div class="form-row">
+          <label for="name">Имя *</label>
+          <input id="name" name="name" type="text" minlength="2" required autocomplete="name">
+          <small class="field-error" data-error-for="name"></small>
+        </div>
+        <div class="form-row">
+          <label for="contact">Телефон или Telegram *</label>
+          <input id="contact" name="contact" type="text" required autocomplete="tel">
+          <small class="field-error" data-error-for="contact"></small>
+        </div>
+        <div class="form-row">
+          <label for="business">Ниша/компания</label>
+          <input id="business" name="business" type="text" autocomplete="organization">
+        </div>
+        <div class="form-row">
+          <label for="website">Сайт компании, если есть</label>
+          <input id="website" name="website" type="url" inputmode="url" placeholder="https://">
+          <small class="field-error" data-error-for="website"></small>
+        </div>
+        <div class="form-row full">
+          <label for="pain">Что сейчас болит в продажах?</label>
+          <textarea id="pain" name="pain" rows="4"></textarea>
+        </div>
+        <input type="hidden" name="utm_source">
+        <input type="hidden" name="utm_medium">
+        <input type="hidden" name="utm_campaign">
+        <input type="hidden" name="utm_content">
+        <input type="hidden" name="utm_term">
+        <input type="hidden" name="referrer">
+        <input type="hidden" name="landing_page">
+        <input type="hidden" name="timestamp">
+        <button class="button button-primary full" type="submit">Получить чек-лист и разбор</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="section-heading">
+        <p class="eyebrow">FAQ</p>
+        <h2>Частые вопросы</h2>
+      </div>
+      <div class="faq-list">
+        <details><summary>Можно ли внедрить amoCRM за 2-3 дня?</summary><p>Да, если задача - быстро собрать рабочий порядок: воронка, поля, задачи, источники, базовые интеграции и контроль. Сложные кастомные интеграции и разработка виджетов считаются отдельно.</p></details>
+<details><summary>Что нужно от нас для старта?</summary><p>Доступ в amoCRM, описание процесса продаж, список менеджеров, источники заявок, доступы к сайту/формам/телефонии/интеграциям, если они нужны.</p></details>
+<details><summary>Вы работаете только с новыми CRM или можете доработать существующую?</summary><p>Можно и с нуля, и с уже созданной amoCRM. Часто задача как раз в том, чтобы разобрать старую CRM, убрать хаос и сделать понятную систему.</p></details>
+<details><summary>Можно ли подключить сайт, WhatsApp, Telegram, телефонию и рекламу?</summary><p>Да, через готовые интеграции и доступные API/виджеты. Конкретный состав зависит от вашего сайта, телефонии и каналов связи.</p></details>
+<details><summary>Сколько стоит внедрение?</summary><p>Быстрый старт - от 69 000 ₽, полноценное внедрение для отдела продаж - от 149 000 ₽, управленческая система для собственника - от 250 000 ₽. Точная стоимость зависит от количества воронок, пользователей и интеграций.</p></details>
+<details><summary>Вы обучаете менеджеров?</summary><p>Да. После настройки проводится короткое обучение: как вести сделку, ставить задачи, фиксировать результат и не ломать аналитику.</p></details>
+<details><summary>Что будет после внедрения?</summary><p>Можно оставить сопровождение: доработки, контроль ошибок, новые автоматизации, ежемесячный разбор воронки и рекомендации по улучшению продаж.</p></details>
+      </div>
+    </section>
+
+
+    <section class="section final-cta" id="contact">
+      <div>
+        <p class="eyebrow">Финальный разбор</p>
+        <h2>Хотите понять, где сейчас теряются заявки?</h2>
+        <p>Оставьте заявку - разберу вашу текущую схему продаж и покажу, что нужно настроить в amoCRM в первую очередь.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="button button-primary" href="#lead">Получить экспресс-разбор</a>
+        <a class="button button-ghost" href="https://t.me/TODO_TELEGRAM">Написать в Telegram</a>
+      </div>
     </section>
   </main>
+
+  
+  <footer class="footer">
+    <div>
+      <strong>Граф Порядков</strong>
+      <p>Внедрение amoCRM для малого и среднего бизнеса</p>
+    </div>
+    <nav aria-label="Ссылки в подвале">
+      <a href="#privacy">Политика конфиденциальности</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <address>
+      Telegram: TODO_TELEGRAM<br>
+      WhatsApp: TODO_WHATSAPP<br>
+      Email: TODO_EMAIL
+    </address>
+  </footer>
 </body>
 </html>
