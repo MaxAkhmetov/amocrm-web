@@ -4,33 +4,49 @@
 
 \## Project
 
-Static website for amoCRM/CRM services with city pages.
+Static Russian-language website for selling amoCRM implementation services.
 
 
 
-\## Rules
+\## Business goal
 
-\- Do not rewrite the whole website unless explicitly asked.
-
-\- Make small, reviewable changes.
-
-\- Preserve current folder structure unless there is a strong reason to change it.
-
-\- Keep Russian text clear, commercial, and SEO-oriented.
-
-\- Do not change unrelated pages.
-
-\- Before finishing, explain what files were changed and why.
-
-\- Never commit secrets, passwords, tokens, or API keys.
+Generate leads for amoCRM setup, CRM automation, funnel design, integrations, and small business sales process optimization.
 
 
 
-\## Git workflow
+\## Style
 
-\- Work in separate branches.
+\- Russian language.
 
-\- Commit only working code.
+\- Clear, direct, commercial tone.
 
-\- Use clear commit messages.
+\- No vague marketing phrases.
+
+\- Focus on pain points: lost leads, chaos in sales, lack of control, weak follow-up, manual work.
+
+\- Positioning: practical expert who builds order in sales systems.
+
+
+
+\## Technical rules
+
+\- Static HTML/CSS/JS unless explicitly changed.
+
+\- Keep code simple.
+
+\- Do not add frameworks without permission.
+
+\- Do not rewrite unrelated files.
+
+\- Check that pages open locally.
+
+
+
+\## Git rules
+
+\- Make small commits.
+
+\- Explain changed files before finishing.
+
+\- Do not commit secrets, passwords, tokens, or API keys.
 
