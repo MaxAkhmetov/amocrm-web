@@ -280,10 +280,27 @@
   }
 
   async function submitLead(payload) {
-    console.info("Lead payload prepared:", payload);
-    // TODO: подключить реальную отправку в amoCRM, почту, Telegram или backend endpoint.
-    // Когда endpoint появится, заменить ошибку ниже на fetch(endpoint, { method: "POST", ... }).
-    throw new Error("Lead endpoint is not configured");
+    var response = await fetch("/api/lead", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    var result = {};
+
+    try {
+      result = await response.json();
+    } catch (error) {
+      result = {};
+    }
+
+    if (!response.ok || !result.ok) {
+      throw new Error(result.message || "Lead endpoint request failed");
+    }
+
+    return result;
   }
 
   window.submitLead = submitLead;
