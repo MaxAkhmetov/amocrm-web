@@ -281,3 +281,27 @@ Use controlled variation:
 - softer borders and less aggressive grid background.
 
 The visual system must stay consistent, but the page should not feel monotonous.
+
+## amoCRM developer documentation
+
+For amoCRM API tasks, use:
+- AMOCRM_INTEGRATION.md as the project-specific integration guide;
+- _codex_refs/amocrm/combined_all_text_files.md only as raw reference documentation.
+
+Do not commit files from _codex_refs/.
+
+Do not expose amoCRM tokens or secrets in frontend code.
+
+Frontend forms must send data only to the local backend endpoint:
+/api/lead
+
+amoCRM API calls must happen only in server-side code, for example Cloudflare Pages Functions.
+
+## Integration security
+
+For any third-party integration:
+- Never expose tokens or secrets in frontend code.
+- Never commit credentials.
+- Use server-side functions for API calls that require secrets.
+- Store secrets only in environment variables.
+- If credentials are missing, return a clear error instead of fake success.

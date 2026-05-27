@@ -191,3 +191,36 @@ Cloudflare Function должна:
 - Реализовать `functions/api/lead.js`.
 - Подключить `submitLead(payload)` к `/api/lead`.
 - Протестировать успешный сценарий, ошибки валидации, 401, 403, 429 и недоступность amoCRM.
+
+
+## Security rules
+
+amoCRM API must never be called from frontend JavaScript.
+
+Tokens and secrets must never be stored in:
+- index.html
+- js/script.js
+- CODEX.md
+- SITE_SPEC.md
+- any frontend-accessible file
+- any committed file in the repository
+
+Secrets must be stored only in Cloudflare Environment Variables.
+
+Frontend can send form data only to the local backend endpoint:
+
+/api/lead
+
+Only Cloudflare Pages Function can call amoCRM API.
+
+Never commit:
+- access_token
+- refresh_token
+- client_secret
+- integration secret
+- real amoCRM credentials
+- real Cloudflare credentials
+
+If environment variables are missing, the function must return a clear error and must not fake success.
+
+User-facing success message can be shown only after the server-side function receives a successful response from amoCRM API.
