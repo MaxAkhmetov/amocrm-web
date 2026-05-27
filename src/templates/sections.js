@@ -1,18 +1,19 @@
 const { attrs, escapeHtml, list } = require("./helpers");
 
 function renderHero(page, site) {
-  const metrics = site.heroMetrics
+  const metrics = page.data.heroMetrics
     .map((metric) => {
       const className = attrs(["metric", metric.tone, metric.wide && "wide"]);
-      return `<div class="${className}"><span>${escapeHtml(metric.label)}</span><strong>${escapeHtml(metric.value)}</strong></div>`;
+      const numericValue = String(metric.value).match(/^\d+$/) ? ` data-counter="${escapeHtml(metric.value)}"` : "";
+      return `<div class="${className}"><span>${escapeHtml(metric.label)}</span><strong${numericValue}>${escapeHtml(metric.value)}</strong></div>`;
     })
     .join("\n");
 
-  const benefits = site.heroBenefits.map((benefit) => `<span>${escapeHtml(benefit)}</span>`).join("\n");
+  const benefits = page.data.heroBenefits.map((benefit) => `<span>${escapeHtml(benefit)}</span>`).join("\n");
 
   return `
     <section class="hero" id="top">
-      <div class="hero-copy">
+      <div class="hero-copy" data-animate="reveal">
         <p class="eyebrow">${escapeHtml(page.hero.eyebrow)}</p>
         <h1>${escapeHtml(page.hero.h1)}</h1>
         <p class="hero-lead">${escapeHtml(page.hero.lead)}</p>
@@ -23,7 +24,7 @@ function renderHero(page, site) {
         <p class="hero-note">${escapeHtml(page.hero.note)}</p>
       </div>
 
-      <div class="dashboard-card" aria-label="Mockup CRM-дашборда">
+      <div class="dashboard-card" aria-label="Mockup CRM-дашборда" data-animate="reveal">
         <div class="dashboard-top">
           <div>
             <p class="dashboard-label">Контроль сегодня</p>
@@ -36,7 +37,7 @@ function renderHero(page, site) {
         </div>
       </div>
 
-      <div class="hero-benefits" aria-label="Преимущества">
+      <div class="hero-benefits" aria-label="Преимущества" data-animate="reveal-list">
         ${benefits}
       </div>
     </section>`;
@@ -45,7 +46,7 @@ function renderHero(page, site) {
 function renderCardsSection({ id, eyebrow, title, items, gridClass }) {
   const cards = items
     .map((item) => `
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>${escapeHtml(item.title)}</h3>
           <p>${escapeHtml(item.text)}</p>
         </article>`)
@@ -66,7 +67,7 @@ function renderCardsSection({ id, eyebrow, title, items, gridClass }) {
 function renderSolution(page) {
   const steps = page.data.solutionSteps
     .map((step, index) => `
-        <article>
+        <article data-animate="reveal">
           <span>${index + 1}</span>
           <h3>${escapeHtml(step.title)}</h3>
           <p>${escapeHtml(step.text)}</p>
@@ -110,7 +111,7 @@ function renderPackages(page) {
       const buttonClass = pack.recommended ? "button button-primary" : "button button-ghost";
 
       return `
-        <article class="${className}">
+        <article class="${className}" data-animate="reveal">
           ${badge}
           <h3>${escapeHtml(pack.title)}</h3>
           <p class="price">${escapeHtml(pack.price)}</p>
@@ -171,7 +172,7 @@ function renderResult(page) {
 function renderProcess(page) {
   const steps = page.data.processSteps
     .map((step, index) => `
-        <article>
+        <article data-animate="reveal">
           <span>${String(index + 1).padStart(2, "0")}</span>
           <h3>${escapeHtml(step.title)}</h3>
           <p>${escapeHtml(step.text)}</p>

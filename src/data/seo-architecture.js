@@ -1,41 +1,45 @@
 const seoArchitecture = {
   layers: [
     {
-      id: "federal",
-      label: "Федеральный слой",
-      intent: "Общие коммерческие запросы без привязки к городу",
-      routePattern: "/{serviceSlug}/"
+      id: "brand_home",
+      label: "Главная бренда",
+      intent: "Общая B2B-платформа ilma.pro по CRM, операциям, автоматизации и управленческому контролю",
+      routePattern: "/"
     },
     {
-      id: "city",
-      label: "Городской слой",
+      id: "service_page",
+      label: "Страница услуги",
+      intent: "Федеральная коммерческая страница конкретного направления",
+      routePattern: "/services/{service}/"
+    },
+    {
+      id: "service_city",
+      label: "Услуга + город",
       intent: "Запросы вида «внедрение amoCRM в [город]»",
-      routePattern: "/{citySlug}/"
+      routePattern: "/services/{service}/{city}/"
     },
     {
-      id: "city_niche",
-      label: "Город + ниша",
+      id: "service_city_niche",
+      label: "Услуга + город + ниша",
       intent: "Запросы вида «amoCRM для [ниша] в [город]»",
-      routePattern: "/{citySlug}/{nicheSlug}/"
+      routePattern: "/services/{service}/{city}/{niche}/"
     },
     {
-      id: "city_pain",
-      label: "Город + боль",
+      id: "service_city_pain",
+      label: "Услуга + город + боль",
       intent: "Запросы по потере заявок, контролю менеджеров, аналитике и автоматизации в городе",
-      routePattern: "/{citySlug}/{painSlug}/"
+      routePattern: "/services/{service}/{city}/{painPoint}/"
     }
   ],
   federalRoutes: [
-    { slug: "", outputPath: "index.html", label: "Главная" },
+    { slug: "", outputPath: "index.html", label: "Главная ilma.pro", futureOnly: true },
     { slug: "services", outputPath: "services/index.html", label: "Услуги" },
-    { slug: "services/amocrm-implementation", outputPath: "services/amocrm-implementation/index.html", label: "Внедрение amoCRM" },
-    { slug: "services/amocrm-audit", outputPath: "services/amocrm-audit/index.html", label: "Аудит amoCRM" },
-    { slug: "services/amocrm-integration", outputPath: "services/amocrm-integration/index.html", label: "Интеграции amoCRM" },
-    { slug: "services/amocrm-automation", outputPath: "services/amocrm-automation/index.html", label: "Автоматизация amoCRM" },
-    { slug: "services/crm-for-sales-control", outputPath: "services/crm-for-sales-control/index.html", label: "CRM для контроля продаж" },
-    { slug: "prices", outputPath: "prices/index.html", label: "Цены" },
+    { slug: "services/amocrm", outputPath: "services/amocrm/index.html", label: "Внедрение amoCRM" },
+    { slug: "services/operational-efficiency", outputPath: "services/operational-efficiency/index.html", label: "Операционная эффективность" },
+    { slug: "services/ai-automation", outputPath: "services/ai-automation/index.html", label: "AI-автоматизация" },
+    { slug: "services/digitalization", outputPath: "services/digitalization/index.html", label: "Цифровизация процессов" },
+    { slug: "blog", outputPath: "blog/index.html", label: "Блог" },
     { slug: "cases", outputPath: "cases/index.html", label: "Кейсы" },
-    { slug: "faq", outputPath: "faq/index.html", label: "FAQ" },
     { slug: "contacts", outputPath: "contacts/index.html", label: "Контакты" }
   ],
   cities: [
@@ -77,35 +81,35 @@ const seoArchitecture = {
   ],
   niches: [
     {
-      slug: "amocrm-dlya-okonnyh-kompaniy",
+      slug: "okonnye-kompanii",
       name: "оконные компании",
       genitive: "оконных компаний",
       scenario: "замер, КП, согласование, оплата и выполнение работ",
       uniquePain: "заявки из рекламы и звонков быстро остывают, если замер не назначен вовремя"
     },
     {
-      slug: "amocrm-dlya-remonta",
+      slug: "remont",
       name: "ремонт и отделка",
       genitive: "ремонта и отделки",
       scenario: "заявка, расчет, смета, договор, оплата и этапы работ",
       uniquePain: "сложно контролировать длинный путь от обращения до договора"
     },
     {
-      slug: "amocrm-dlya-stomatologii",
+      slug: "stomatologiya",
       name: "стоматологии",
       genitive: "стоматологий",
       scenario: "обращение, запись, консультация, план лечения и повторный визит",
       uniquePain: "администраторы теряют повторные касания после первичной консультации"
     },
     {
-      slug: "amocrm-dlya-obrazovaniya",
+      slug: "obrazovanie",
       name: "образование и курсы",
       genitive: "образовательных центров",
       scenario: "заявка, консультация, пробное занятие, оплата и продление",
       uniquePain: "источники заявок есть, но не видно, какие группы и курсы дают деньги"
     },
     {
-      slug: "amocrm-dlya-mebelnyh-kompaniy",
+      slug: "mebelnye-kompanii",
       name: "мебельные компании",
       genitive: "мебельных компаний",
       scenario: "замер, расчет, дизайн-проект, договор, производство и монтаж",
@@ -114,8 +118,8 @@ const seoArchitecture = {
   ],
   painPoints: [
     {
-      slug: "zayavki-teryayutsya",
-      name: "заявки теряются",
+      slug: "poterya-zayavok",
+      name: "потеря заявок",
       intent: "как не терять заявки из сайта, звонков и мессенджеров",
       uniqueAngle: "единый входящий поток и обязательный следующий шаг"
     },
@@ -138,8 +142,8 @@ const seoArchitecture = {
       uniqueAngle: "автозадачи менеджерам и контроль просрочек"
     },
     {
-      slug: "integraciya-saita-s-amocrm",
-      name: "интеграция сайта с amoCRM",
+      slug: "integraciya-saita",
+      name: "интеграция сайта",
       intent: "как передавать заявки с сайта в amoCRM",
       uniqueAngle: "формы, источники, UTM и ответственный в одной сделке"
     }
@@ -167,6 +171,7 @@ const seoArchitecture = {
     }
   ],
   antiDuplicateRequirements: [
+    "serviceId",
     "uniqueIntent",
     "title",
     "description",

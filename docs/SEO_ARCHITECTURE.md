@@ -1,45 +1,71 @@
-# SEO-архитектура сайта
+# SEO-архитектура ilma.pro
 
-Проект остается статическим: итоговые страницы генерируются в HTML без React, Next.js, Vite и тяжелых зависимостей.
+Проект остается статическим: итоговые страницы генерируются в HTML без React, Next.js, Vite, Tailwind и тяжелых зависимостей.
 
-## Слои страниц
+amoCRM - не главная всего домена, а одно сервисное направление внутри будущей B2B-платформы ilma.pro.
 
-1. Федеральные страницы: общие коммерческие запросы без города.
-2. Городские страницы: запросы вида `внедрение amoCRM в [город]`.
-3. Город + ниша: запросы вида `amoCRM для [ниша] в [город]`.
-4. Город + боль: запросы про потерю заявок, контроль менеджеров, UTM-аналитику и автоматизацию задач в конкретном городе.
+## Целевая структура
+
+- `/` - будущая главная бренда ilma.pro.
+- `/services/` - каталог направлений.
+- `/services/amocrm/` - страница услуги внедрения amoCRM.
+- `/services/operational-efficiency/` - операционная эффективность.
+- `/services/ai-automation/` - AI-автоматизация без hype-подачи.
+- `/services/digitalization/` - цифровизация процессов.
+- `/blog/` - материалы.
+- `/cases/` - кейсы.
+
+Сейчас amoCRM-страница временно генерируется в `index.html` для быстрой публикации, но в данных имеет `targetOutputPath: services/amocrm/index.html`.
+
+## Service-first SEO-слои
+
+1. `service_page`: `/services/{service}/`
+2. `service_city`: `/services/{service}/{city}/`
+3. `service_city_niche`: `/services/{service}/{city}/{niche}/`
+4. `service_city_pain`: `/services/{service}/{city}/{pain-point}/`
+
+Примеры будущих URL:
+
+- `/services/amocrm/`
+- `/services/amocrm/moskva/`
+- `/services/amocrm/moskva/okonnye-kompanii/`
+- `/services/amocrm/moskva/poterya-zayavok/`
 
 ## Где лежат данные
 
-- `src/data/site.js` - общие данные сайта: бренд, контакты, тарифы, FAQ, блоки услуг.
-- `src/data/seo-architecture.js` - федеральные маршруты, города, ниши, боли, интеграции и антидубль-требования.
-- `src/data/page-factories.js` - фабрики для главной и будущих SEO-страниц.
+- `src/data/site.js` - платформа ilma.pro: бренд, контакты, общая навигация.
+- `src/data/services.js` - сервисные направления.
+- `src/data/amocrm.js` - контент страницы услуги amoCRM.
+- `src/data/seo-architecture.js` - маршруты, города, ниши, боли, интеграции и антидубль-требования.
+- `src/data/page-factories.js` - фабрики активной amoCRM-страницы и будущих SEO-страниц.
 - `src/data/pages.js` - активные страницы для генерации и черновики будущих страниц.
 
 ## Где лежат шаблоны
 
-- `src/templates/layout.js` - общий HTML layout, SEO, Open Graph, JSON-LD, header/footer.
-- `src/templates/sections.js` - переиспользуемые секции: hero, проблемы, решение, тарифы, FAQ, CTA, форма, related links.
+- `src/templates/layout.js` - общий HTML layout, platform header, service strip, SEO, Open Graph.
+- `src/templates/sections.js` - переиспользуемые секции услуги.
+- `src/templates/schemas.js` - JSON-LD: ProfessionalService, FAQPage, BreadcrumbList.
 - `src/templates/helpers.js` - экранирование HTML, JSON-LD, относительные пути к CSS/JS.
 
 ## Как добавлять страницы позже
 
 Новая активная страница добавляется в массив `pages` в `src/data/pages.js`.
 
-Для городских и нишевых страниц сначала использовать фабрики:
+Для будущих SEO-страниц использовать фабрики:
 
-- `createCityPageDraft(city)`
-- `createCityNichePageDraft(city, niche)`
-- `createCityPainPageDraft(city, painPoint)`
+- `createServiceCityPageDraft(service, city)`
+- `createServiceCityNichePageDraft(service, city, niche)`
+- `createServiceCityPainPageDraft(service, city, painPoint)`
 
-После этого черновик нужно превратить в полноценную страницу: добавить уникальные `sections`, `data`, `faq`, `relatedLinks`, `canonical`, `ogUrl`.
+Черновик нельзя публиковать как готовую страницу. Его нужно наполнить уникальными блоками: первые абзацы, боли, примеры, FAQ, CTA, внутренние ссылки, schema.
 
 ## Как избегать дублей
 
-Нельзя выпускать страницу, где заменен только город.
+Нельзя выпускать страницу, где заменен только город или ниша.
 
 Для каждой SEO-страницы должны быть уникальны:
 
+- `serviceId`
 - `uniqueIntent`
 - `title`
 - `description`
@@ -50,6 +76,7 @@
 - FAQ
 - внутренние ссылки
 - примеры сценариев внедрения
+- блок "что настроим именно здесь"
 
 Скрипт `scripts/build-site.js` запускает проверки из `src/lib/seo-validation.js`.
 

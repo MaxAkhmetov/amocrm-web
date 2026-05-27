@@ -6,12 +6,12 @@
   <title>Внедрение amoCRM за 2-3 дня - настройка CRM для контроля продаж</title>
   <meta name="description" content="Настрою amoCRM для малого бизнеса: заявки из сайта, звонков, WhatsApp, Telegram и рекламы, задачи менеджерам, контроль просрочек, источники и отчеты собственника.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="TODO_CANONICAL_URL">
+  <link rel="canonical" href="TODO_CANONICAL_BASE_URL/services/amocrm/">
 
   <meta property="og:title" content="Внедрение amoCRM за 2-3 дня - настройка CRM для контроля продаж">
   <meta property="og:description" content="Заявки, менеджеры, просрочки, источники и потери денег под контролем собственника.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="TODO_OG_URL">
+  <meta property="og:url" content="TODO_CANONICAL_BASE_URL/services/amocrm/">
   <meta property="og:image" content="TODO_OG_IMAGE">
 
   <link rel="stylesheet" href="css/style.css">
@@ -22,11 +22,16 @@
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "Граф Порядков",
-  "description": "Внедрение amoCRM для малого и среднего бизнеса",
+  "description": "Настрою amoCRM для малого бизнеса: заявки из сайта, звонков, WhatsApp, Telegram и рекламы, задачи менеджерам, контроль просрочек, источники и отчеты собственника.",
   "areaServed": "Russia",
   "serviceType": "Внедрение amoCRM",
-  "url": "TODO_CANONICAL_URL",
-  "email": "TODO_EMAIL"
+  "url": "TODO_CANONICAL_BASE_URL/services/amocrm/",
+  "email": "TODO_EMAIL",
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "ilma.pro",
+    "description": "B2B-платформа для CRM, операционной эффективности, автоматизации и управленческого контроля"
+  }
 }
   </script>
   <script type="application/ld+json">
@@ -93,16 +98,42 @@
   ]
 }
   </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "ilma.pro",
+      "item": "/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Услуги",
+      "item": "/services/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Внедрение amoCRM",
+      "item": "/services/amocrm/"
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   
   <header class="site-header">
-    <nav class="nav" aria-label="Основная навигация">
-      <a class="brand" href="#top" aria-label="Граф Порядков">
-        <span class="brand-mark" aria-hidden="true">ГП</span>
+    <nav class="nav nav-platform" aria-label="Навигация платформы">
+      <a class="brand" href="/" aria-label="ilma.pro">
+        <span class="brand-mark" aria-hidden="true">IP</span>
         <span>
-          <strong>Граф Порядков</strong>
-          <small>amoCRM для собственников</small>
+          <strong>ilma.pro</strong>
+          <small>CRM, процессы и AI-автоматизация</small>
         </span>
       </a>
       <button class="nav-toggle" type="button" aria-controls="nav-menu" aria-expanded="false">
@@ -111,20 +142,19 @@
         <span></span>
         <span class="sr-only">Открыть меню</span>
       </button>
-      <div class="nav-menu" id="nav-menu">
-        <a href="#problems">Проблемы</a>
-<a href="#solution">Решение</a>
-<a href="#setup">Что настроим</a>
-<a href="#packages">Тарифы</a>
-<a href="#process">Процесс</a>
-<a href="#faq">FAQ</a>
+      <div class="nav-menu nav-menu-platform" id="nav-menu">
+        <a href="/services/">Услуги</a>
+<a href="/cases/">Кейсы</a>
+<a href="/blog/">Блог</a>
+<a href="/contacts/">Контакты</a>
         <a class="nav-cta" href="#lead">Получить разбор</a>
       </div>
     </nav>
+    <div class="breadcrumbs" aria-label="Хлебные крошки"><a href="/">ilma.pro</a><span>/</span><a href="/services/">Услуги</a><span>/</span><a href="/services/amocrm/">Внедрение amoCRM</a></div>
     
     <section class="hero" id="top">
-      <div class="hero-copy">
-        <p class="eyebrow">Порядок в продажах за дни, не месяцы</p>
+      <div class="hero-copy" data-animate="reveal">
+        <p class="eyebrow">Граф Порядков / страница услуги amoCRM</p>
         <h1>Внедрение amoCRM за 2-3 дня: заявки, менеджеры и потери денег под контролем</h1>
         <p class="hero-lead">Настраиваю amoCRM так, чтобы собственник видел все заявки, источники, просрочки, задачи менеджеров и места, где бизнес теряет деньги. Без долгих внедрений и абстрактной автоматизации.</p>
         <div class="hero-actions">
@@ -134,7 +164,7 @@
         <p class="hero-note">Для компаний, где заявки приходят из сайта, звонков, WhatsApp, Telegram, Авито, ВК и рекламы.</p>
       </div>
 
-      <div class="dashboard-card" aria-label="Mockup CRM-дашборда">
+      <div class="dashboard-card" aria-label="Mockup CRM-дашборда" data-animate="reveal">
         <div class="dashboard-top">
           <div>
             <p class="dashboard-label">Контроль сегодня</p>
@@ -143,16 +173,16 @@
           <span>live</span>
         </div>
         <div class="metric-grid">
-          <div class="metric"><span>Новые заявки</span><strong>18</strong></div>
-<div class="metric danger"><span>Без ответа</span><strong>3</strong></div>
-<div class="metric warning"><span>Просроченные задачи</span><strong>7</strong></div>
-<div class="metric"><span>Сделки без шага</span><strong>11</strong></div>
+          <div class="metric"><span>Новые заявки</span><strong data-counter="18">18</strong></div>
+<div class="metric danger"><span>Без ответа</span><strong data-counter="3">3</strong></div>
+<div class="metric warning"><span>Просроченные задачи</span><strong data-counter="7">7</strong></div>
+<div class="metric"><span>Сделки без шага</span><strong data-counter="11">11</strong></div>
 <div class="metric warning wide"><span>Потери на этапе КП</span><strong>24%</strong></div>
 <div class="metric wide"><span>Лучший источник</span><strong>Яндекс Директ</strong></div>
         </div>
       </div>
 
-      <div class="hero-benefits" aria-label="Преимущества">
+      <div class="hero-benefits" aria-label="Преимущества" data-animate="reveal-list">
         <span>Быстрый запуск: 2-3 дня</span>
 <span>Фокус на деньгах, а не на кнопках</span>
 <span>Контроль менеджеров и источников заявок</span>
@@ -169,32 +199,32 @@
       </div>
       <div class="cards-grid six">
         
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Заявки теряются</h3>
           <p>Сайт, звонки, мессенджеры и реклама живут отдельно. Менеджеры отвечают не всем, а собственник узнает об этом слишком поздно.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Менеджеры работают без контроля</h3>
           <p>Нет понятной картины: кто перезвонил, кто забыл, у кого сделки висят без следующего шага.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Реклама есть, аналитики нет</h3>
           <p>Деньги уходят в Директ, ВК и другие каналы, но не видно, какие заявки дошли до денег.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>CRM превращается в склад сделок</h3>
           <p>Сделки заведены, но нет правил, задач, причин отказов и нормальной управленческой логики.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Собственник смотрит в Excel</h3>
           <p>Данные приходится собирать вручную, а CRM не отвечает на главный вопрос: где теряются деньги.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Внедрение растягивают</h3>
           <p>Интеграторы продают длинный проект, хотя базовый порядок можно собрать намного быстрее.</p>
         </article>
@@ -209,25 +239,25 @@
       </div>
       <div class="flow">
         
-        <article>
+        <article data-animate="reveal">
           <span>1</span>
           <h3>Заявка попадает в CRM</h3>
           <p>Сайт, формы, звонки, WhatsApp, Telegram, Авито, ВК, реклама.</p>
         </article>
 
-        <article>
+        <article data-animate="reveal">
           <span>2</span>
           <h3>Менеджер получает задачу</h3>
           <p>Автоматические задачи, сроки, напоминания, контроль просрочек.</p>
         </article>
 
-        <article>
+        <article data-animate="reveal">
           <span>3</span>
           <h3>Сделка движется по понятной воронке</h3>
           <p>Этапы, обязательные поля, причины отказов, шаблоны коммуникаций.</p>
         </article>
 
-        <article>
+        <article data-animate="reveal">
           <span>4</span>
           <h3>Собственник видит цифры</h3>
           <p>Источники, конверсия, потери, просрочки, работа менеджеров, прогноз продаж.</p>
@@ -267,42 +297,42 @@
       </div>
       <div class="cards-grid industries">
         
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Оконные компании и ремонт окон</h3>
           <p>Заявки из сайта, звонков, мессенджеров и рекламы собираются в одну воронку: от обращения до замера, КП, оплаты и выполнения работ.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Ремонт, строительство, отделка</h3>
           <p>Контроль этапов от первичного обращения до сметы, договора, оплаты и завершения работ.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Выездные мастера и сервисные службы</h3>
           <p>Назначение ответственных, сроки выезда, повторные заявки и контроль просрочек в одном месте.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Клиники и медицинские услуги</h3>
           <p>Заявки из рекламы и мессенджеров не теряются, администраторы видят следующий шаг по каждому пациенту.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Образовательные центры и курсы</h3>
           <p>Воронка от заявки до консультации, оплаты и повторного касания с понятной аналитикой источников.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Мебель, кухни, двери</h3>
           <p>Контроль замеров, КП, согласований, оплат и причин отказа после расчета.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Франшизы и сети услуг</h3>
           <p>Единые правила обработки лидов, контроль филиалов и сравнение источников заявок.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>B2B-продажи и оптовые компании</h3>
           <p>Прозрачные этапы сделки, задачи менеджерам, история коммуникаций и прогноз продаж.</p>
         </article>
@@ -316,7 +346,7 @@
       </div>
       <div class="price-grid">
         
-        <article class="price-card">
+        <article class="price-card" data-animate="reveal">
           
           <h3>Быстрый старт</h3>
           <p class="price">от 69 000 ₽</p>
@@ -334,7 +364,7 @@
           <a class="button button-ghost" href="#lead">Обсудить быстрый старт</a>
         </article>
 
-        <article class="price-card recommended">
+        <article class="price-card recommended" data-animate="reveal">
           <span class="badge">Рекомендуемый</span>
           <h3>Отдел продаж под контролем</h3>
           <p class="price">от 149 000 ₽</p>
@@ -354,7 +384,7 @@
           <a class="button button-primary" href="#lead">Получить расчет</a>
         </article>
 
-        <article class="price-card">
+        <article class="price-card" data-animate="reveal">
           
           <h3>Собственник видит все</h3>
           <p class="price">от 250 000 ₽</p>
@@ -419,31 +449,31 @@
       </div>
       <div class="process-list">
         
-        <article>
+        <article data-animate="reveal">
           <span>01</span>
           <h3>Экспресс-разбор</h3>
           <p>30-45 минут: смотрим источники заявок, текущую CRM/Excel, менеджеров, этапы и хаос.</p>
         </article>
 
-        <article>
+        <article data-animate="reveal">
           <span>02</span>
           <h3>Схема будущей CRM</h3>
           <p>Фиксируем воронку, поля, этапы, задачи, источники и правила.</p>
         </article>
 
-        <article>
+        <article data-animate="reveal">
           <span>03</span>
           <h3>Настройка amoCRM</h3>
           <p>Собираю систему: воронки, поля, задачи, интеграции, шаблоны, отчеты.</p>
         </article>
 
-        <article>
+        <article data-animate="reveal">
           <span>04</span>
           <h3>Проверка на реальных сценариях</h3>
           <p>Прогоняем заявки из сайта, звонка, мессенджера, рекламы и проверяем, что ничего не теряется.</p>
         </article>
 
-        <article>
+        <article data-animate="reveal">
           <span>05</span>
           <h3>Обучение и запуск</h3>
           <p>Показываю менеджерам, как работать, а собственнику - где смотреть контрольные цифры.</p>
@@ -458,22 +488,22 @@
       </div>
       <div class="cards-grid four">
         
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Бизнес-анализ до настройки</h3>
           <p>Сначала процесс, потом CRM. Иначе автоматизируется хаос.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Скорость без потери логики</h3>
           <p>Типовые решения собираются быстро, потому что используются готовые паттерны воронок, задач и отчетов.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Фокус на собственнике</h3>
           <p>Главный результат - не заполненная CRM, а управляемые заявки, менеджеры и источники.</p>
         </article>
 
-        <article class="card">
+        <article class="card" data-animate="reveal">
           <h3>Без лишней бюрократии</h3>
           <p>Минимум сложных документов на старте. Максимум практического результата.</p>
         </article>
@@ -540,6 +570,20 @@
       </div>
     </section>
 
+    <section class="section related-links" id="related">
+      <div class="section-heading">
+        <p class="eyebrow">Связанные страницы</p>
+        <h2>Куда развернется направление amoCRM</h2>
+      </div>
+      <div class="related-grid">
+        <a href="/services/amocrm/audit/">Аудит amoCRM</a>
+<a href="/services/amocrm/integrations/">Интеграции amoCRM</a>
+<a href="/services/amocrm/automation/">Автоматизация задач в amoCRM</a>
+<a href="/services/amocrm/moskva/">amoCRM для Москвы</a>
+<a href="/services/amocrm/moskva/okonnye-kompanii/">amoCRM для оконных компаний</a>
+<a href="/services/amocrm/moskva/poterya-zayavok/">Потеря заявок: диагностика</a>
+      </div>
+    </section>
 
     <section class="section final-cta" id="contact">
       <div>
@@ -557,8 +601,8 @@
   
   <footer class="footer">
     <div>
-      <strong>Граф Порядков</strong>
-      <p>Внедрение amoCRM для малого и среднего бизнеса</p>
+      <strong>ilma.pro</strong>
+      <p>B2B-платформа для CRM, операционной эффективности, автоматизации и управленческого контроля</p>
     </div>
     <nav aria-label="Ссылки в подвале">
       <a href="#privacy">Политика конфиденциальности</a>

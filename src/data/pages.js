@@ -1,23 +1,26 @@
 const { seoArchitecture } = require("./seo-architecture");
+const { getService } = require("./services");
 const {
-  createCityNichePageDraft,
-  createCityPainPageDraft,
-  createCityPageDraft,
-  createHomePage
+  createAmocrmServicePage,
+  createServiceCityNichePageDraft,
+  createServiceCityPainPageDraft,
+  createServiceCityPageDraft
 } = require("./page-factories");
 
+const amocrmService = getService("amocrm");
+
 const pages = [
-  createHomePage()
+  createAmocrmServicePage()
 ];
 
 const futurePageDrafts = {
   federalRoutes: seoArchitecture.federalRoutes,
-  cityPages: seoArchitecture.cities.map(createCityPageDraft),
-  cityNichePages: seoArchitecture.cities.flatMap((city) =>
-    seoArchitecture.niches.map((niche) => createCityNichePageDraft(city, niche))
+  serviceCityPages: seoArchitecture.cities.map((city) => createServiceCityPageDraft(amocrmService, city)),
+  serviceCityNichePages: seoArchitecture.cities.flatMap((city) =>
+    seoArchitecture.niches.map((niche) => createServiceCityNichePageDraft(amocrmService, city, niche))
   ),
-  cityPainPages: seoArchitecture.cities.flatMap((city) =>
-    seoArchitecture.painPoints.map((painPoint) => createCityPainPageDraft(city, painPoint))
+  serviceCityPainPages: seoArchitecture.cities.flatMap((city) =>
+    seoArchitecture.painPoints.map((painPoint) => createServiceCityPainPageDraft(amocrmService, city, painPoint))
   )
 };
 

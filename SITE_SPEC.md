@@ -1,8 +1,8 @@
-# ТЗ для Codex: первая страница сайта по внедрению amoCRM
+# ТЗ для Codex: страница услуги по внедрению amoCRM
 
 ## 0. Контекст
 
-Нужно создать первую страницу сайта для продажи услуг по внедрению amoCRM.
+Нужно создать страницу услуги для продажи внедрения amoCRM. Это не главная страница всего домена ilma.pro, а сервисная страница направления amoCRM.
 
 Проект не должен выглядеть как типовая страница интегратора CRM. Позиционирование: быстрый практический внедренец, который не просто настраивает CRM, а наводит порядок в продажах и дает собственнику контроль над заявками, менеджерами, просрочками, источниками и потерями денег.
 
@@ -606,7 +606,7 @@ Open Graph:
 Страница считается готовой, если:
 
 1. Локальная сборка проходит без ошибок.
-2. На главной странице есть все блоки из ТЗ.
+2. На странице услуги amoCRM есть все блоки из ТЗ.
 3. Страница корректно выглядит на mobile/tablet/desktop.
 4. Первый экран ясно объясняет услугу и содержит CTA.
 5. Есть форма заявки с валидацией.
@@ -632,7 +632,7 @@ Open Graph:
 
 ## 11. Команда для Codex
 
-Выполни это ТЗ в текущем репозитории. Сначала изучи структуру проекта и используй существующий стек. Если стек неочевиден, выбери самый простой путь без лишних зависимостей. Реализуй первую страницу сайта для услуги внедрения amoCRM с блоками, текстами, адаптивом, SEO-мета-тегами, JSON-LD, формой заявки, сбором UTM-меток и строгим дизайном в стиле "Граф Порядков". После реализации запусти проверку сборки/линтера, исправь ошибки и напиши краткий отчет по измененным файлам.
+Выполни это ТЗ в текущем репозитории. Сначала изучи структуру проекта и используй существующий стек. Если стек неочевиден, выбери самый простой путь без лишних зависимостей. Реализуй страницу услуги amoCRM. Сейчас она может временно находиться в index.html для быстрой публикации, но архитектурно должна быть готова к переносу в /services/amocrm/. для услуги внедрения amoCRM с блоками, текстами, адаптивом, SEO-мета-тегами, JSON-LD, формой заявки, сбором UTM-меток и строгим дизайном в стиле "Граф Порядков". После реализации запусти проверку сборки/линтера, исправь ошибки и напиши краткий отчет по измененным файлам.
 
 ## 12. SEO scaling architecture
 
@@ -842,3 +842,73 @@ Performance is critical:
 - no heavy rendering effects.
 
 Prefer CSS transitions and lightweight JS over large animation frameworks.
+
+## Brand architecture
+
+The domain ilma.pro is not dedicated only to amoCRM.
+
+amoCRM is one of several service directions.
+
+The website should evolve into a broader B2B consulting and automation platform focused on:
+- sales systems;
+- CRM implementation;
+- operational efficiency;
+- AI automation;
+- business process digitalization;
+- management control systems.
+
+Therefore:
+- the amoCRM page is a service page, not the permanent homepage of the entire domain;
+- the architecture must support multiple service directions;
+- future services must coexist under one scalable structure.
+
+Current target structure:
+
+/ - brand homepage
+/services/amocrm/
+/services/operational-efficiency/
+/services/ai-automation/
+/services/digitalization/
+/blog/
+/cases/
+
+The current amoCRM page may temporarily act as homepage for launch speed, but architecturally it should be treated as a future service page.
+
+## URL architecture
+
+Preferred scalable structure:
+
+/services/{service}/
+/services/{service}/{city}/
+/services/{service}/{city}/{niche}/
+/services/{service}/{city}/{pain-point}/
+
+Examples:
+/services/amocrm/
+/services/amocrm/moskva/
+/services/amocrm/moskva/okonnye-kompanii/
+/services/amocrm/moskva/poterya-zayavok/
+
+The architecture should prioritize service-first hierarchy rather than city-first hierarchy.
+
+## Global page consistency
+
+All future pages must use one shared brand architecture:
+
+/ - brand homepage
+/services/{service}/ - federal service page
+/services/{service}/{city}/ - city service page
+/services/{service}/{city}/{niche}/ - city + niche page
+/services/{service}/{city}/{pain-point}/ - city + pain page
+/blog/{article}/ - article
+/cases/{case}/ - case
+
+The approved amoCRM service page defines the first version of the design system:
+- one global header;
+- no duplicate service header;
+- dark premium visual style;
+- consistent typography;
+- restrained motion;
+- reusable CTA/form/FAQ blocks.
+
+Future pages should extend this system, not reinvent it.

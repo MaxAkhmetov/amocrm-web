@@ -1,44 +1,23 @@
 const { assetPath, escapeHtml, jsonLd } = require("./helpers");
+const {
+  renderBreadcrumbSchema,
+  renderFaqSchema,
+  renderProfessionalServiceSchema
+} = require("./schemas");
 const { renderHero, renderPageSections } = require("./sections");
 
-function renderProfessionalServiceSchema(page, site) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": site.brand.name,
-    "description": site.brand.description,
-    "areaServed": site.brand.areaServed,
-    "serviceType": site.brand.serviceName,
-    "url": page.canonical,
-    "email": site.contacts.email,
-    ...(page.city ? { "address": { "@type": "PostalAddress", "addressLocality": page.city } } : {})
-  };
-}
-
-function renderFaqSchema(page) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": page.data.faq.map((item) => ({
-      "@type": "Question",
-      "name": item.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": item.answer
-      }
-    }))
-  };
-}
-
 function renderHeader(page, site) {
-  const nav = site.navigation
+  const platformNav = site.platformNavigation
     .map((item) => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a>`)
     .join("\n");
+  const breadcrumbs = (page.breadcrumbs || [])
+    .map((item) => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a>`)
+    .join("<span>/</span>");
 
   return `
   <header class="site-header">
-    <nav class="nav" aria-label="Основная навигация">
-      <a class="brand" href="#top" aria-label="${escapeHtml(site.brand.name)}">
+    <nav class="nav nav-platform" aria-label="Навигация платформы">
+      <a class="brand" href="/" aria-label="${escapeHtml(site.brand.name)}">
         <span class="brand-mark" aria-hidden="true">${escapeHtml(site.brand.shortMark)}</span>
         <span>
           <strong>${escapeHtml(site.brand.name)}</strong>
@@ -51,11 +30,12 @@ function renderHeader(page, site) {
         <span></span>
         <span class="sr-only">Открыть меню</span>
       </button>
-      <div class="nav-menu" id="nav-menu">
-        ${nav}
+      <div class="nav-menu nav-menu-platform" id="nav-menu">
+        ${platformNav}
         <a class="nav-cta" href="#lead">Получить разбор</a>
       </div>
     </nav>
+    ${breadcrumbs ? `<div class="breadcrumbs" aria-label="Хлебные крошки">${breadcrumbs}</div>` : ""}
     ${renderHero(page, site)}
   </header>`;
 }
@@ -108,6 +88,9 @@ function renderPage(page, site) {
   <script type="application/ld+json">
   ${jsonLd(renderFaqSchema(page))}
   </script>
+  ${renderBreadcrumbSchema(page) ? `<script type="application/ld+json">
+  ${jsonLd(renderBreadcrumbSchema(page))}
+  </script>` : ""}
 </head>
 <body>
   ${renderHeader(page, site)}

@@ -1,33 +1,59 @@
+const { amocrm } = require("./amocrm");
+const { getService } = require("./services");
 const { site } = require("./site");
 
-function withSharedData(overrides = {}) {
+function absoluteUrl(path) {
+  if (!site.urls.canonicalBase || site.urls.canonicalBase.startsWith("TODO")) {
+    return path === "/" ? "TODO_CANONICAL_URL" : `TODO_CANONICAL_BASE_URL${path}`;
+  }
+
+  return new URL(path, site.urls.canonicalBase).toString();
+}
+
+function withServiceData(serviceData, overrides = {}) {
   return {
-    pains: overrides.pains || site.pains,
-    solutionSteps: overrides.solutionSteps || site.solutionSteps,
-    setupItems: overrides.setupItems || site.setupItems,
-    industries: overrides.industries || site.industries,
-    packages: overrides.packages || site.packages,
-    result: overrides.result || site.result,
-    processSteps: overrides.processSteps || site.processSteps,
-    why: overrides.why || site.why,
-    faq: overrides.faq || site.faq
+    heroMetrics: overrides.heroMetrics || serviceData.heroMetrics,
+    heroBenefits: overrides.heroBenefits || serviceData.heroBenefits,
+    pains: overrides.pains || serviceData.pains,
+    solutionSteps: overrides.solutionSteps || serviceData.solutionSteps,
+    setupItems: overrides.setupItems || serviceData.setupItems,
+    industries: overrides.industries || serviceData.industries,
+    packages: overrides.packages || serviceData.packages,
+    result: overrides.result || serviceData.result,
+    processSteps: overrides.processSteps || serviceData.processSteps,
+    why: overrides.why || serviceData.why,
+    faq: overrides.faq || serviceData.faq
   };
 }
 
-function createHomePage() {
+function createAmocrmServicePage() {
+  const service = getService("amocrm");
+
   return {
-    type: "home",
-    layer: "federal",
-    uniqueIntent: "Быстрое внедрение amoCRM как системы контроля заявок, менеджеров, источников и потерь денег для собственника.",
-    outputPath: "index.html",
-    canonical: site.urls.canonical,
-    ogUrl: site.urls.ogUrl,
+    type: "service",
+    layer: "service_page",
+    serviceId: service.id,
+    serviceName: service.name,
+    serviceBrand: service.serviceBrand,
+    serviceSubtitle: service.serviceSubtitle,
+    serviceShortMark: service.shortMark,
+    uniqueIntent: "Внедрение amoCRM как системы контроля заявок, менеджеров, источников и потерь денег для собственника.",
+    outputPath: service.temporaryOutputPath,
+    targetOutputPath: service.targetPath,
+    targetUrl: service.targetUrl,
+    canonical: absoluteUrl(service.targetUrl),
+    ogUrl: absoluteUrl(service.targetUrl),
     ogImage: site.urls.ogImage,
     title: "Внедрение amoCRM за 2-3 дня - настройка CRM для контроля продаж",
     description: "Настрою amoCRM для малого бизнеса: заявки из сайта, звонков, WhatsApp, Telegram и рекламы, задачи менеджерам, контроль просрочек, источники и отчеты собственника.",
     ogDescription: "Заявки, менеджеры, просрочки, источники и потери денег под контролем собственника.",
+    breadcrumbs: [
+      { label: site.brand.name, href: "/" },
+      { label: "Услуги", href: "/services/" },
+      { label: "Внедрение amoCRM", href: service.targetUrl }
+    ],
     hero: {
-      eyebrow: "Порядок в продажах за дни, не месяцы",
+      eyebrow: "Граф Порядков / страница услуги amoCRM",
       h1: "Внедрение amoCRM за 2-3 дня: заявки, менеджеры и потери денег под контролем",
       lead: "Настраиваю amoCRM так, чтобы собственник видел все заявки, источники, просрочки, задачи менеджеров и места, где бизнес теряет деньги. Без долгих внедрений и абстрактной автоматизации.",
       primaryCta: "Получить экспресс-разбор",
@@ -52,23 +78,32 @@ function createHomePage() {
       finalCtaTitle: "Хотите понять, где сейчас теряются заявки?",
       finalCtaText: "Оставьте заявку - разберу вашу текущую схему продаж и покажу, что нужно настроить в amoCRM в первую очередь."
     },
-    data: withSharedData(),
-    relatedLinks: []
+    data: withServiceData(amocrm),
+    relatedLinksTitle: "Куда развернется направление amoCRM",
+    relatedLinks: [
+      { label: "Аудит amoCRM", href: "/services/amocrm/audit/" },
+      { label: "Интеграции amoCRM", href: "/services/amocrm/integrations/" },
+      { label: "Автоматизация задач в amoCRM", href: "/services/amocrm/automation/" },
+      { label: "amoCRM для Москвы", href: "/services/amocrm/moskva/" },
+      { label: "amoCRM для оконных компаний", href: "/services/amocrm/moskva/okonnye-kompanii/" },
+      { label: "Потеря заявок: диагностика", href: "/services/amocrm/moskva/poterya-zayavok/" }
+    ]
   };
 }
 
-function createCityPageDraft(city) {
+function createServiceCityPageDraft(service, city) {
   return {
-    type: "city",
-    layer: "city",
+    type: "service_city",
+    layer: "service_city",
+    serviceId: service.id,
     city: city.slug,
-    outputPath: `${city.slug}/index.html`,
-    uniqueIntent: `Внедрение amoCRM в городе ${city.name} с акцентом на локальные источники заявок и контроль менеджеров.`,
-    title: `Внедрение amoCRM в ${city.prepositional} - контроль заявок и менеджеров`,
-    description: `Настройка amoCRM для бизнеса в ${city.prepositional}: заявки, источники, задачи менеджерам, просрочки и отчет собственника.`,
+    outputPath: `services/${service.slug}/${city.slug}/index.html`,
+    uniqueIntent: `${service.name} в городе ${city.name} с акцентом на локальные источники заявок и контроль менеджеров.`,
+    title: `${service.name} в ${city.prepositional} - контроль заявок и менеджеров`,
+    description: `Настройка ${service.name} для бизнеса в ${city.prepositional}: заявки, источники, задачи менеджерам, просрочки и отчет собственника.`,
     hero: {
-      h1: `Внедрение amoCRM в ${city.prepositional}: заявки и менеджеры под контролем`,
-      lead: `Настраиваю amoCRM для компаний в ${city.prepositional} с учетом локальных источников заявок, рекламы, мессенджеров и типовых просрочек отдела продаж.`
+      h1: `${service.name} в ${city.prepositional}: заявки и менеджеры под контролем`,
+      lead: `Будущая страница должна раскрывать локальную схему продаж в ${city.prepositional}, а не копировать федеральную услугу.`
     },
     uniqueContentSlots: {
       localBusinessExamples: city.businessExamples,
@@ -80,19 +115,20 @@ function createCityPageDraft(city) {
   };
 }
 
-function createCityNichePageDraft(city, niche) {
+function createServiceCityNichePageDraft(service, city, niche) {
   return {
-    type: "city_niche",
-    layer: "city_niche",
+    type: "service_city_niche",
+    layer: "service_city_niche",
+    serviceId: service.id,
     city: city.slug,
     niche: niche.slug,
-    outputPath: `${city.slug}/${niche.slug}/index.html`,
-    uniqueIntent: `amoCRM для ${niche.genitive} в ${city.prepositional}: ${niche.scenario}.`,
-    title: `amoCRM для ${niche.genitive} в ${city.prepositional} - внедрение CRM`,
-    description: `Настройка amoCRM для ${niche.genitive} в ${city.prepositional}: заявки, этапы, задачи, причины отказов и аналитика источников.`,
+    outputPath: `services/${service.slug}/${city.slug}/${niche.slug}/index.html`,
+    uniqueIntent: `${service.name} для ${niche.genitive} в ${city.prepositional}: ${niche.scenario}.`,
+    title: `${service.name} для ${niche.genitive} в ${city.prepositional}`,
+    description: `Настройка ${service.name} для ${niche.genitive} в ${city.prepositional}: заявки, этапы, задачи, причины отказов и аналитика источников.`,
     hero: {
-      h1: `amoCRM для ${niche.genitive} в ${city.prepositional}`,
-      lead: `Собираю CRM под сценарий: ${niche.scenario}. Отдельный фокус - ${niche.uniquePain}.`
+      h1: `${service.name} для ${niche.genitive} в ${city.prepositional}`,
+      lead: `Будущая страница должна раскрывать сценарий: ${niche.scenario}. Отдельный фокус - ${niche.uniquePain}.`
     },
     uniqueContentSlots: {
       nicheScenario: niche.scenario,
@@ -104,19 +140,20 @@ function createCityNichePageDraft(city, niche) {
   };
 }
 
-function createCityPainPageDraft(city, painPoint) {
+function createServiceCityPainPageDraft(service, city, painPoint) {
   return {
-    type: "city_pain",
-    layer: "city_pain",
+    type: "service_city_pain",
+    layer: "service_city_pain",
+    serviceId: service.id,
     city: city.slug,
     painPoint: painPoint.slug,
-    outputPath: `${city.slug}/${painPoint.slug}/index.html`,
-    uniqueIntent: `${painPoint.intent} в ${city.prepositional}.`,
-    title: `${painPoint.name} в ${city.prepositional} - настройка amoCRM`,
-    description: `Помогу решить проблему «${painPoint.name}» в amoCRM для бизнеса в ${city.prepositional}: задачи, источники, контроль и отчет собственника.`,
+    outputPath: `services/${service.slug}/${city.slug}/${painPoint.slug}/index.html`,
+    uniqueIntent: `${painPoint.intent} в ${city.prepositional} через ${service.name}.`,
+    title: `${painPoint.name} в ${city.prepositional} - ${service.name}`,
+    description: `Помогу решить проблему «${painPoint.name}» через ${service.name} для бизнеса в ${city.prepositional}: задачи, источники, контроль и отчет собственника.`,
     hero: {
-      h1: `${painPoint.name}: настройка amoCRM для бизнеса в ${city.prepositional}`,
-      lead: `Страница должна раскрывать не общую услугу, а конкретный сценарий: ${painPoint.uniqueAngle}.`
+      h1: `${painPoint.name}: ${service.name} для бизнеса в ${city.prepositional}`,
+      lead: `Будущая страница должна раскрывать конкретный сценарий: ${painPoint.uniqueAngle}.`
     },
     uniqueContentSlots: {
       painIntent: painPoint.intent,
@@ -129,9 +166,9 @@ function createCityPainPageDraft(city, painPoint) {
 }
 
 module.exports = {
-  createCityNichePageDraft,
-  createCityPainPageDraft,
-  createCityPageDraft,
-  createHomePage,
-  withSharedData
+  createAmocrmServicePage,
+  createServiceCityNichePageDraft,
+  createServiceCityPainPageDraft,
+  createServiceCityPageDraft,
+  withServiceData
 };

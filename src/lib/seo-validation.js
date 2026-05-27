@@ -30,8 +30,10 @@ function assertRequiredPageFields(page) {
   const required = [
     "type",
     "layer",
+    "serviceId",
     "uniqueIntent",
     "outputPath",
+    "targetOutputPath",
     "title",
     "description",
     "hero.h1",
@@ -79,9 +81,9 @@ function validatePages(pages) {
 
 function validateFutureDrafts(futurePageDrafts) {
   const drafts = [
-    ...futurePageDrafts.cityPages,
-    ...futurePageDrafts.cityNichePages,
-    ...futurePageDrafts.cityPainPages
+    ...futurePageDrafts.serviceCityPages,
+    ...futurePageDrafts.serviceCityNichePages,
+    ...futurePageDrafts.serviceCityPainPages
   ];
 
   const outputPaths = new Set();
@@ -91,8 +93,8 @@ function validateFutureDrafts(futurePageDrafts) {
     }
     outputPaths.add(draft.outputPath);
 
-    if (!draft.uniqueIntent || !draft.uniqueContentSlots) {
-      throw new Error(`Future draft "${draft.outputPath}" must have uniqueIntent and uniqueContentSlots`);
+    if (!draft.serviceId || !draft.uniqueIntent || !draft.uniqueContentSlots) {
+      throw new Error(`Future draft "${draft.outputPath}" must have serviceId, uniqueIntent and uniqueContentSlots`);
     }
   });
 }

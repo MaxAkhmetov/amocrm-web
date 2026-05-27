@@ -2,9 +2,9 @@
 
 
 
-\## Project
+## Project
 
-Static Russian-language website for selling amoCRM implementation services.
+Static Russian-language B2B website for ilma.pro. The domain is a multi-service platform for CRM implementation, operational efficiency, AI automation, process digitalization and management control systems. amoCRM is one service direction, not the whole website.
 
 
 
@@ -179,3 +179,46 @@ Image needed:
 - How to export:
 - Where to place the file:
 - What code will use it:
+
+## Multi-service architecture
+
+Do not assume the entire website is dedicated only to amoCRM.
+
+The domain is a broader business platform.
+
+amoCRM is only one service direction.
+
+Architecture decisions should support future expansion into:
+- operational efficiency;
+- AI automation;
+- process digitalization;
+- management systems;
+- consulting products.
+
+Avoid tightly coupling the entire website structure only to amoCRM.
+
+## Future migration readiness
+
+The current amoCRM landing page may temporarily live at the root domain for launch speed.
+
+But the implementation should allow easy future migration to:
+/services/amocrm/
+
+Avoid hardcoded assumptions that this page will permanently remain the homepage.
+
+
+## Page creation rules
+
+When creating any new page:
+- First identify the page type: brand homepage, service page, city page, niche page, pain-point page, blog article, case page.
+- Reuse existing layout, header, footer, CTA, form, FAQ and design system.
+- Do not create a new visual style for each page.
+- Do not duplicate generic text with only city/service name changed.
+- Keep each page unique by intent, examples, FAQ, title, description and internal links.
+- Keep typography consistent with the approved amoCRM page.
+- Use one global header for the whole domain.
+- Do not add a second service-specific header.
+- Use service/page labels inside the page content, not as separate headers.
+- Do not add custom cursor animations.
+- Use restrained premium motion only: fade-up, hover lift, soft border glow, smooth accordion, number counters where useful.
+- Before coding, propose the page URL, page type, SEO intent, H1, title, description and reused blocks.
