@@ -2,6 +2,7 @@
   var UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
   var STORAGE_KEY = "graf_poryadkov_utm";
   var LEAD_API_URL = window.LEAD_API_URL || "https://functions.yandexcloud.net/d4e9csenibv3gfmm6sjb";
+  var PHONE_PREFIX = "+7 (";
 
   var navToggle = document.querySelector(".nav-toggle");
   var navMenu = document.querySelector("#nav-menu");
@@ -222,11 +223,78 @@
     statusNode.className = "form-status" + (type ? " " + type : "");
   }
 
+  function getPhoneNationalDigits(value) {
+    var digits = String(value || "").replace(/\D/g, "");
+
+    if (digits.charAt(0) === "7" || digits.charAt(0) === "8") {
+      digits = digits.slice(1);
+    }
+
+    return digits.slice(0, 10);
+  }
+
+  function formatPhone(value) {
+    var digits = getPhoneNationalDigits(value);
+
+    if (!digits) {
+      return PHONE_PREFIX;
+    }
+
+    var formatted = "+7 (" + digits.slice(0, 3);
+
+    if (digits.length >= 3) {
+      formatted += ") " + digits.slice(3, 6);
+    }
+
+    if (digits.length >= 6) {
+      formatted += " " + digits.slice(6, 8);
+    }
+
+    if (digits.length >= 8) {
+      formatted += " " + digits.slice(8, 10);
+    }
+
+    return formatted;
+  }
+
+  function normalizePhone(value) {
+    var digits = getPhoneNationalDigits(value);
+    return digits.length === 10 ? "+7" + digits : "";
+  }
+
+  function initPhoneMask() {
+    if (!leadForm || !leadForm.elements.phone) {
+      return;
+    }
+
+    var phoneField = leadForm.elements.phone;
+
+    phoneField.addEventListener("focus", function () {
+      if (!getPhoneNationalDigits(phoneField.value)) {
+        phoneField.value = PHONE_PREFIX;
+      }
+    });
+
+    phoneField.addEventListener("keydown", function (event) {
+      var selectionStart = phoneField.selectionStart || 0;
+      var selectionEnd = phoneField.selectionEnd || 0;
+      var hasSelection = selectionEnd > selectionStart;
+
+      if ((event.key === "Backspace" || event.key === "Delete") && !hasSelection && selectionStart <= PHONE_PREFIX.length) {
+        event.preventDefault();
+      }
+    });
+
+    phoneField.addEventListener("input", function () {
+      phoneField.value = formatPhone(phoneField.value);
+      phoneField.setSelectionRange(phoneField.value.length, phoneField.value.length);
+    });
+  }
+
   function validateForm(form) {
     var isValid = true;
     var name = form.elements.name.value.trim();
-    var phone = form.elements.phone.value.trim();
-    var website = form.elements.website.value.trim();
+    var phone = normalizePhone(form.elements.phone.value);
 
     setFieldError("name", "");
     setFieldError("phone", "");
@@ -238,17 +306,8 @@
     }
 
     if (!phone) {
-      setFieldError("phone", "Укажите телефон.");
+      setFieldError("phone", "Укажите телефон в формате +7 (999) 999 99 99.");
       isValid = false;
-    }
-
-    if (website) {
-      try {
-        new URL(website);
-      } catch (error) {
-        setFieldError("website", "Укажите сайт в формате https://example.ru.");
-        isValid = false;
-      }
     }
 
     return isValid;
@@ -257,9 +316,11 @@
   function buildPayload(form) {
     var attribution = collectAttribution();
     var timestamp = new Date().toISOString();
+    var phoneFormatted = formatPhone(form.elements.phone.value);
     var payload = {
       name: form.elements.name.value.trim(),
-      phone: form.elements.phone.value.trim(),
+      phone: normalizePhone(form.elements.phone.value),
+      phoneFormatted: phoneFormatted,
       companyName: form.elements.companyName.value.trim(),
       industry: form.elements.industry.value.trim(),
       website: form.elements.website.value.trim(),
@@ -361,6 +422,7 @@
   }
 
   initNavigation();
+  initPhoneMask();
   initLeadForm();
   initRevealAnimations();
   initCounters();

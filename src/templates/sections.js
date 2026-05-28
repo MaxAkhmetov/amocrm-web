@@ -219,7 +219,7 @@ function renderLeadForm(page) {
         </div>
         <div class="form-row">
           <label for="phone">Телефон *</label>
-          <input id="phone" name="phone" type="tel" required autocomplete="tel">
+          <input id="phone" name="phone" type="tel" inputmode="tel" required autocomplete="tel" placeholder="+7 (___) ___ __ __">
           <small class="field-error" data-error-for="phone"></small>
         </div>
         <div class="form-row">

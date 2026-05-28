@@ -123,6 +123,31 @@ function envNumber(key) {
   return Number.isFinite(value) ? value : null;
 }
 
+function getPhoneNationalDigits(value) {
+  let digits = String(value || "").replace(/\D/g, "");
+
+  if (digits.charAt(0) === "7" || digits.charAt(0) === "8") {
+    digits = digits.slice(1);
+  }
+
+  return digits.slice(0, 10);
+}
+
+function normalizePhone(value) {
+  const digits = getPhoneNationalDigits(value);
+  return digits.length === 10 ? "+7" + digits : "";
+}
+
+function formatPhone(value) {
+  const digits = getPhoneNationalDigits(value);
+
+  if (digits.length !== 10) {
+    return normalizeText(value);
+  }
+
+  return "+7 (" + digits.slice(0, 3) + ") " + digits.slice(3, 6) + " " + digits.slice(6, 8) + " " + digits.slice(8, 10);
+}
+
 function parseBody(event) {
   if (!event.body) {
     return {
@@ -150,7 +175,8 @@ function normalizePayload(payload) {
 
   return {
     name: normalizeText(source.name),
-    phone: normalizeText(source.phone),
+    phone: normalizePhone(source.phone),
+    phoneFormatted: formatPhone(source.phoneFormatted || source.phone),
     companyName: normalizeText(source.companyName),
     industry: normalizeText(source.industry),
     website: normalizeText(source.website),
@@ -174,15 +200,7 @@ function validatePayload(payload) {
   }
 
   if (!payload.phone) {
-    errors.phone = "Укажите телефон.";
-  }
-
-  if (payload.website) {
-    try {
-      new URL(payload.website);
-    } catch (error) {
-      errors.website = "Укажите сайт в формате https://example.ru.";
-    }
+    errors.phone = "Укажите телефон в формате +7 (999) 999 99 99.";
   }
 
   return errors;
@@ -279,7 +297,8 @@ function buildNoteText(payload) {
     "Заявка с ilma.pro",
     "",
     "Имя: " + payload.name,
-    "Телефон: " + payload.phone,
+    "Телефон: " + (payload.phoneFormatted || payload.phone),
+    "Телефон для amoCRM: " + payload.phone,
     "Название компании: " + (payload.companyName || "-"),
     "Ниша компании: " + (payload.industry || "-"),
     "Сайт компании: " + (payload.website || "-"),
