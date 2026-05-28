@@ -20,8 +20,23 @@ function getHeader(headers, name) {
     return "";
   }
 
-  const foundKey = Object.keys(headers).find((key) => key.toLowerCase() === name.toLowerCase());
-  return foundKey ? headers[foundKey] : "";
+  const targetName = name.toLowerCase();
+  const foundKey = Object.keys(headers).find((key) => key.toLowerCase() === targetName);
+  const value = foundKey ? headers[foundKey] : "";
+
+  if (Array.isArray(value)) {
+    return value[0] || "";
+  }
+
+  return typeof value === "string" ? value : String(value || "");
+}
+
+function normalizeOrigin(origin) {
+  return normalizeText(origin).replace(/\/+$/, "");
+}
+
+function getRequestOrigin(event) {
+  return normalizeOrigin(getHeader(event.headers, "origin"));
 }
 
 function getMethod(event) {
@@ -29,21 +44,30 @@ function getMethod(event) {
 }
 
 function isAllowedOrigin(origin) {
-  return ALLOWED_ORIGINS.has(origin);
+  return ALLOWED_ORIGINS.has(normalizeOrigin(origin));
 }
 
 function buildCorsHeaders(origin) {
-  if (!isAllowedOrigin(origin)) {
+  const normalizedOrigin = normalizeOrigin(origin);
+
+  if (!isAllowedOrigin(normalizedOrigin)) {
     return {
       "Vary": "Origin"
     };
   }
 
   return {
-    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Origin": normalizedOrigin,
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Vary": "Origin"
+  };
+}
+
+function originDebug(origin) {
+  return {
+    receivedOrigin: origin || "",
+    allowedOrigins: Array.from(ALLOWED_ORIGINS)
   };
 }
 
@@ -409,20 +433,26 @@ async function createAmoLead(payload) {
 
 exports.handler = async (event) => {
   const requestId = createRequestId();
-  const origin = getHeader(event.headers, "origin");
+  const origin = getRequestOrigin(event);
   const method = getMethod(event);
 
   if (method === "OPTIONS") {
     return isAllowedOrigin(origin)
       ? emptyResponse(204, origin)
-      : emptyResponse(403, origin);
+      : jsonResponse(403, {
+        success: false,
+        message: "Origin is not allowed.",
+        requestId,
+        ...originDebug(origin)
+      }, origin);
   }
 
   if (!isAllowedOrigin(origin)) {
     return jsonResponse(403, {
       success: false,
       message: "Origin is not allowed.",
-      requestId
+      requestId,
+      ...originDebug(origin)
     }, origin);
   }
 
