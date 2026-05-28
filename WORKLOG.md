@@ -26,6 +26,8 @@
 - Added honest frontend error when Yandex Function URL is not configured.
 - Added Yandex Cloud Function implementation in `serverless/yandex-lead-function/index.js`.
 - Yandex Function creates contact, optional company, lead, links entities and adds a lead note.
+- Yandex Function writes website to company Web field when `companyName` is filled, and to contact website field only when company is not filled.
+- Website values without protocol are normalized to `https://...` before sending to amoCRM custom fields.
 - Updated AMOCRM_INTEGRATION.md for GitHub Pages + Yandex Cloud Functions + amoCRM architecture.
 - Marked Cloudflare implementation as deprecated/reference instead of deleting it.
 
@@ -39,15 +41,17 @@
   - `AMOCRM_PIPELINE_ID`;
   - `AMOCRM_STATUS_ID`;
   - `AMOCRM_RESPONSIBLE_USER_ID`;
-  - `AMOCRM_CONTACT_WEBSITE_FIELD_ID`.
+  - `AMOCRM_CONTACT_WEBSITE_FIELD_ID`;
+  - `AMOCRM_COMPANY_WEBSITE_FIELD_ID`.
 - Deploy the Yandex Cloud Function.
 - Insert the public Yandex Function URL into frontend by setting `window.LEAD_API_URL` or replacing `TODO_YANDEX_FUNCTION_URL`.
 - Deploy GitHub Pages.
 - Send a real test form submission from `https://ilma.pro`.
 - Verify in amoCRM:
   - contact is created with phone;
-  - website is written to contact field when provided;
+  - website is written to contact field when provided and `companyName` is empty;
   - company is created only when `companyName` is provided;
+  - website is written to company Web field when `companyName` is provided;
   - lead is created in the correct pipeline/status;
   - lead is linked to contact and optional company;
   - note contains form fields, UTM, referrer, landing_page and timestamp.

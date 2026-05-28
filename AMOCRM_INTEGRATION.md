@@ -81,8 +81,17 @@ UTM, referrer, landing_page и timestamp обязательно попадают
 - `AMOCRM_STATUS_ID` - `43070671`
 - `AMOCRM_RESPONSIBLE_USER_ID` - `6391603`
 - `AMOCRM_CONTACT_WEBSITE_FIELD_ID` - `327399`
+- `AMOCRM_COMPANY_WEBSITE_FIELD_ID` - `103951`
 
 `AMOCRM_ACCESS_TOKEN` нельзя хранить в репозитории.
+
+## Website mapping
+
+- Если `companyName` заполнено, функция создает компанию и записывает `website` в поле компании `AMOCRM_COMPANY_WEBSITE_FIELD_ID`.
+- Если `companyName` не заполнено, функция не создает компанию и записывает `website` в поле контакта `AMOCRM_CONTACT_WEBSITE_FIELD_ID`.
+- Если `website` пустой, функция не отправляет сайт ни в контакт, ни в компанию.
+- Перед отправкой в amoCRM website без протокола нормализуется: `ilma.pro` -> `https://ilma.pro`.
+- В note сайт остается частью блока "Компания и ниша", но пустые значения не добавляются.
 
 ## Yandex Cloud Function
 
@@ -119,8 +128,10 @@ Runtime:
 1. Создает контакт через `POST /api/v4/contacts`.
    - `contact.name = name`
    - телефон записывается в `custom_fields_values` через `field_code: PHONE`, `enum_code: WORK`
-   - если `website` заполнен, сайт записывается в контактное поле `AMOCRM_CONTACT_WEBSITE_FIELD_ID`
+   - если `website` заполнен и `companyName` не заполнено, сайт записывается в контактное поле `AMOCRM_CONTACT_WEBSITE_FIELD_ID`
 2. Создает компанию через `POST /api/v4/companies`, только если заполнен `companyName`.
+   - если `website` заполнен, сайт записывается в поле компании `AMOCRM_COMPANY_WEBSITE_FIELD_ID`
+   - сайт без протокола нормализуется до URL с `https://`
 3. Создает сделку через `POST /api/v4/leads`.
    - `pipeline_id = AMOCRM_PIPELINE_ID`
    - `status_id = AMOCRM_STATUS_ID`

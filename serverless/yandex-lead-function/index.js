@@ -10,7 +10,8 @@ const REQUIRED_ENV = [
   "AMOCRM_PIPELINE_ID",
   "AMOCRM_STATUS_ID",
   "AMOCRM_RESPONSIBLE_USER_ID",
-  "AMOCRM_CONTACT_WEBSITE_FIELD_ID"
+  "AMOCRM_CONTACT_WEBSITE_FIELD_ID",
+  "AMOCRM_COMPANY_WEBSITE_FIELD_ID"
 ];
 
 const FALLBACK_MESSAGE = "Не удалось отправить заявку. Напишите напрямую в Telegram, WhatsApp или на info@ilma.pro.";
@@ -112,6 +113,16 @@ function normalizeText(value) {
 
 function normalizeBaseUrl(value) {
   return normalizeText(value).replace(/\/+$/, "");
+}
+
+function normalizeWebsiteUrl(value) {
+  const website = normalizeText(value);
+
+  if (!website) {
+    return "";
+  }
+
+  return /^[a-z][a-z0-9+.-]*:\/\//i.test(website) ? website : "https://" + website;
 }
 
 function getMissingEnv() {
@@ -259,12 +270,12 @@ function buildContactBody(payload) {
     }
   ];
 
-  if (payload.website) {
+  if (payload.website && !payload.companyName) {
     customFields.push({
       field_id: envNumber("AMOCRM_CONTACT_WEBSITE_FIELD_ID"),
       values: [
         {
-          value: payload.website
+          value: normalizeWebsiteUrl(payload.website)
         }
       ]
     });
@@ -277,6 +288,28 @@ function buildContactBody(payload) {
       custom_fields_values: customFields
     }
   ];
+}
+
+function buildCompanyBody(payload) {
+  const company = {
+    name: payload.companyName,
+    responsible_user_id: envNumber("AMOCRM_RESPONSIBLE_USER_ID")
+  };
+
+  if (payload.website) {
+    company.custom_fields_values = [
+      {
+        field_id: envNumber("AMOCRM_COMPANY_WEBSITE_FIELD_ID"),
+        values: [
+          {
+            value: normalizeWebsiteUrl(payload.website)
+          }
+        ]
+      }
+    ];
+  }
+
+  return [company];
 }
 
 function buildLeadBody(payload) {
@@ -292,27 +325,55 @@ function buildLeadBody(payload) {
   ];
 }
 
+function noteValue(value) {
+  if (value === null || value === undefined) {
+    return "";
+  }
+
+  const text = String(value).trim();
+  return text && text !== "-" ? text : "";
+}
+
+function noteLine(label, value) {
+  const text = noteValue(value);
+  return text ? label + ": " + text : "";
+}
+
+function noteSection(title, rows) {
+  const filledRows = rows.filter(Boolean);
+  return filledRows.length > 0 ? [title, ...filledRows].join("\n") : "";
+}
+
 function buildNoteText(payload) {
+  const utmRows = [
+    noteLine("utm_source", payload.utm_source),
+    noteLine("utm_medium", payload.utm_medium),
+    noteLine("utm_campaign", payload.utm_campaign),
+    noteLine("utm_content", payload.utm_content),
+    noteLine("utm_term", payload.utm_term)
+  ];
+
   return [
     "Заявка с ilma.pro",
-    "",
-    "Имя: " + payload.name,
-    "Телефон: " + (payload.phoneFormatted || payload.phone),
-    "Телефон для amoCRM: " + payload.phone,
-    "Название компании: " + (payload.companyName || "-"),
-    "Ниша компании: " + (payload.industry || "-"),
-    "Сайт компании: " + (payload.website || "-"),
-    "Что болит в продажах: " + (payload.pain || "-"),
-    "",
-    "utm_source: " + (payload.utm_source || "-"),
-    "utm_medium: " + (payload.utm_medium || "-"),
-    "utm_campaign: " + (payload.utm_campaign || "-"),
-    "utm_content: " + (payload.utm_content || "-"),
-    "utm_term: " + (payload.utm_term || "-"),
-    "referrer: " + (payload.referrer || "-"),
-    "landing_page: " + (payload.landing_page || "-"),
-    "timestamp: " + (payload.timestamp || "-")
-  ].join("\n");
+    noteSection("Контакт", [
+      noteLine("Имя", payload.name),
+      noteLine("Телефон", payload.phoneFormatted || payload.phone)
+    ]),
+    noteSection("Компания и ниша", [
+      noteLine("Компания", payload.companyName),
+      noteLine("Ниша", payload.industry),
+      noteLine("Сайт", payload.website)
+    ]),
+    noteSection("Что болит", [
+      noteLine("Что болит в продажах", payload.pain)
+    ]),
+    noteSection("Источник", [
+      noteLine("landing_page", payload.landing_page),
+      noteLine("timestamp", payload.timestamp),
+      noteLine("referrer", payload.referrer)
+    ]),
+    noteSection("UTM", utmRows)
+  ].filter(Boolean).join("\n\n");
 }
 
 async function linkEntityToLead(leadId, entityType, entityId) {
@@ -350,12 +411,7 @@ async function createAmoLead(payload) {
   let companyId = null;
 
   if (payload.companyName) {
-    const companyResult = await amoRequest("/api/v4/companies", [
-      {
-        name: payload.companyName,
-        responsible_user_id: envNumber("AMOCRM_RESPONSIBLE_USER_ID")
-      }
-    ]);
+    const companyResult = await amoRequest("/api/v4/companies", buildCompanyBody(payload));
 
     if (!companyResult.ok) {
       return {
