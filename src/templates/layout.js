@@ -52,10 +52,12 @@ function renderFooter(site) {
       <a href="#contact">Контакты</a>
     </nav>
     <address>
+      Email: <a href="mailto:${escapeHtml(site.contacts.email)}">${escapeHtml(site.contacts.email)}</a><br>
       Телефон: <a href="${escapeHtml(site.contacts.phoneHref)}">${escapeHtml(site.contacts.phone)}</a><br>
       WhatsApp: <a href="${escapeHtml(site.contacts.whatsappUrl)}">${escapeHtml(site.contacts.whatsapp)}</a><br>
       Telegram: <a href="${escapeHtml(site.contacts.telegramUrl)}">@${escapeHtml(site.contacts.telegram)}</a><br>
-      Email: <a href="mailto:${escapeHtml(site.contacts.email)}">${escapeHtml(site.contacts.email)}</a>
+      ВК: <a href="${escapeHtml(site.contacts.vkUrl)}">${escapeHtml(site.contacts.vkLabel)}</a><br>
+      <a href="${escapeHtml(site.contacts.maxUrl)}">${escapeHtml(site.contacts.maxLabel)}</a>
     </address>
   </footer>`;
 }

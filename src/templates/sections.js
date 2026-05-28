@@ -247,7 +247,8 @@ function renderLeadForm(page) {
         <input type="hidden" name="referrer">
         <input type="hidden" name="landing_page">
         <input type="hidden" name="timestamp">
-        <button class="button button-primary full" type="submit">Получить чек-лист и разбор</button>
+        <input type="hidden" name="offer" value="no_crm_loss_map">
+        <button class="button button-primary full" type="submit">Получить карту потерь и разбор</button>
         <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
       </form>
     </section>`;

@@ -58,6 +58,7 @@ Frontend payload:
   "industry": "",
   "website": "",
   "pain": "",
+  "offer": "no_crm_loss_map",
   "utm_source": "",
   "utm_medium": "",
   "utm_campaign": "",
@@ -70,6 +71,8 @@ Frontend payload:
 ```
 
 UTM, referrer, landing_page и timestamp обязательно попадают в note сделки.
+
+`offer = "no_crm_loss_map"` отмечает текущий лид-магнит формы: "Карта потерь заявок без CRM".
 
 ## Yandex Cloud env variables
 
@@ -136,6 +139,8 @@ Runtime:
    - `pipeline_id = AMOCRM_PIPELINE_ID`
    - `status_id = AMOCRM_STATUS_ID`
    - `responsible_user_id = AMOCRM_RESPONSIBLE_USER_ID`
+   - `tags_to_add = [{ "name": "offer:no_crm_loss_map" }]`
+   - тег `offer:no_crm_loss_map` нужен для автоматической отправки карты/чек-листа.
    - если `industry` заполнено, `lead.name = "Заявка с ilma.pro - {industry}"`
    - иначе `lead.name = "Заявка с ilma.pro - amoCRM"`
 4. Связывает сделку с контактом.
@@ -152,6 +157,7 @@ Runtime:
 - Ниша компании
 - Сайт компании
 - Что болит в продажах
+- Оффер формы: карта потерь заявок без CRM
 - `utm_source`
 - `utm_medium`
 - `utm_campaign`

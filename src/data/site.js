@@ -7,13 +7,17 @@ const site = {
     areaServed: "Russia"
   },
   contacts: {
-    telegram: "amo-partner",
-    telegramUrl: "https://t.me/amo-partner",
+    telegram: "amo_partner",
+    telegramUrl: "https://t.me/amo_partner",
     whatsapp: "+7 903 158 00 51",
     whatsappUrl: "https://wa.me/79031580051",
     phone: "+7 903 158 00 51",
     phoneHref: "tel:+79031580051",
-    email: "info@ilma.pro"
+    email: "info@ilma.pro",
+    vkLabel: "Граф Порядков",
+    vkUrl: "https://vk.ru/it_simple_123",
+    maxLabel: "MAX",
+    maxUrl: "https://max.ru/u/f9LHodD0cOIG8smtAmnUhJjLb4iNOmc1T8EXcWCCZ4kDRq5IBw81AKWZTOw"
   },
   urls: {
     canonicalBase: "TODO_CANONICAL_BASE",

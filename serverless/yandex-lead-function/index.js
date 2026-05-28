@@ -4,6 +4,9 @@ const ALLOWED_ORIGINS = new Set([
 ]);
 
 const MAX_FIELD_LENGTH = 1200;
+const OFFER_CODE = "no_crm_loss_map";
+const OFFER_LABEL = "карта потерь заявок без CRM";
+const OFFER_TAG = "offer:no_crm_loss_map";
 const REQUIRED_ENV = [
   "AMOCRM_BASE_URL",
   "AMOCRM_ACCESS_TOKEN",
@@ -192,6 +195,7 @@ function normalizePayload(payload) {
     industry: normalizeText(source.industry),
     website: normalizeText(source.website),
     pain: normalizeText(source.pain),
+    offer: normalizeText(source.offer) || OFFER_CODE,
     utm_source: normalizeText(source.utm_source),
     utm_medium: normalizeText(source.utm_medium),
     utm_campaign: normalizeText(source.utm_campaign),
@@ -320,7 +324,12 @@ function buildLeadBody(payload) {
         : "Заявка с ilma.pro - amoCRM",
       pipeline_id: envNumber("AMOCRM_PIPELINE_ID"),
       status_id: envNumber("AMOCRM_STATUS_ID"),
-      responsible_user_id: envNumber("AMOCRM_RESPONSIBLE_USER_ID")
+      responsible_user_id: envNumber("AMOCRM_RESPONSIBLE_USER_ID"),
+      tags_to_add: [
+        {
+          name: OFFER_TAG
+        }
+      ]
     }
   ];
 }
@@ -358,6 +367,9 @@ function buildNoteText(payload) {
     noteSection("Контакт", [
       noteLine("Имя", payload.name),
       noteLine("Телефон", payload.phoneFormatted || payload.phone)
+    ]),
+    noteSection("Оффер", [
+      noteLine("Оффер формы", payload.offer === OFFER_CODE ? OFFER_LABEL : payload.offer)
     ]),
     noteSection("Компания и ниша", [
       noteLine("Компания", payload.companyName),

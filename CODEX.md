@@ -52,6 +52,17 @@ Generate leads for amoCRM setup, CRM automation, funnel design, integrations, an
 
 Use SITE_SPEC.md as the main source of truth for website content, design and acceptance criteria.
 
+## Public contacts
+
+Use these public contacts on future pages:
+
+- Email: `info@ilma.pro`
+- Phone: `+7 903 158 00 51`
+- WhatsApp: `+7 903 158 00 51`, `https://wa.me/79031580051`
+- Telegram: `https://t.me/amo_partner`, display as `@amo_partner`
+- VK: `https://vk.ru/it_simple_123`, display as `ВК: Граф Порядков`
+- MAX: `https://max.ru/u/f9LHodD0cOIG8smtAmnUhJjLb4iNOmc1T8EXcWCCZ4kDRq5IBw81AKWZTOw`, display as `MAX`
+
 ## Workflow after every task
 
 After completing any task:
@@ -318,3 +329,22 @@ If the session is interrupted, context is lost, or the task is continued later:
 6. Before large changes, first explain what is already implemented and what remains.
 7. After each completed logical stage, suggest exact git commands for commit and push.
 8. Do not run git push without explicit user permission.
+
+
+## Git command policy
+
+Do not execute git commands.
+
+In the current Codex environment, git may not be available in PATH. The user runs git manually in PowerShell.
+
+After every task, provide manual commands for the user:
+- git status
+- git add ...
+- git commit -m "..."
+- git push
+
+Do not attempt to run:
+- git status
+- git add
+- git commit
+- git push

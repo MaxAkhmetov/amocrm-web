@@ -28,6 +28,9 @@
 - Yandex Function creates contact, optional company, lead, links entities and adds a lead note.
 - Yandex Function writes website to company Web field when `companyName` is filled, and to contact website field only when company is not filled.
 - Website values without protocol are normalized to `https://...` before sending to amoCRM custom fields.
+- Lead magnet was changed to "Карта потерь заявок без CRM".
+- Frontend sends `offer = "no_crm_loss_map"` in the lead payload.
+- Yandex Function adds one lead tag in amoCRM: `offer:no_crm_loss_map`.
 - Updated AMOCRM_INTEGRATION.md for GitHub Pages + Yandex Cloud Functions + amoCRM architecture.
 - Marked Cloudflare implementation as deprecated/reference instead of deleting it.
 
@@ -53,8 +56,9 @@
   - company is created only when `companyName` is provided;
   - website is written to company Web field when `companyName` is provided;
   - lead is created in the correct pipeline/status;
+  - lead has tag `offer:no_crm_loss_map`;
   - lead is linked to contact and optional company;
-  - note contains form fields, UTM, referrer, landing_page and timestamp.
+  - note contains form fields, offer label, UTM when present, referrer when present, landing_page and timestamp.
 
 ## Risks / notes
 
