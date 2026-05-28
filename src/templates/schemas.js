@@ -8,6 +8,7 @@ function renderProfessionalServiceSchema(page, site) {
     "serviceType": page.serviceName,
     "url": page.canonical,
     "email": site.contacts.email,
+    "telephone": site.contacts.phone,
     "parentOrganization": {
       "@type": "Organization",
       "name": site.brand.name,
@@ -15,6 +16,14 @@ function renderProfessionalServiceSchema(page, site) {
     },
     ...(page.city ? { "address": { "@type": "PostalAddress", "addressLocality": page.city } } : {})
   };
+}
+
+function absoluteItemUrl(href, site) {
+  if (/^https?:\/\//i.test(href)) {
+    return href;
+  }
+
+  return new URL(href, site.urls.canonicalBase).toString();
 }
 
 function renderFaqSchema(page) {
@@ -32,7 +41,7 @@ function renderFaqSchema(page) {
   };
 }
 
-function renderBreadcrumbSchema(page) {
+function renderBreadcrumbSchema(page, site) {
   if (!page.breadcrumbs || page.breadcrumbs.length === 0) {
     return null;
   }
@@ -44,13 +53,25 @@ function renderBreadcrumbSchema(page) {
       "@type": "ListItem",
       "position": index + 1,
       "name": item.label,
-      "item": item.href
+      "item": absoluteItemUrl(item.href, site)
     }))
+  };
+}
+
+function renderWebSiteSchema(site) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": site.brand.name,
+    "url": site.urls.canonicalBase,
+    "description": site.brand.description,
+    "inLanguage": "ru-RU"
   };
 }
 
 module.exports = {
   renderBreadcrumbSchema,
   renderFaqSchema,
-  renderProfessionalServiceSchema
+  renderProfessionalServiceSchema,
+  renderWebSiteSchema
 };

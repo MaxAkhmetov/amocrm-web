@@ -2,7 +2,8 @@ const { assetPath, escapeHtml, jsonLd } = require("./helpers");
 const {
   renderBreadcrumbSchema,
   renderFaqSchema,
-  renderProfessionalServiceSchema
+  renderProfessionalServiceSchema,
+  renderWebSiteSchema
 } = require("./schemas");
 const { renderHero, renderPageSections } = require("./sections");
 
@@ -65,6 +66,9 @@ function renderFooter(site) {
 function renderPage(page, site) {
   const cssPath = assetPath(page.outputPath, "css/style.css");
   const jsPath = assetPath(page.outputPath, "js/script.js");
+  const ogImageTag = page.ogImage
+    ? `\n  <meta property="og:image" content="${escapeHtml(page.ogImage)}">\n  <meta name="twitter:image" content="${escapeHtml(page.ogImage)}">`
+    : "";
 
   return `<!doctype html>
 <html lang="ru">
@@ -80,7 +84,11 @@ function renderPage(page, site) {
   <meta property="og:description" content="${escapeHtml(page.ogDescription || page.description)}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="${escapeHtml(page.ogUrl)}">
-  <meta property="og:image" content="${escapeHtml(page.ogImage)}">
+  <meta property="og:site_name" content="${escapeHtml(site.brand.name)}">${ogImageTag}
+
+  <meta name="twitter:card" content="${page.ogImage ? "summary_large_image" : "summary"}">
+  <meta name="twitter:title" content="${escapeHtml(page.title)}">
+  <meta name="twitter:description" content="${escapeHtml(page.ogDescription || page.description)}">
 
   <link rel="stylesheet" href="${escapeHtml(cssPath)}">
   <script src="${escapeHtml(jsPath)}" defer></script>
@@ -91,8 +99,11 @@ function renderPage(page, site) {
   <script type="application/ld+json">
   ${jsonLd(renderFaqSchema(page))}
   </script>
-  ${renderBreadcrumbSchema(page) ? `<script type="application/ld+json">
-  ${jsonLd(renderBreadcrumbSchema(page))}
+  <script type="application/ld+json">
+  ${jsonLd(renderWebSiteSchema(site))}
+  </script>
+  ${renderBreadcrumbSchema(page, site) ? `<script type="application/ld+json">
+  ${jsonLd(renderBreadcrumbSchema(page, site))}
   </script>` : ""}
 </head>
 <body>

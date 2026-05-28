@@ -20,8 +20,8 @@ const site = {
     maxUrl: "https://max.ru/u/f9LHodD0cOIG8smtAmnUhJjLb4iNOmc1T8EXcWCCZ4kDRq5IBw81AKWZTOw"
   },
   urls: {
-    canonicalBase: "TODO_CANONICAL_BASE",
-    ogImage: "TODO_OG_IMAGE"
+    canonicalBase: "https://ilma.pro/",
+    ogImage: ""
   },
   platformNavigation: [
     { label: "Услуги", href: "/services/" },
