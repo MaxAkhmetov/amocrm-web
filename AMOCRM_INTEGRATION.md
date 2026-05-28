@@ -2,225 +2,178 @@
 
 Короткий проектный ориентир для подключения формы сайта к amoCRM. Сырая справочная выгрузка лежит в `_codex_refs/amocrm/combined_all_text_files.md` и не должна попадать в коммиты.
 
-## Целевая архитектура
+## Current architecture
 
-Форма на сайте отправляет данные только на локальный backend endpoint:
+Текущий production-путь:
 
 ```text
-index.html + js/script.js
-  -> POST /api/lead
-  -> Cloudflare Pages Function
+GitHub Pages static site
+  -> public Yandex Cloud Function URL
+  -> Yandex Cloud Function, Node.js 22, entrypoint index.handler
   -> amoCRM API v4
 ```
 
-Frontend отвечает за валидацию, сбор UTM и честное сообщение пользователю. Cloudflare Pages Function отвечает за секреты, нормализацию payload, создание сделки в amoCRM, добавление note и обработку ошибок.
+Frontend не вызывает amoCRM API напрямую. Все секреты amoCRM хранятся только в environment variables Yandex Cloud Function.
 
-## Почему amoCRM API нельзя вызывать из frontend JS
+Прежняя Cloudflare Pages Function в `functions/api/lead.js` оставлена как deprecated/reference, потому что сайт работает на GitHub Pages и не может использовать Cloudflare Pages Functions как локальный `/api/lead`.
 
-- `access_token`, `refresh_token`, `client_secret` и другие ключи являются приватными и должны храниться в безопасном хранилище.
-- Любой токен в браузерном JS, HTML, source map или network request станет доступен посетителю.
-- Клиентский код нельзя считать доверенной средой: его можно изменить и отправлять произвольные сделки, спам и некорректные данные.
-- В браузере нельзя безопасно выполнять refresh OAuth-токена и управлять сроком жизни секретов.
-- Серверный слой нужен для rate limit, антиспама, логирования, единых ошибок и скрытия деталей amoCRM от пользователя.
+## Frontend endpoint
 
-## Endpoint сайта
+Форма отправляет POST-запрос на URL из:
 
-Будущий endpoint:
-
-```http
-POST /api/lead
-Content-Type: application/json
+```js
+const LEAD_API_URL = window.LEAD_API_URL || "TODO_YANDEX_FUNCTION_URL";
 ```
 
-Минимальный payload от формы:
+Пока URL не задан или равен `TODO_YANDEX_FUNCTION_URL`, frontend показывает честную ошибку и не показывает success.
+
+После получения публичного URL Yandex Cloud Function его нужно задать во frontend:
+
+```html
+<script>
+  window.LEAD_API_URL = "https://functions.yandexcloud.net/...";
+</script>
+```
+
+Или заменить значение `TODO_YANDEX_FUNCTION_URL` в `js/script.js`.
+
+## Final form mapping
+
+Финальные поля формы:
+
+- `name` - имя, required.
+- `phone` - телефон, required.
+- `companyName` - название компании, optional.
+- `industry` - ниша компании, optional.
+- `website` - сайт компании, optional.
+- `pain` - что сейчас болит в продажах, optional.
+
+Frontend payload:
 
 ```json
 {
-  "name": "Имя",
-  "contact": "Телефон или email",
-  "business": "Сфера / размер бизнеса",
-  "website": "Сайт или соцсеть",
-  "pain": "Что сейчас болит",
-  "page": "/services/amocrm/",
-  "utm": {
-    "utm_source": "",
-    "utm_medium": "",
-    "utm_campaign": "",
-    "utm_content": "",
-    "utm_term": ""
-  }
+  "name": "",
+  "phone": "",
+  "companyName": "",
+  "industry": "",
+  "website": "",
+  "pain": "",
+  "utm_source": "",
+  "utm_medium": "",
+  "utm_campaign": "",
+  "utm_content": "",
+  "utm_term": "",
+  "referrer": "",
+  "landing_page": "",
+  "timestamp": ""
 }
 ```
 
-## Env variables
+UTM, referrer, landing_page и timestamp обязательно попадают в note сделки.
 
-Обязательные для первой версии:
+## Yandex Cloud env variables
 
-- `AMOCRM_BASE_URL` - базовый URL аккаунта, например `https://example.amocrm.ru`.
-- `AMOCRM_ACCESS_TOKEN` - Bearer token для запросов к amoCRM API.
+Добавить в environment variables Yandex Cloud Function:
 
-Желательные для маршрутизации заявок:
+- `AMOCRM_BASE_URL` - `https://maksimpartner.amocrm.ru`
+- `AMOCRM_ACCESS_TOKEN` - только в Yandex Cloud env, не в код, HTML, JS, README или документацию.
+- `AMOCRM_PIPELINE_ID` - `4118389`
+- `AMOCRM_STATUS_ID` - `43070671`
+- `AMOCRM_RESPONSIBLE_USER_ID` - `6391603`
+- `AMOCRM_CONTACT_WEBSITE_FIELD_ID` - `327399`
 
-- `AMOCRM_PIPELINE_ID` - ID воронки для заявок с сайта.
-- `AMOCRM_STATUS_ID` - ID этапа для новых заявок.
-- `AMOCRM_RESPONSIBLE_USER_ID` - ID ответственного пользователя.
+`AMOCRM_ACCESS_TOKEN` нельзя хранить в репозитории.
 
-Для полноценного OAuth refresh flow:
+## Yandex Cloud Function
 
-- `AMOCRM_CLIENT_ID`
-- `AMOCRM_CLIENT_SECRET`
-- `AMOCRM_REFRESH_TOKEN`
-- `AMOCRM_REDIRECT_URI`
+Файл функции:
 
-Опционально для защиты формы:
-
-- `TURNSTILE_SECRET_KEY` - если подключаем Cloudflare Turnstile.
-- `LEAD_FORM_SECRET` - если нужен простой внутренний секрет между формой и function, но он не заменяет антиспам.
-
-Секреты задаются в настройках Cloudflare Pages, не в репозитории.
-
-## Как создать сделку
-
-Базовый вариант: создать только сделку.
-
-```http
-POST {AMOCRM_BASE_URL}/api/v4/leads
-Authorization: Bearer {AMOCRM_ACCESS_TOKEN}
-Content-Type: application/json
+```text
+serverless/yandex-lead-function/index.js
 ```
 
-Тело запроса:
+Runtime:
+
+- Node.js 22
+- Entry point: `index.handler`
+- Timeout: 10 sec
+- Memory: 256 MB
+
+Функция:
+
+- принимает `POST`;
+- обрабатывает `OPTIONS` preflight;
+- поддерживает CORS только для `https://ilma.pro` и `https://www.ilma.pro`;
+- не использует `Access-Control-Allow-Origin: *`;
+- валидирует JSON;
+- проверяет обязательные поля `name` и `phone`;
+- читает amoCRM-настройки только из env variables;
+- не логирует полный payload пользователя;
+- не возвращает токены или технические секреты в response;
+- возвращает success только после успешного amoCRM flow.
+
+## amoCRM flow
+
+Текущая логика Yandex Function:
+
+1. Создает контакт через `POST /api/v4/contacts`.
+   - `contact.name = name`
+   - телефон записывается в `custom_fields_values` через `field_code: PHONE`, `enum_code: WORK`
+   - если `website` заполнен, сайт записывается в контактное поле `AMOCRM_CONTACT_WEBSITE_FIELD_ID`
+2. Создает компанию через `POST /api/v4/companies`, только если заполнен `companyName`.
+3. Создает сделку через `POST /api/v4/leads`.
+   - `pipeline_id = AMOCRM_PIPELINE_ID`
+   - `status_id = AMOCRM_STATUS_ID`
+   - `responsible_user_id = AMOCRM_RESPONSIBLE_USER_ID`
+   - если `industry` заполнено, `lead.name = "Заявка с ilma.pro - {industry}"`
+   - иначе `lead.name = "Заявка с ilma.pro - amoCRM"`
+4. Связывает сделку с контактом.
+5. Если компания создана, связывает сделку с компанией.
+6. Добавляет note к сделке через `POST /api/v4/leads/{lead_id}/notes`.
+
+## Note content
+
+В note записываются:
+
+- Имя
+- Телефон
+- Название компании
+- Ниша компании
+- Сайт компании
+- Что болит в продажах
+- `utm_source`
+- `utm_medium`
+- `utm_campaign`
+- `utm_content`
+- `utm_term`
+- `referrer`
+- `landing_page`
+- `timestamp`
+
+UTM в custom fields пока не пишем, чтобы не ломать создание сделки без подтвержденных field IDs. Гарантированный источник UTM-контекста - note.
+
+## Error handling
+
+Yandex Function должна возвращать честную ошибку, если:
+
+- origin не разрешен;
+- метод не `POST` или `OPTIONS`;
+- body не JSON;
+- отсутствуют `name` или `phone`;
+- отсутствуют env variables;
+- amoCRM вернула ошибку на любом обязательном шаге.
+
+Frontend показывает success только если backend вернул:
 
 ```json
-[
-  {
-    "name": "Заявка с сайта: внедрение amoCRM",
-    "pipeline_id": 123,
-    "status_id": 456,
-    "responsible_user_id": 789,
-    "_embedded": {
-      "tags": [
-        { "name": "site" },
-        { "name": "amocrm" }
-      ]
-    }
-  }
-]
+{ "success": true }
 ```
-
-`pipeline_id`, `status_id` и `responsible_user_id` добавлять только если env variables заданы. После ответа нужно взять ID созданной сделки из ответа amoCRM и использовать его для note.
-
-## Контакт: создавать или пока не создавать
-
-Рекомендуемый первый релиз: не создавать контакт автоматически, пока не подтверждены поля аккаунта amoCRM, правила дублей, формат телефона и email.
-
-На первом этапе:
-
-- создать сделку;
-- записать имя, телефон/email, сайт, сферу, боль и UTM в note сделки;
-- при необходимости добавить контакт вручную в amoCRM после обработки заявки.
-
-Следующий этап после согласования:
-
-- искать контакт по телефону/email через `GET /api/v4/contacts?query=...`;
-- если контакт найден, связать его со сделкой;
-- если контакт не найден, создать через `POST /api/v4/contacts`;
-- либо использовать комплексный метод `POST /api/v4/leads/complex`, если нужно сразу создавать сделку с контактом и компанией.
-
-## Как добавить note с данными формы и UTM
-
-После создания сделки добавить обычное текстовое примечание:
-
-```http
-POST {AMOCRM_BASE_URL}/api/v4/leads/{lead_id}/notes
-Authorization: Bearer {AMOCRM_ACCESS_TOKEN}
-Content-Type: application/json
-```
-
-Тело запроса:
-
-```json
-[
-  {
-    "note_type": "common",
-    "params": {
-      "text": "Имя: ...\nКонтакт: ...\nБизнес: ...\nСайт: ...\nБоль: ...\nСтраница: ...\nUTM: ..."
-    }
-  }
-]
-```
-
-В note нужно сохранить все данные формы, UTM, referrer, URL страницы, timestamp и технический request id. Это позволит менеджеру видеть контекст заявки даже без настройки custom fields.
-
-## Обработка ошибок
-
-Cloudflare Function должна:
-
-- принимать только `POST`;
-- проверять `Content-Type: application/json`;
-- валидировать обязательные поля до запроса в amoCRM;
-- ограничивать длину строк;
-- не логировать токены и секреты;
-- возвращать пользователю понятное сообщение без внутренних деталей amoCRM;
-- логировать server-side статус amoCRM, request id и короткое описание ошибки.
-
-Реакции по статусам amoCRM:
-
-- `400` / `422` - ошибка payload или обязательных полей; логировать ответ, пользователю показать просьбу связаться другим способом.
-- `401` - токен истек или неверен; после внедрения refresh flow обновить токен и повторить запрос один раз.
-- `403` - нет прав или интеграция отключена; не повторять автоматически, нужна ручная проверка доступа.
-- `429` - превышен лимит; не спамить повторами, добавить backoff/очередь в будущей версии.
-- `5xx` / `504` - временная ошибка amoCRM; логировать и вернуть честное сообщение о проблеме отправки.
-
-Если сделка создана, а note не добавилась, function должна считать заявку принятой, но залогировать ошибку note отдельно.
-
-## Файлы проекта, которые будут затронуты при реализации
-
-- `js/script.js` - заменить текущий TODO в `submitLead(payload)` на `fetch("/api/lead", ...)` и честную обработку ответа.
-- `functions/api/lead.js` - новая Cloudflare Pages Function для серверной отправки в amoCRM.
-- `AMOCRM_INTEGRATION.md` - поддерживать как проектную памятку по интеграции.
-- Возможно `.dev.vars.example` - только пример названий переменных без секретов, если понадобится локальная проверка Pages Functions.
 
 ## TODO
 
-- Уточнить реальный `AMOCRM_BASE_URL`, воронку, этап и ответственного.
-- Решить, используем долгосрочный токен или полноценный OAuth refresh flow.
-- Проверить, есть ли в аккаунте обязательные поля сделки, мешающие созданию через API.
-- Согласовать стратегию контактов: только note в первом релизе или создание/поиск контакта сразу.
-- Добавить антиспам: Cloudflare Turnstile, rate limit или другую защиту.
-- Реализовать `functions/api/lead.js`.
-- Подключить `submitLead(payload)` к `/api/lead`.
-- Протестировать успешный сценарий, ошибки валидации, 401, 403, 429 и недоступность amoCRM.
-
-
-## Security rules
-
-amoCRM API must never be called from frontend JavaScript.
-
-Tokens and secrets must never be stored in:
-- index.html
-- js/script.js
-- CODEX.md
-- SITE_SPEC.md
-- any frontend-accessible file
-- any committed file in the repository
-
-Secrets must be stored only in Cloudflare Environment Variables.
-
-Frontend can send form data only to the local backend endpoint:
-
-/api/lead
-
-Only Cloudflare Pages Function can call amoCRM API.
-
-Never commit:
-- access_token
-- refresh_token
-- client_secret
-- integration secret
-- real amoCRM credentials
-- real Cloudflare credentials
-
-If environment variables are missing, the function must return a clear error and must not fake success.
-
-User-facing success message can be shown only after the server-side function receives a successful response from amoCRM API.
+- Вставить публичный URL Yandex Function во frontend вместо `TODO_YANDEX_FUNCTION_URL` или задать `window.LEAD_API_URL`.
+- Добавить `AMOCRM_ACCESS_TOKEN` только в Yandex Cloud environment variables.
+- Проверить реальную заявку с `https://ilma.pro`.
+- Убедиться, что контакт, компания, сделка, связи и note создаются в amoCRM.
+- После проверки решить, нужны ли UTM custom fields в сделке.
+- Добавить антиспам: Turnstile, rate limit или серверную защиту.

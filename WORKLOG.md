@@ -5,54 +5,63 @@
 - Project is a static HTML/CSS/JS site for ilma.pro, without React, Next.js, Vite, Tailwind or other heavy frameworks.
 - Current amoCRM page is a service page for the amoCRM direction, temporarily published through `index.html`.
 - Architecture is prepared for future migration of this page to `/services/amocrm/`.
-- SITE_SPEC.md and CODEX.md contain rules for scalable multi-service and SEO architecture.
-- AMOCRM_INTEGRATION.md exists as the project-specific amoCRM integration guide.
-- Security rules for amoCRM are documented: no tokens or secrets in frontend code or committed files.
-- Frontend form sends lead payload to `/api/lead`.
-- Cloudflare Pages Function `functions/api/lead.js` is implemented and is the only layer that calls amoCRM API.
-- amoCRM settings are read only from environment variables.
+- Site is hosted on GitHub Pages.
+- Lead backend is moving to Yandex Cloud Functions.
+- Frontend form now sends leads to a public Yandex Function URL through `LEAD_API_URL`.
+- `LEAD_API_URL` is currently guarded by `TODO_YANDEX_FUNCTION_URL`; the real function URL must be inserted after deploy.
+- amoCRM secrets must live only in Yandex Cloud Function environment variables.
+- Legacy Cloudflare Function `functions/api/lead.js` is kept as deprecated/reference and is not the current production target.
 
 ## Completed recently
 
-- Created AMOCRM_INTEGRATION.md with the safe form -> `/api/lead` -> Cloudflare Pages Function -> amoCRM API architecture.
-- Added continuation/recovery rules to CODEX.md.
-- Created WORKLOG.md as the project state handoff file.
-- Implemented secure lead submission infrastructure:
-  - updated `js/script.js` so `submitLead(payload)` posts to `/api/lead`;
-  - created `functions/api/lead.js`;
-  - added env validation and honest configuration errors;
-  - added server-side payload validation;
-  - added amoCRM lead creation via `POST /api/v4/leads`;
-  - added lead note creation via `POST /api/v4/leads/{lead_id}/notes`;
-  - kept tokens out of frontend code.
-- Syntax checks passed for `js/script.js` and `functions/api/lead.js`.
-- Manual function checks confirmed honest JSON errors for missing env, validation errors and invalid amoCRM URL.
+- Updated frontend form fields:
+  - `name`;
+  - `phone`;
+  - `companyName`;
+  - `industry`;
+  - `website`;
+  - `pain`.
+- Updated frontend payload to include required form fields plus UTM, referrer, landing_page and timestamp.
+- Added `LEAD_API_URL = window.LEAD_API_URL || "TODO_YANDEX_FUNCTION_URL"` in `js/script.js`.
+- Added honest frontend error when Yandex Function URL is not configured.
+- Added Yandex Cloud Function implementation in `serverless/yandex-lead-function/index.js`.
+- Yandex Function creates contact, optional company, lead, links entities and adds a lead note.
+- Updated AMOCRM_INTEGRATION.md for GitHub Pages + Yandex Cloud Functions + amoCRM architecture.
+- Marked Cloudflare implementation as deprecated/reference instead of deleting it.
 
 ## Next tasks
 
-- Run git status in an environment where Git is available and review all changed files before committing.
-- Add real environment variables in Cloudflare Pages settings, not in the repository:
+- Copy `serverless/yandex-lead-function/index.js` into Yandex Cloud Function editor.
+- Set Yandex Cloud Function entrypoint to `index.handler`.
+- Add environment variables in Yandex Cloud:
   - `AMOCRM_BASE_URL`;
   - `AMOCRM_ACCESS_TOKEN`;
-  - optional `AMOCRM_PIPELINE_ID`;
-  - optional `AMOCRM_STATUS_ID`;
-  - optional `AMOCRM_RESPONSIBLE_USER_ID`.
-- Deploy to Cloudflare Pages or run through `wrangler pages dev .`.
-- Send a real test form submission.
-- Verify that amoCRM receives a lead in the correct pipeline/status.
-- Verify that the lead note contains form fields, UTM, referrer, landing page, timestamp and request id.
-- Decide whether the first release keeps contacts manual or adds contact search/create logic.
-- Consider adding anti-spam protection, for example Cloudflare Turnstile or rate limiting.
+  - `AMOCRM_PIPELINE_ID`;
+  - `AMOCRM_STATUS_ID`;
+  - `AMOCRM_RESPONSIBLE_USER_ID`;
+  - `AMOCRM_CONTACT_WEBSITE_FIELD_ID`.
+- Deploy the Yandex Cloud Function.
+- Insert the public Yandex Function URL into frontend by setting `window.LEAD_API_URL` or replacing `TODO_YANDEX_FUNCTION_URL`.
+- Deploy GitHub Pages.
+- Send a real test form submission from `https://ilma.pro`.
+- Verify in amoCRM:
+  - contact is created with phone;
+  - website is written to contact field when provided;
+  - company is created only when `companyName` is provided;
+  - lead is created in the correct pipeline/status;
+  - lead is linked to contact and optional company;
+  - note contains form fields, UTM, referrer, landing_page and timestamp.
 
 ## Risks / notes
 
 - Git is not available in the current PowerShell PATH, so `git status` and `git diff --name-only` could not be executed here.
-- Do not commit `_codex_refs/` or any real amoCRM/Cloudflare credentials.
-- Do not show fake frontend success unless `/api/lead` returns `ok: true`.
-- Without Cloudflare env variables, `/api/lead` intentionally returns a configuration error.
-- OAuth refresh flow is not implemented yet; current function expects a valid `AMOCRM_ACCESS_TOKEN`.
-- Contact creation is intentionally not implemented until field mapping and duplicate rules are confirmed.
+- Do not commit `_codex_refs/` or any real amoCRM/Yandex credentials.
+- Do not store `AMOCRM_ACCESS_TOKEN` in code, HTML, JS, README or documentation.
+- Current function does not implement OAuth refresh; it expects a valid `AMOCRM_ACCESS_TOKEN`.
+- UTM custom fields are not written yet; UTM is guaranteed in the lead note.
+- If Yandex Function URL is not configured, the frontend intentionally returns an honest error.
+- CORS allows only `https://ilma.pro` and `https://www.ilma.pro`.
 
 ## Next Codex prompt
 
-- Check repository status, review current diffs, then prepare local/Cloudflare verification for `/api/lead` with env variables supplied outside git. Do not add secrets to the repository and do not push without explicit permission.
+- Review Yandex Function deployment result, insert the public Yandex Function URL into frontend, then verify a real amoCRM lead from https://ilma.pro. Do not add secrets to the repository and do not push without explicit permission.

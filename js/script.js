@@ -1,6 +1,7 @@
 (function () {
   var UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
   var STORAGE_KEY = "graf_poryadkov_utm";
+  var LEAD_API_URL = window.LEAD_API_URL || "TODO_YANDEX_FUNCTION_URL";
 
   var navToggle = document.querySelector(".nav-toggle");
   var navMenu = document.querySelector("#nav-menu");
@@ -224,11 +225,11 @@
   function validateForm(form) {
     var isValid = true;
     var name = form.elements.name.value.trim();
-    var contact = form.elements.contact.value.trim();
+    var phone = form.elements.phone.value.trim();
     var website = form.elements.website.value.trim();
 
     setFieldError("name", "");
-    setFieldError("contact", "");
+    setFieldError("phone", "");
     setFieldError("website", "");
 
     if (name.length < 2) {
@@ -236,8 +237,8 @@
       isValid = false;
     }
 
-    if (!contact) {
-      setFieldError("contact", "Укажите телефон или Telegram.");
+    if (!phone) {
+      setFieldError("phone", "Укажите телефон.");
       isValid = false;
     }
 
@@ -258,8 +259,9 @@
     var timestamp = new Date().toISOString();
     var payload = {
       name: form.elements.name.value.trim(),
-      contact: form.elements.contact.value.trim(),
-      business: form.elements.business.value.trim(),
+      phone: form.elements.phone.value.trim(),
+      companyName: form.elements.companyName.value.trim(),
+      industry: form.elements.industry.value.trim(),
       website: form.elements.website.value.trim(),
       pain: form.elements.pain.value.trim(),
       utm_source: attribution.utm_source || "",
@@ -280,7 +282,11 @@
   }
 
   async function submitLead(payload) {
-    var response = await fetch("/api/lead", {
+    if (!LEAD_API_URL || LEAD_API_URL === "https://functions.yandexcloud.net/d4e9csenibv3gfmm6sjb") {
+      throw new Error("Форма пока не подключена. Напишите напрямую в Telegram, WhatsApp или на info@ilma.pro.");
+    }
+
+    var response = await fetch(LEAD_API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -296,7 +302,7 @@
       result = {};
     }
 
-    if (!response.ok || !result.ok) {
+    if (!response.ok || result.success !== true) {
       throw new Error(result.message || "Lead endpoint request failed");
     }
 
@@ -349,7 +355,7 @@
         leadForm.reset();
         fillHiddenFields(collectAttribution());
       } catch (error) {
-        setStatus("Не удалось отправить заявку. Напишите напрямую в Telegram или WhatsApp.", "error");
+        setStatus(error.message || "Не удалось отправить заявку. Напишите в Telegram, WhatsApp, на info@ilma.pro или позвоните: +7 903 158 00 51.", "error");
       }
     });
   }

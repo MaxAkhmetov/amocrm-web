@@ -218,13 +218,17 @@ function renderLeadForm(page) {
           <small class="field-error" data-error-for="name"></small>
         </div>
         <div class="form-row">
-          <label for="contact">Телефон или Telegram *</label>
-          <input id="contact" name="contact" type="text" required autocomplete="tel">
-          <small class="field-error" data-error-for="contact"></small>
+          <label for="phone">Телефон *</label>
+          <input id="phone" name="phone" type="tel" required autocomplete="tel">
+          <small class="field-error" data-error-for="phone"></small>
         </div>
         <div class="form-row">
-          <label for="business">Ниша/компания</label>
-          <input id="business" name="business" type="text" autocomplete="organization">
+          <label for="companyName">Название компании</label>
+          <input id="companyName" name="companyName" type="text" autocomplete="organization">
+        </div>
+        <div class="form-row">
+          <label for="industry">Ниша компании</label>
+          <input id="industry" name="industry" type="text">
         </div>
         <div class="form-row">
           <label for="website">Сайт компании, если есть</label>
@@ -297,7 +301,7 @@ function renderFinalCta(page, site) {
       </div>
       <div class="cta-actions">
         <a class="button button-primary" href="#lead">Получить экспресс-разбор</a>
-        <a class="button button-ghost" href="https://t.me/${escapeHtml(site.contacts.telegram)}">Написать в Telegram</a>
+        <a class="button button-ghost" href="${escapeHtml(site.contacts.telegramUrl)}">Написать в Telegram</a>
       </div>
     </section>`;
 }

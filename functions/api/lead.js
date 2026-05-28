@@ -1,6 +1,11 @@
+// Deprecated for current production flow.
+// GitHub Pages cannot use Cloudflare Pages Functions directly, so the active backend
+// for the lead form lives in serverless/yandex-lead-function/index.js.
+// Keep this file only as the previous Cloudflare implementation reference.
 const MAX_FIELD_LENGTH = 1200;
 const REQUIRED_ENV = ["AMOCRM_BASE_URL", "AMOCRM_ACCESS_TOKEN"];
 const OPTIONAL_NUMBER_ENV = ["AMOCRM_PIPELINE_ID", "AMOCRM_STATUS_ID", "AMOCRM_RESPONSIBLE_USER_ID"];
+const FALLBACK_CONTACT_MESSAGE = "Напишите в Telegram, WhatsApp, на info@ilma.pro или позвоните: +7 903 158 00 51.";
 
 function jsonResponse(body, status) {
   return new Response(JSON.stringify(body), {
@@ -233,14 +238,14 @@ async function callAmoCrm(path, body, env) {
 
 function getUserMessage(status) {
   if (status === 401 || status === 403) {
-    return "Интеграция amoCRM требует проверки доступа. Напишите напрямую в Telegram или WhatsApp.";
+    return "Интеграция amoCRM требует проверки доступа. " + FALLBACK_CONTACT_MESSAGE;
   }
 
   if (status === 429) {
-    return "amoCRM временно ограничила прием заявок. Напишите напрямую в Telegram или WhatsApp.";
+    return "amoCRM временно ограничила прием заявок. " + FALLBACK_CONTACT_MESSAGE;
   }
 
-  return "Не удалось отправить заявку. Напишите напрямую в Telegram или WhatsApp.";
+  return "Не удалось отправить заявку. " + FALLBACK_CONTACT_MESSAGE;
 }
 
 async function handleLeadRequest(context) {
@@ -257,7 +262,7 @@ async function handleLeadRequest(context) {
     return jsonResponse({
       ok: false,
       code: "CONFIG_MISSING",
-      message: "Отправка заявки пока не настроена. Напишите напрямую в Telegram или WhatsApp.",
+      message: "Отправка заявки пока не настроена. " + FALLBACK_CONTACT_MESSAGE,
       requestId
     }, 503);
   }
@@ -323,7 +328,7 @@ async function handleLeadRequest(context) {
     return jsonResponse({
       ok: false,
       code: "AMOCRM_LEAD_ID_MISSING",
-      message: "Заявка не подтверждена amoCRM. Напишите напрямую в Telegram или WhatsApp.",
+      message: "Заявка не подтверждена amoCRM. " + FALLBACK_CONTACT_MESSAGE,
       requestId
     }, 502);
   }

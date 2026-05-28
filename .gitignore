@@ -1,1 +1,4 @@
 _codex_refs/
+_local/
+__pycache__/
+*.pyc

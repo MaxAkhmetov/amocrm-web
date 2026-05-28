@@ -7,9 +7,13 @@ const site = {
     areaServed: "Russia"
   },
   contacts: {
-    telegram: "TODO_TELEGRAM",
-    whatsapp: "TODO_WHATSAPP",
-    email: "TODO_EMAIL"
+    telegram: "amo-partner",
+    telegramUrl: "https://t.me/amo-partner",
+    whatsapp: "+7 903 158 00 51",
+    whatsappUrl: "https://wa.me/79031580051",
+    phone: "+7 903 158 00 51",
+    phoneHref: "tel:+79031580051",
+    email: "info@ilma.pro"
   },
   urls: {
     canonicalBase: "TODO_CANONICAL_BASE",
