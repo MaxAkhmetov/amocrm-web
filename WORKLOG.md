@@ -14,6 +14,13 @@
 
 ## Completed recently
 
+- Fixed lead attribution for homepage vs amoCRM service page:
+  - Homepage form now sends `offer = "main"` and Yandex Function adds one tag: `main`.
+  - `/services/amocrm/` form keeps `offer = "no_crm_loss_map"` and Yandex Function adds one tag: `offer:no_crm_loss_map`.
+  - Empty or unknown offer values now fall back to `main`.
+  - Frontend payload now includes `form_page = window.location.href`.
+  - `landing_page` remains the first landing page attribution value.
+  - amoCRM note source block now separates `Страница отправки`, `Первая страница входа`, `referrer` and `timestamp`, without duplicate empty/equal values.
 - Homepage and `/services/amocrm/` cleanup completed:
   - Removed the visible service eyebrow from the amoCRM hero.
   - Removed the visible "lead magnet" label near forms.

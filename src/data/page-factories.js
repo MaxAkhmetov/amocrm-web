@@ -189,7 +189,7 @@ function createHomePage() {
       ]
     },
     form: {
-      offer: "express_audit",
+      offer: "main",
       buttonText: "Получить экспресс-разбор"
     },
     footer: {

@@ -262,6 +262,7 @@ function renderLeadForm(page) {
         <input type="hidden" name="utm_term">
         <input type="hidden" name="referrer">
         <input type="hidden" name="landing_page">
+        <input type="hidden" name="form_page">
         <input type="hidden" name="timestamp">
         <input type="hidden" name="offer" value="${escapeHtml(offer)}">
         <button class="button button-primary full" type="submit">${escapeHtml(buttonText)}</button>

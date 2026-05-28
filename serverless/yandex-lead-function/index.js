@@ -4,11 +4,11 @@ const ALLOWED_ORIGINS = new Set([
 ]);
 
 const MAX_FIELD_LENGTH = 1200;
-const DEFAULT_OFFER_CODE = "express_audit";
+const DEFAULT_OFFER_CODE = "main";
 const OFFERS = {
-  express_audit: {
-    label: "экспресс-разбор системы продаж и процессов",
-    tag: "offer:express_audit"
+  main: {
+    label: "экспресс-разбор с главной страницы",
+    tag: "main"
   },
   no_crm_loss_map: {
     label: "карта потерь заявок без CRM",
@@ -216,6 +216,7 @@ function normalizePayload(payload) {
     utm_term: normalizeText(source.utm_term),
     referrer: normalizeText(source.referrer),
     landing_page: normalizeText(source.landing_page),
+    form_page: normalizeText(source.form_page),
     timestamp: normalizeText(source.timestamp)
   };
 }
@@ -363,6 +364,12 @@ function noteLine(label, value) {
   return text ? label + ": " + text : "";
 }
 
+function sameNoteValue(first, second) {
+  const left = noteValue(first).replace(/\/+$/, "");
+  const right = noteValue(second).replace(/\/+$/, "");
+  return left && right && left === right;
+}
+
 function noteSection(title, rows) {
   const filledRows = rows.filter(Boolean);
   return filledRows.length > 0 ? [title, ...filledRows].join("\n") : "";
@@ -370,6 +377,7 @@ function noteSection(title, rows) {
 
 function buildNoteText(payload) {
   const offer = OFFERS[payload.offer] || OFFERS[DEFAULT_OFFER_CODE];
+  const formPage = payload.form_page || payload.landing_page;
   const utmRows = [
     noteLine("utm_source", payload.utm_source),
     noteLine("utm_medium", payload.utm_medium),
@@ -396,9 +404,10 @@ function buildNoteText(payload) {
       noteLine("Что болит в продажах", payload.pain)
     ]),
     noteSection("Источник", [
-      noteLine("landing_page", payload.landing_page),
-      noteLine("timestamp", payload.timestamp),
-      noteLine("referrer", payload.referrer)
+      noteLine("Страница отправки", formPage),
+      sameNoteValue(payload.landing_page, formPage) ? "" : noteLine("Первая страница входа", payload.landing_page),
+      sameNoteValue(payload.referrer, formPage) ? "" : noteLine("referrer", payload.referrer),
+      noteLine("timestamp", payload.timestamp)
     ]),
     noteSection("UTM", utmRows)
   ].filter(Boolean).join("\n\n");

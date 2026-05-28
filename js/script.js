@@ -2,7 +2,7 @@
   var UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
   var STORAGE_KEY = "graf_poryadkov_utm";
   var LEAD_API_URL = window.LEAD_API_URL || "https://functions.yandexcloud.net/d4e9csenibv3gfmm6sjb";
-  var OFFER_CODE = "no_crm_loss_map";
+  var DEFAULT_OFFER_CODE = "main";
   var PHONE_PREFIX = "+7 (";
   var METRIKA_COUNTER_ID = 109472354;
 
@@ -201,10 +201,16 @@
       return;
     }
 
-    UTM_KEYS.concat(["referrer", "landing_page", "offer"]).forEach(function (key) {
+    UTM_KEYS.concat(["referrer", "landing_page", "form_page", "offer"]).forEach(function (key) {
       var field = leadForm.elements[key];
       if (field) {
-        field.value = key === "offer" ? OFFER_CODE : attribution[key] || "";
+        if (key === "offer") {
+          field.value = field.value || DEFAULT_OFFER_CODE;
+        } else if (key === "form_page") {
+          field.value = window.location.href;
+        } else {
+          field.value = attribution[key] || "";
+        }
       }
     });
   }
@@ -351,7 +357,7 @@
       industry: form.elements.industry.value.trim(),
       website: form.elements.website.value.trim(),
       pain: form.elements.pain.value.trim(),
-      offer: OFFER_CODE,
+      offer: form.elements.offer ? form.elements.offer.value.trim() || DEFAULT_OFFER_CODE : DEFAULT_OFFER_CODE,
       utm_source: attribution.utm_source || "",
       utm_medium: attribution.utm_medium || "",
       utm_campaign: attribution.utm_campaign || "",
@@ -359,6 +365,7 @@
       utm_term: attribution.utm_term || "",
       referrer: attribution.referrer || "",
       landing_page: attribution.landing_page || window.location.href,
+      form_page: window.location.href,
       timestamp: timestamp
     };
 
