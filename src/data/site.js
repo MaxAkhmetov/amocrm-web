@@ -23,6 +23,9 @@ const site = {
     canonicalBase: "https://ilma.pro/",
     ogImage: ""
   },
+  analytics: {
+    yandexMetrikaId: 109472354
+  },
   platformNavigation: [
     { label: "Услуги", href: "/services/" },
     { label: "Кейсы", href: "/cases/" },

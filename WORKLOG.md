@@ -31,6 +31,8 @@
 - Lead magnet was changed to "Карта потерь заявок без CRM".
 - Frontend sends `offer = "no_crm_loss_map"` in the lead payload.
 - Yandex Function adds one lead tag in amoCRM: `offer:no_crm_loss_map`.
+- Yandex.Metrika counter `109472354` was added through the shared layout template.
+- Frontend Yandex.Metrika goals were added for form success and public contact clicks.
 - Updated AMOCRM_INTEGRATION.md for GitHub Pages + Yandex Cloud Functions + amoCRM architecture.
 - Marked Cloudflare implementation as deprecated/reference instead of deleting it.
 
@@ -49,6 +51,14 @@
 - Deploy the Yandex Cloud Function.
 - Insert the public Yandex Function URL into frontend by setting `window.LEAD_API_URL` or replacing `TODO_YANDEX_FUNCTION_URL`.
 - Deploy GitHub Pages.
+- Create matching goals in the Yandex.Metrika interface:
+  - `lead_form_success`;
+  - `click_telegram`;
+  - `click_whatsapp`;
+  - `click_phone`;
+  - `click_vk`;
+  - `click_max`;
+  - `click_email`.
 - Send a real test form submission from `https://ilma.pro`.
 - Verify in amoCRM:
   - contact is created with phone;

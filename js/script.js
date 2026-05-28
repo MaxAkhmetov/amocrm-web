@@ -4,6 +4,7 @@
   var LEAD_API_URL = window.LEAD_API_URL || "https://functions.yandexcloud.net/d4e9csenibv3gfmm6sjb";
   var OFFER_CODE = "no_crm_loss_map";
   var PHONE_PREFIX = "+7 (";
+  var METRIKA_COUNTER_ID = 109472354;
 
   var navToggle = document.querySelector(".nav-toggle");
   var navMenu = document.querySelector("#nav-menu");
@@ -224,6 +225,30 @@
     statusNode.className = "form-status" + (type ? " " + type : "");
   }
 
+  function reachGoal(goalId) {
+    if (typeof window.ym !== "function") {
+      return;
+    }
+
+    try {
+      window.ym(METRIKA_COUNTER_ID, "reachGoal", goalId);
+    } catch (error) {
+      // Analytics must never block navigation, forms, or contact clicks.
+    }
+  }
+
+  function initGoalTracking() {
+    document.addEventListener("click", function (event) {
+      var link = event.target.closest ? event.target.closest("[data-goal]") : null;
+
+      if (!link) {
+        return;
+      }
+
+      reachGoal(link.getAttribute("data-goal"));
+    });
+  }
+
   function getPhoneNationalDigits(value) {
     var digits = String(value || "").replace(/\D/g, "");
 
@@ -414,6 +439,7 @@
 
       try {
         await submitLead(payload);
+        reachGoal("lead_form_success");
         setStatus("Заявка отправлена. Я свяжусь с вами и предложу короткий разбор продаж.", "success");
         leadForm.reset();
         fillHiddenFields(collectAttribution());
@@ -426,6 +452,7 @@
   initNavigation();
   initPhoneMask();
   initLeadForm();
+  initGoalTracking();
   initRevealAnimations();
   initCounters();
   initFaqAnimation();

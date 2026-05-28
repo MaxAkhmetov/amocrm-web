@@ -63,6 +63,19 @@ Use these public contacts on future pages:
 - VK: `https://vk.ru/it_simple_123`, display as `ВК: Граф Порядков`
 - MAX: `https://max.ru/u/f9LHodD0cOIG8smtAmnUhJjLb4iNOmc1T8EXcWCCZ4kDRq5IBw81AKWZTOw`, display as `MAX`
 
+## Analytics
+
+- Yandex.Metrika counter ID: `109472354`.
+- Preserve Yandex.Metrika goals when changing forms and contact links.
+- Current goals:
+  - `lead_form_success`
+  - `click_telegram`
+  - `click_whatsapp`
+  - `click_phone`
+  - `click_vk`
+  - `click_max`
+  - `click_email`
+
 ## Workflow after every task
 
 After completing any task:

@@ -142,6 +142,21 @@
 </head>
 <body>
   
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+      (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109472354', 'ym');
+
+      ym(109472354, 'init', {ssr:true, webvisor:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/109472354" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+
+  
   <header class="site-header">
     <nav class="nav nav-platform" aria-label="Навигация платформы">
       <a class="brand" href="/" aria-label="ilma.pro">
@@ -613,7 +628,7 @@
       </div>
       <div class="cta-actions">
         <a class="button button-primary" href="#lead">Получить экспресс-разбор</a>
-        <a class="button button-ghost" href="https://t.me/amo_partner">Написать в Telegram</a>
+        <a class="button button-ghost" href="https://t.me/amo_partner" data-goal="click_telegram">Написать в Telegram</a>
       </div>
     </section>
   </main>
@@ -629,12 +644,12 @@
       <a href="#contact">Контакты</a>
     </nav>
     <address>
-      Email: <a href="mailto:info@ilma.pro">info@ilma.pro</a><br>
-      Телефон: <a href="tel:+79031580051">+7 903 158 00 51</a><br>
-      WhatsApp: <a href="https://wa.me/79031580051">+7 903 158 00 51</a><br>
-      Telegram: <a href="https://t.me/amo_partner">@amo_partner</a><br>
-      ВК: <a href="https://vk.ru/it_simple_123">Граф Порядков</a><br>
-      <a href="https://max.ru/u/f9LHodD0cOIG8smtAmnUhJjLb4iNOmc1T8EXcWCCZ4kDRq5IBw81AKWZTOw">MAX</a>
+      Email: <a href="mailto:info@ilma.pro" data-goal="click_email">info@ilma.pro</a><br>
+      Телефон: <a href="tel:+79031580051" data-goal="click_phone">+7 903 158 00 51</a><br>
+      WhatsApp: <a href="https://wa.me/79031580051" data-goal="click_whatsapp">+7 903 158 00 51</a><br>
+      Telegram: <a href="https://t.me/amo_partner" data-goal="click_telegram">@amo_partner</a><br>
+      ВК: <a href="https://vk.ru/it_simple_123" data-goal="click_vk">Граф Порядков</a><br>
+      <a href="https://max.ru/u/f9LHodD0cOIG8smtAmnUhJjLb4iNOmc1T8EXcWCCZ4kDRq5IBw81AKWZTOw" data-goal="click_max">MAX</a>
     </address>
   </footer>
 </body>

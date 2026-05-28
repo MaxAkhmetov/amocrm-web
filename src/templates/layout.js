@@ -53,14 +53,37 @@ function renderFooter(site) {
       <a href="#contact">Контакты</a>
     </nav>
     <address>
-      Email: <a href="mailto:${escapeHtml(site.contacts.email)}">${escapeHtml(site.contacts.email)}</a><br>
-      Телефон: <a href="${escapeHtml(site.contacts.phoneHref)}">${escapeHtml(site.contacts.phone)}</a><br>
-      WhatsApp: <a href="${escapeHtml(site.contacts.whatsappUrl)}">${escapeHtml(site.contacts.whatsapp)}</a><br>
-      Telegram: <a href="${escapeHtml(site.contacts.telegramUrl)}">@${escapeHtml(site.contacts.telegram)}</a><br>
-      ВК: <a href="${escapeHtml(site.contacts.vkUrl)}">${escapeHtml(site.contacts.vkLabel)}</a><br>
-      <a href="${escapeHtml(site.contacts.maxUrl)}">${escapeHtml(site.contacts.maxLabel)}</a>
+      Email: <a href="mailto:${escapeHtml(site.contacts.email)}" data-goal="click_email">${escapeHtml(site.contacts.email)}</a><br>
+      Телефон: <a href="${escapeHtml(site.contacts.phoneHref)}" data-goal="click_phone">${escapeHtml(site.contacts.phone)}</a><br>
+      WhatsApp: <a href="${escapeHtml(site.contacts.whatsappUrl)}" data-goal="click_whatsapp">${escapeHtml(site.contacts.whatsapp)}</a><br>
+      Telegram: <a href="${escapeHtml(site.contacts.telegramUrl)}" data-goal="click_telegram">@${escapeHtml(site.contacts.telegram)}</a><br>
+      ВК: <a href="${escapeHtml(site.contacts.vkUrl)}" data-goal="click_vk">${escapeHtml(site.contacts.vkLabel)}</a><br>
+      <a href="${escapeHtml(site.contacts.maxUrl)}" data-goal="click_max">${escapeHtml(site.contacts.maxLabel)}</a>
     </address>
   </footer>`;
+}
+
+function renderYandexMetrika(site) {
+  const counterId = site.analytics && site.analytics.yandexMetrikaId;
+
+  if (!counterId) {
+    return "";
+  }
+
+  return `
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+      (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=${escapeHtml(String(counterId))}', 'ym');
+
+      ym(${escapeHtml(String(counterId))}, 'init', {ssr:true, webvisor:true, clickmap:true, referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/${escapeHtml(String(counterId))}" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->`;
 }
 
 function renderPage(page, site) {
@@ -107,6 +130,8 @@ function renderPage(page, site) {
   </script>` : ""}
 </head>
 <body>
+  ${renderYandexMetrika(site)}
+
   ${renderHeader(page, site)}
 
   <main>

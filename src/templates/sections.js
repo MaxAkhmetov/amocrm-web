@@ -302,7 +302,7 @@ function renderFinalCta(page, site) {
       </div>
       <div class="cta-actions">
         <a class="button button-primary" href="#lead">Получить экспресс-разбор</a>
-        <a class="button button-ghost" href="${escapeHtml(site.contacts.telegramUrl)}">Написать в Telegram</a>
+        <a class="button button-ghost" href="${escapeHtml(site.contacts.telegramUrl)}" data-goal="click_telegram">Написать в Telegram</a>
       </div>
     </section>`;
 }
