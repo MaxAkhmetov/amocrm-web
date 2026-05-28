@@ -3,6 +3,7 @@ const { getService } = require("./services");
 const {
   createHomePage,
   createAmocrmServicePage,
+  createAmocrmSeoPages,
   createServiceCityNichePageDraft,
   createServiceCityPainPageDraft,
   createServiceCityPageDraft
@@ -12,7 +13,8 @@ const amocrmService = getService("amocrm");
 
 const pages = [
   createHomePage(),
-  createAmocrmServicePage()
+  createAmocrmServicePage(),
+  ...createAmocrmSeoPages()
 ];
 
 const futurePageDrafts = {

@@ -315,6 +315,18 @@ function renderHomePrinciple(page) {
     </section>`;
 }
 
+function renderTopicSections(page) {
+  return page.data.topicSections
+    .map((section) => renderCardsSection({
+      id: section.id,
+      eyebrow: section.eyebrow,
+      title: section.title,
+      items: section.items,
+      gridClass: section.gridClass || "six"
+    }))
+    .join("\n");
+}
+
 function renderFaq(page) {
   const items = page.data.faq
     .map((item) => `<details><summary>${escapeHtml(item.question)}</summary><p>${escapeHtml(item.answer)}</p></details>`)
@@ -375,6 +387,16 @@ function renderPageSections(page, site) {
       renderHomePrinciple(page),
       renderLeadForm(page),
       renderFaq(page),
+      renderFinalCta(page, site)
+    ].join("\n");
+  }
+
+  if (page.type === "amocrm_topic") {
+    return [
+      renderTopicSections(page),
+      renderLeadForm(page),
+      renderFaq(page),
+      renderRelatedLinks(page),
       renderFinalCta(page, site)
     ].join("\n");
   }

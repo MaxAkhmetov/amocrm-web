@@ -950,7 +950,7 @@ Homepage `/`:
 
 - Hero has one primary CTA: `Получить разбор`, linking to the homepage form.
 - The homepage direction is broad: `CRM-системы для заявок и продаж`, not a page only about amoCRM.
-- The homepage form offer is `express_audit`.
+- The homepage form offer is `main`.
 - Homepage form copy:
   - Title: `Получите экспресс-разбор системы продаж и процессов`.
   - Text: `За 45 минут покажу, где сейчас есть потери в заявках, задачах, ответственности и автоматизации - и какие проблемы можно закрыть в первую очередь.`
@@ -967,10 +967,10 @@ amoCRM service page `/services/amocrm/`:
 
 Lead offers:
 
-- `express_audit` maps to amoCRM tag `offer:express_audit`.
+- `main` maps to amoCRM tag `main`.
 - `no_crm_loss_map` maps to amoCRM tag `offer:no_crm_loss_map`.
-- Empty or unknown offer values safely fall back to `express_audit`.
-- Only one `offer:*` tag should be added to a lead.
+- Empty or unknown offer values safely fall back to `main`.
+- Only one offer tag should be added to a lead.
 
 ## UI correction requirements for amoCRM service page
 
@@ -986,4 +986,33 @@ Required corrections:
 - Avoid identical card-grid rhythm in every section.
 - Make desktop tables fit without horizontal scroll.
 - Keep motion restrained, but make it more polished and less template-like.
+
+## amoCRM SEO pages: federal, integration, niche and local intents
+
+Implemented additional amoCRM SEO pages:
+
+- `/services/amocrm/nastroyka/` - настройка amoCRM под существующий процесс продаж.
+- `/services/amocrm/integracii/` - интеграции amoCRM с сайтом, формами, мессенджерами, телефонией и рекламой.
+- `/services/amocrm/dlya-okonnyh-kompaniy/` - amoCRM для оконных компаний и сервисов ремонта окон.
+- `/services/amocrm/moskva/` - внедрение amoCRM в Москве и Московской области.
+
+All pages use the shared static generator, global layout, header/footer, lead form, SEO metadata, canonical URL, Open Graph/Twitter metadata, FAQPage JSON-LD when FAQ is present, and Yandex.Metrika counter `109472354`.
+
+Lead offer mapping:
+
+- `/` sends `offer = "main"`, amoCRM tag `main`, note label `Оффер формы: экспресс-разбор с главной страницы`.
+- `/services/amocrm/` sends `offer = "no_crm_loss_map"`, amoCRM tag `offer:no_crm_loss_map`, note label `Оффер формы: карта потерь заявок без CRM`.
+- `/services/amocrm/nastroyka/` sends `offer = "amocrm_setup"`, amoCRM tag `offer:amocrm_setup`, note label `Оффер формы: настройка amoCRM`.
+- `/services/amocrm/integracii/` sends `offer = "amocrm_integrations"`, amoCRM tag `offer:amocrm_integrations`, note label `Оффер формы: интеграции amoCRM`.
+- `/services/amocrm/dlya-okonnyh-kompaniy/` sends `offer = "amocrm_windows"`, amoCRM tag `offer:amocrm_windows`, note label `Оффер формы: amoCRM для оконных компаний`.
+- `/services/amocrm/moskva/` sends `offer = "amocrm_moscow"`, amoCRM tag `offer:amocrm_moscow`, note label `Оффер формы: внедрение amoCRM в Москве`.
+
+If `offer` is empty or unknown, the Yandex Function uses the safe default: tag `main` and note label `Оффер формы: экспресс-разбор с главной страницы`.
+
+The amoCRM note source block separates:
+
+- `Страница отправки` from `form_page`;
+- `Первая страница входа` from `landing_page`, only when it differs from `form_page`;
+- `referrer`, only when filled and different from `form_page`;
+- `timestamp`.
 

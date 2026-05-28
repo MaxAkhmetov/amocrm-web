@@ -13,6 +13,22 @@ const OFFERS = {
   no_crm_loss_map: {
     label: "карта потерь заявок без CRM",
     tag: "offer:no_crm_loss_map"
+  },
+  amocrm_setup: {
+    label: "настройка amoCRM",
+    tag: "offer:amocrm_setup"
+  },
+  amocrm_integrations: {
+    label: "интеграции amoCRM",
+    tag: "offer:amocrm_integrations"
+  },
+  amocrm_windows: {
+    label: "amoCRM для оконных компаний",
+    tag: "offer:amocrm_windows"
+  },
+  amocrm_moscow: {
+    label: "внедрение amoCRM в Москве",
+    tag: "offer:amocrm_moscow"
   }
 };
 const REQUIRED_ENV = [

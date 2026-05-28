@@ -14,6 +14,19 @@
 
 ## Completed recently
 
+- Added four amoCRM SEO pages through the static generator:
+  - `/services/amocrm/nastroyka/`;
+  - `/services/amocrm/integracii/`;
+  - `/services/amocrm/dlya-okonnyh-kompaniy/`;
+  - `/services/amocrm/moskva/`.
+- Added internal related links from `/services/amocrm/` to the four new amoCRM pages and cross-links between the new pages.
+- Added page-specific lead offers:
+  - `amocrm_setup` -> amoCRM tag `offer:amocrm_setup`;
+  - `amocrm_integrations` -> amoCRM tag `offer:amocrm_integrations`;
+  - `amocrm_windows` -> amoCRM tag `offer:amocrm_windows`;
+  - `amocrm_moscow` -> amoCRM tag `offer:amocrm_moscow`.
+- Yandex Function offer mapping now supports the four new offers and still falls back to `main` for empty or unknown offers.
+- `sitemap.xml` is generated with the new amoCRM SEO URLs.
 - Fixed lead attribution for homepage vs amoCRM service page:
   - Homepage form now sends `offer = "main"` and Yandex Function adds one tag: `main`.
   - `/services/amocrm/` form keeps `offer = "no_crm_loss_map"` and Yandex Function adds one tag: `offer:no_crm_loss_map`.
@@ -27,9 +40,9 @@
   - Expanded amoCRM FAQ to 10 practical questions.
   - Reframed homepage direction from amoCRM-specific to broader CRM systems.
   - Homepage hero now has one CTA: `Получить разбор`.
-  - Homepage form now sends `offer = "express_audit"`.
+  - Homepage form now sends `offer = "main"`.
   - amoCRM form keeps `offer = "no_crm_loss_map"`.
-  - Yandex Function now maps `offer` to exactly one `offer:*` amoCRM tag and uses `offer:express_audit` as the safe default.
+  - Yandex Function now maps `offer` to exactly one amoCRM tag and uses `main` as the safe default.
   - Homepage footer hides VK; service pages can still show it.
 - Stage 2 completed:
   - `/` is now a minimal brand homepage for ilma.pro.
