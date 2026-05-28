@@ -1,6 +1,7 @@
 const { seoArchitecture } = require("./seo-architecture");
 const { getService } = require("./services");
 const {
+  createHomePage,
   createAmocrmServicePage,
   createServiceCityNichePageDraft,
   createServiceCityPainPageDraft,
@@ -10,6 +11,7 @@ const {
 const amocrmService = getService("amocrm");
 
 const pages = [
+  createHomePage(),
   createAmocrmServicePage()
 ];
 

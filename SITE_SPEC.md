@@ -913,6 +913,37 @@ The approved amoCRM service page defines the first version of the design system:
 
 Future pages should extend this system, not reinvent it.
 
+## Stage 2: brand homepage and amoCRM service URL
+
+Implemented target structure:
+
+- `/` is the minimal brand homepage for ilma.pro.
+- `/services/amocrm/` is the amoCRM service page.
+
+Homepage intent:
+
+- Page type: brand homepage.
+- H1: `Системы управления продажами, процессами и AI`.
+- Canonical: `https://ilma.pro/`.
+- Main directions:
+  - `Внедрение amoCRM` - available now, links to `/services/amocrm/`.
+  - `Процессы и операционный порядок` - planned, disabled.
+  - `AI-автоматизация` - planned, disabled.
+- CTA form reuses the existing lead form markup and frontend script behavior.
+
+amoCRM service page:
+
+- URL: `/services/amocrm/`.
+- Canonical: `https://ilma.pro/services/amocrm/`.
+- The page keeps the existing service content, form, FAQ, SEO metadata, JSON-LD, contacts and Yandex.Metrika integration.
+
+Do not create the planned SEO pages for amoCRM variations until a separate task:
+
+- `/services/amocrm/nastroyka/`
+- `/services/amocrm/integracii/`
+- `/services/amocrm/dlya-okonnyh-kompaniy/`
+- `/services/amocrm/moskva/`
+
 ## UI correction requirements for amoCRM service page
 
 The first version of the page should be refined before publication.

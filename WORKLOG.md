@@ -14,6 +14,12 @@
 
 ## Completed recently
 
+- Stage 2 completed:
+  - `/` is now a minimal brand homepage for ilma.pro.
+  - The current amoCRM service page moved from root to `/services/amocrm/`.
+  - `sitemap.xml` now includes both `https://ilma.pro/` and `https://ilma.pro/services/amocrm/`.
+  - The shared lead form, frontend script, Yandex Function endpoint behavior, phone mask, Yandex.Metrika counter `109472354`, goals and public contacts were preserved.
+  - No additional amoCRM SEO pages were created in this stage.
 - Updated frontend form fields:
   - `name`;
   - `phone`;

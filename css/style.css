@@ -447,6 +447,66 @@ a {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.direction-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.direction-card {
+  min-height: 340px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  border-radius: 10px;
+  transition: border-color 220ms var(--ease-premium), background-color 220ms var(--ease-premium), transform 220ms var(--ease-premium), box-shadow 220ms var(--ease-premium);
+}
+
+.direction-card:hover {
+  border-color: rgba(56, 189, 248, 0.24);
+  background: rgba(255, 255, 255, 0.052);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(56, 189, 248, 0.055);
+  transform: translateY(-2px);
+}
+
+.direction-card.is-disabled {
+  opacity: 0.72;
+}
+
+.direction-status {
+  display: inline-flex;
+  margin-bottom: 20px;
+  padding: 6px 10px;
+  border: 1px solid rgba(232, 160, 32, 0.18);
+  color: var(--gold-2);
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+.direction-card h3 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.22;
+  font-weight: 700;
+}
+
+.direction-card p {
+  margin: 16px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.disabled-link {
+  cursor: default;
+  opacity: 0.68;
+}
+
 .card {
   padding: 28px;
   transition: border-color 220ms var(--ease-premium), background-color 220ms var(--ease-premium), transform 220ms var(--ease-premium), box-shadow 220ms var(--ease-premium);
@@ -960,6 +1020,7 @@ details p {
   .cards-grid.six,
   .cards-grid.industries,
   .cards-grid.four,
+  .direction-grid,
   .price-grid,
   .before-after {
     grid-template-columns: 1fr 1fr;
@@ -1024,6 +1085,7 @@ details p {
   .cards-grid.six,
   .cards-grid.industries,
   .cards-grid.four,
+  .direction-grid,
   .related-grid,
   .check-grid,
   .price-grid,

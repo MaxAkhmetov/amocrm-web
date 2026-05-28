@@ -26,6 +26,112 @@ function withServiceData(serviceData, overrides = {}) {
   };
 }
 
+function createHomePage() {
+  return {
+    type: "home",
+    layer: "brand_homepage",
+    serviceId: "platform",
+    serviceName: "CRM, процессы и AI-автоматизация",
+    serviceBrand: site.brand.name,
+    serviceSubtitle: site.brand.subtitle,
+    serviceShortMark: site.brand.shortMark,
+    uniqueIntent: "Брендовая главная ilma.pro для трех направлений: внедрение amoCRM, операционный порядок и AI-автоматизация.",
+    outputPath: "index.html",
+    targetOutputPath: "index.html",
+    targetUrl: "/",
+    canonical: absoluteUrl("/"),
+    ogUrl: absoluteUrl("/"),
+    ogImage: site.urls.ogImage,
+    title: "ilma.pro - CRM, процессы и AI-автоматизация для управляемых продаж",
+    description: "Настройка CRM, операционных процессов и AI-автоматизации: заявки, задачи, деньги, потери и контроль собственника без хаоса в Excel и мессенджерах.",
+    ogDescription: "CRM, операционные процессы и AI-автоматизация для бизнеса, которому нужен порядок в заявках, задачах, деньгах и ответственности.",
+    breadcrumbs: [],
+    hero: {
+      eyebrow: "ilma.pro / системы управления",
+      h1: "Системы управления продажами, процессами и AI",
+      lead: "Настраиваю CRM, операционные процессы и автоматизацию так, чтобы собственник видел заявки, задачи, деньги и потери - без хаоса в Excel, мессенджерах и головах менеджеров.",
+      primaryCta: "Внедрение amoCRM",
+      primaryHref: "/services/amocrm/",
+      secondaryCta: "Получить разбор",
+      secondaryHref: "#lead",
+      note: "Три направления одной системы: CRM фиксирует заявки, процессы держат порядок, AI забирает повторяющуюся ручную работу."
+    },
+    sections: {
+      problemsTitle: "Направления ilma.pro",
+      directionsTitle: "Три уровня порядка в бизнесе",
+      directionsText: "Можно начать с CRM, процессов или AI. Важно выбрать тот слой, где сейчас теряются заявки, задачи, деньги и ответственность.",
+      principleTitle: "Сначала порядок, потом автоматизация",
+      principleText: "Автоматизация не спасает хаос. Сначала фиксируем, где теряются заявки, задачи и деньги. Потом настраиваем CRM, процессы и AI так, чтобы система работала каждый день, а не только на презентации.",
+      leadMagnetTitle: "Хотите понять, где сейчас теряются заявки и деньги?",
+      leadMagnetText: "Оставьте контакт - покажу, с какого уровня порядка лучше начать: CRM, процессы или AI-автоматизация.",
+      faqTitle: "Частые вопросы",
+      finalCtaTitle: "Хотите понять, с чего начать наведение порядка?",
+      finalCtaText: "Оставьте заявку - разберу текущую схему и покажу, какой слой системы даст самый быстрый управленческий эффект."
+    },
+    data: {
+      heroMetrics: [
+        { label: "Направления", value: "3" },
+        { label: "Фокус", value: "контроль", tone: "warning" },
+        { label: "Первый шаг", value: "разбор", wide: true }
+      ],
+      heroBenefits: [
+        "CRM для заявок и продаж",
+        "Процессы для ответственности",
+        "AI для повторяющихся задач"
+      ],
+      directions: [
+        {
+          title: "Внедрение amoCRM",
+          text: "Собираю заявки, источники, задачи менеджеров, воронки, причины отказов и отчеты в одну управляемую систему.",
+          status: "Доступно сейчас",
+          href: "/services/amocrm/",
+          available: true
+        },
+        {
+          title: "Процессы и операционный порядок",
+          text: "Разбираю, где бизнес теряет время, деньги и ответственность: роли, контрольные точки, отчетность и управленческий ритм.",
+          status: "Скоро",
+          href: "#",
+          available: false
+        },
+        {
+          title: "AI-автоматизация",
+          text: "Проектирую AI-помощников и автоматизации для повторяющихся задач: заявки, контент, документы, анализ и контроль исполнения.",
+          status: "Скоро",
+          href: "#",
+          available: false
+        }
+      ],
+      pains: [
+        {
+          title: "Заявки и задачи расходятся по разным местам",
+          text: "Часть информации остается в мессенджерах, часть в Excel, часть в памяти менеджеров. Собственник видит итог слишком поздно."
+        },
+        {
+          title: "Процессы держатся на ручном контроле",
+          text: "Роли, сроки и точки ответственности не зафиксированы, поэтому управление превращается в постоянные напоминания."
+        },
+        {
+          title: "AI пытаются внедрить поверх хаоса",
+          text: "Автоматизация работает только там, где понятны входящие данные, правила, ответственные и ожидаемый результат."
+        }
+      ],
+      faq: [
+        {
+          question: "С чего лучше начать: CRM, процессы или AI?",
+          answer: "Сначала нужно найти главный источник потерь. Если теряются заявки - начинаем с CRM. Если непонятна ответственность - с процессов. Если порядок уже есть и много повторяющейся ручной работы - с AI-автоматизации."
+        },
+        {
+          question: "Можно ли оставить заявку только на amoCRM?",
+          answer: "Да. Сейчас направление внедрения amoCRM доступно как отдельная услуга на странице /services/amocrm/."
+        }
+      ]
+    },
+    relatedLinksTitle: "",
+    relatedLinks: []
+  };
+}
+
 function createAmocrmServicePage() {
   const service = getService("amocrm");
 
@@ -38,11 +144,11 @@ function createAmocrmServicePage() {
     serviceSubtitle: service.serviceSubtitle,
     serviceShortMark: service.shortMark,
     uniqueIntent: "Внедрение amoCRM как системы контроля заявок, менеджеров, источников и потерь денег для собственника.",
-    outputPath: service.temporaryOutputPath,
+    outputPath: service.targetPath,
     targetOutputPath: service.targetPath,
     targetUrl: service.targetUrl,
-    canonical: absoluteUrl("/"),
-    ogUrl: absoluteUrl("/"),
+    canonical: absoluteUrl(service.targetUrl),
+    ogUrl: absoluteUrl(service.targetUrl),
     ogImage: site.urls.ogImage,
     title: "Внедрение amoCRM за 2-3 дня - настройка CRM для контроля продаж",
     description: "Настрою amoCRM для малого бизнеса: заявки из сайта, звонков, WhatsApp, Telegram и рекламы, задачи менеджерам, контроль просрочек, источники и отчеты собственника.",
@@ -166,6 +272,7 @@ function createServiceCityPainPageDraft(service, city, painPoint) {
 }
 
 module.exports = {
+  createHomePage,
   createAmocrmServicePage,
   createServiceCityNichePageDraft,
   createServiceCityPainPageDraft,

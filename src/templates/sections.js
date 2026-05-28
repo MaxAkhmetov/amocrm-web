@@ -10,6 +10,8 @@ function renderHero(page, site) {
     .join("\n");
 
   const benefits = page.data.heroBenefits.map((benefit) => `<span>${escapeHtml(benefit)}</span>`).join("\n");
+  const primaryHref = page.hero.primaryHref || "#lead";
+  const secondaryHref = page.hero.secondaryHref || "#setup";
 
   return `
     <section class="hero" id="top">
@@ -18,8 +20,8 @@ function renderHero(page, site) {
         <h1>${escapeHtml(page.hero.h1)}</h1>
         <p class="hero-lead">${escapeHtml(page.hero.lead)}</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#lead">${escapeHtml(page.hero.primaryCta)}</a>
-          <a class="button button-ghost" href="#setup">${escapeHtml(page.hero.secondaryCta)}</a>
+          <a class="button button-primary" href="${escapeHtml(primaryHref)}">${escapeHtml(page.hero.primaryCta)}</a>
+          <a class="button button-ghost" href="${escapeHtml(secondaryHref)}">${escapeHtml(page.hero.secondaryCta)}</a>
         </div>
         <p class="hero-note">${escapeHtml(page.hero.note)}</p>
       </div>
@@ -254,6 +256,50 @@ function renderLeadForm(page) {
     </section>`;
 }
 
+function renderHomeDirections(page) {
+  const cards = page.data.directions
+    .map((item) => {
+      const className = attrs(["direction-card", !item.available && "is-disabled"]);
+      const link = item.available
+        ? `<a class="button button-ghost" href="${escapeHtml(item.href)}">Подробнее</a>`
+        : `<span class="button button-ghost disabled-link" aria-disabled="true">Скоро</span>`;
+
+      return `
+        <article class="${className}" data-animate="reveal">
+          <div>
+            <span class="direction-status">${escapeHtml(item.status)}</span>
+            <h3>${escapeHtml(item.title)}</h3>
+            <p>${escapeHtml(item.text)}</p>
+          </div>
+          ${link}
+        </article>`;
+    })
+    .join("\n");
+
+  return `
+    <section class="section" id="directions">
+      <div class="section-heading">
+        <p class="eyebrow">Направления</p>
+        <h2>${escapeHtml(page.sections.directionsTitle)}</h2>
+        <p>${escapeHtml(page.sections.directionsText)}</p>
+      </div>
+      <div class="direction-grid">
+        ${cards}
+      </div>
+    </section>`;
+}
+
+function renderHomePrinciple(page) {
+  return `
+    <section class="section principle-section" id="order-first">
+      <div class="section-heading">
+        <p class="eyebrow">Подход</p>
+        <h2>${escapeHtml(page.sections.principleTitle)}</h2>
+        <p>${escapeHtml(page.sections.principleText)}</p>
+      </div>
+    </section>`;
+}
+
 function renderFaq(page) {
   const items = page.data.faq
     .map((item) => `<details><summary>${escapeHtml(item.question)}</summary><p>${escapeHtml(item.answer)}</p></details>`)
@@ -308,6 +354,16 @@ function renderFinalCta(page, site) {
 }
 
 function renderPageSections(page, site) {
+  if (page.type === "home") {
+    return [
+      renderHomeDirections(page),
+      renderHomePrinciple(page),
+      renderLeadForm(page),
+      renderFaq(page),
+      renderFinalCta(page, site)
+    ].join("\n");
+  }
+
   return [
     renderCardsSection({
       id: "problems",
