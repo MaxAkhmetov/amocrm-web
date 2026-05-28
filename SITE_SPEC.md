@@ -944,6 +944,34 @@ Do not create the planned SEO pages for amoCRM variations until a separate task:
 - `/services/amocrm/dlya-okonnyh-kompaniy/`
 - `/services/amocrm/moskva/`
 
+## Homepage/service cleanup after Stage 2
+
+Homepage `/`:
+
+- Hero has one primary CTA: `Получить разбор`, linking to the homepage form.
+- The homepage direction is broad: `CRM-системы для заявок и продаж`, not a page only about amoCRM.
+- The homepage form offer is `express_audit`.
+- Homepage form copy:
+  - Title: `Получите экспресс-разбор системы продаж и процессов`.
+  - Text: `За 45 минут покажу, где сейчас есть потери в заявках, задачах, ответственности и автоматизации - и какие проблемы можно закрыть в первую очередь.`
+  - Button: `Получить экспресс-разбор`.
+- Homepage FAQ contains 5-6 general questions about CRM, processes, AI and the express review.
+- VK is hidden in the homepage footer.
+
+amoCRM service page `/services/amocrm/`:
+
+- The top hero eyebrow `Граф Порядков / страница услуги amoCRM` is not shown.
+- The form does not show the public label `лид-магнит`.
+- The amoCRM form keeps offer `no_crm_loss_map`.
+- FAQ contains at least 8-10 short practical questions.
+
+Lead offers:
+
+- `express_audit` maps to amoCRM tag `offer:express_audit`.
+- `no_crm_loss_map` maps to amoCRM tag `offer:no_crm_loss_map`.
+- Empty or unknown offer values safely fall back to `express_audit`.
+- Only one `offer:*` tag should be added to a lead.
+
 ## UI correction requirements for amoCRM service page
 
 The first version of the page should be refined before publication.

@@ -4,9 +4,17 @@ const ALLOWED_ORIGINS = new Set([
 ]);
 
 const MAX_FIELD_LENGTH = 1200;
-const OFFER_CODE = "no_crm_loss_map";
-const OFFER_LABEL = "карта потерь заявок без CRM";
-const OFFER_TAG = "offer:no_crm_loss_map";
+const DEFAULT_OFFER_CODE = "express_audit";
+const OFFERS = {
+  express_audit: {
+    label: "экспресс-разбор системы продаж и процессов",
+    tag: "offer:express_audit"
+  },
+  no_crm_loss_map: {
+    label: "карта потерь заявок без CRM",
+    tag: "offer:no_crm_loss_map"
+  }
+};
 const REQUIRED_ENV = [
   "AMOCRM_BASE_URL",
   "AMOCRM_ACCESS_TOKEN",
@@ -184,6 +192,11 @@ function parseBody(event) {
   }
 }
 
+function normalizeOffer(value) {
+  const offer = normalizeText(value);
+  return OFFERS[offer] ? offer : DEFAULT_OFFER_CODE;
+}
+
 function normalizePayload(payload) {
   const source = payload && typeof payload === "object" ? payload : {};
 
@@ -195,7 +208,7 @@ function normalizePayload(payload) {
     industry: normalizeText(source.industry),
     website: normalizeText(source.website),
     pain: normalizeText(source.pain),
-    offer: normalizeText(source.offer) || OFFER_CODE,
+    offer: normalizeOffer(source.offer),
     utm_source: normalizeText(source.utm_source),
     utm_medium: normalizeText(source.utm_medium),
     utm_campaign: normalizeText(source.utm_campaign),
@@ -317,6 +330,8 @@ function buildCompanyBody(payload) {
 }
 
 function buildLeadBody(payload) {
+  const offer = OFFERS[payload.offer] || OFFERS[DEFAULT_OFFER_CODE];
+
   return [
     {
       name: payload.industry
@@ -327,7 +342,7 @@ function buildLeadBody(payload) {
       responsible_user_id: envNumber("AMOCRM_RESPONSIBLE_USER_ID"),
       tags_to_add: [
         {
-          name: OFFER_TAG
+          name: offer.tag
         }
       ]
     }
@@ -354,6 +369,7 @@ function noteSection(title, rows) {
 }
 
 function buildNoteText(payload) {
+  const offer = OFFERS[payload.offer] || OFFERS[DEFAULT_OFFER_CODE];
   const utmRows = [
     noteLine("utm_source", payload.utm_source),
     noteLine("utm_medium", payload.utm_medium),
@@ -369,7 +385,7 @@ function buildNoteText(payload) {
       noteLine("Телефон", payload.phoneFormatted || payload.phone)
     ]),
     noteSection("Оффер", [
-      noteLine("Оффер формы", payload.offer === OFFER_CODE ? OFFER_LABEL : payload.offer)
+      noteLine("Оффер формы", offer.label)
     ]),
     noteSection("Компания и ниша", [
       noteLine("Компания", payload.companyName),

@@ -41,7 +41,12 @@ function renderHeader(page, site) {
   </header>`;
 }
 
-function renderFooter(site) {
+function renderFooter(page, site) {
+  const vkLink = page.footer && page.footer.hideVk
+    ? ""
+    : `      ВК: <a href="${escapeHtml(site.contacts.vkUrl)}" data-goal="click_vk">${escapeHtml(site.contacts.vkLabel)}</a><br>
+`;
+
   return `
   <footer class="footer">
     <div>
@@ -57,7 +62,7 @@ function renderFooter(site) {
       Телефон: <a href="${escapeHtml(site.contacts.phoneHref)}" data-goal="click_phone">${escapeHtml(site.contacts.phone)}</a><br>
       WhatsApp: <a href="${escapeHtml(site.contacts.whatsappUrl)}" data-goal="click_whatsapp">${escapeHtml(site.contacts.whatsapp)}</a><br>
       Telegram: <a href="${escapeHtml(site.contacts.telegramUrl)}" data-goal="click_telegram">@${escapeHtml(site.contacts.telegram)}</a><br>
-      ВК: <a href="${escapeHtml(site.contacts.vkUrl)}" data-goal="click_vk">${escapeHtml(site.contacts.vkLabel)}</a><br>
+${vkLink}
       <a href="${escapeHtml(site.contacts.maxUrl)}" data-goal="click_max">${escapeHtml(site.contacts.maxLabel)}</a>
     </address>
   </footer>`;
@@ -138,7 +143,7 @@ function renderPage(page, site) {
     ${renderPageSections(page, site)}
   </main>
 
-  ${renderFooter(site)}
+  ${renderFooter(page, site)}
 </body>
 </html>
 `;

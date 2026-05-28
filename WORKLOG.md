@@ -14,6 +14,16 @@
 
 ## Completed recently
 
+- Homepage and `/services/amocrm/` cleanup completed:
+  - Removed the visible service eyebrow from the amoCRM hero.
+  - Removed the visible "lead magnet" label near forms.
+  - Expanded amoCRM FAQ to 10 practical questions.
+  - Reframed homepage direction from amoCRM-specific to broader CRM systems.
+  - Homepage hero now has one CTA: `Получить разбор`.
+  - Homepage form now sends `offer = "express_audit"`.
+  - amoCRM form keeps `offer = "no_crm_loss_map"`.
+  - Yandex Function now maps `offer` to exactly one `offer:*` amoCRM tag and uses `offer:express_audit` as the safe default.
+  - Homepage footer hides VK; service pages can still show it.
 - Stage 2 completed:
   - `/` is now a minimal brand homepage for ilma.pro.
   - The current amoCRM service page moved from root to `/services/amocrm/`.

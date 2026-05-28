@@ -1,6 +1,6 @@
 const { attrs, escapeHtml, list } = require("./helpers");
 
-function renderHero(page, site) {
+function renderHero(page) {
   const metrics = page.data.heroMetrics
     .map((metric) => {
       const className = attrs(["metric", metric.tone, metric.wide && "wide"]);
@@ -12,16 +12,25 @@ function renderHero(page, site) {
   const benefits = page.data.heroBenefits.map((benefit) => `<span>${escapeHtml(benefit)}</span>`).join("\n");
   const primaryHref = page.hero.primaryHref || "#lead";
   const secondaryHref = page.hero.secondaryHref || "#setup";
+  const eyebrow = page.hero.eyebrow ? `<p class="eyebrow">${escapeHtml(page.hero.eyebrow)}</p>` : "";
+  const primaryAction = page.hero.primaryCta
+    ? `<a class="button button-primary" href="${escapeHtml(primaryHref)}">${escapeHtml(page.hero.primaryCta)}</a>`
+    : "";
+  const secondaryAction = page.hero.secondaryCta
+    ? `<a class="button button-ghost" href="${escapeHtml(secondaryHref)}">${escapeHtml(page.hero.secondaryCta)}</a>`
+    : "";
+  const dashboardLabel = page.hero.dashboardLabel || "Контроль сегодня";
+  const dashboardTitle = page.hero.dashboardTitle || "amoCRM порядок";
 
   return `
     <section class="hero" id="top">
       <div class="hero-copy" data-animate="reveal">
-        <p class="eyebrow">${escapeHtml(page.hero.eyebrow)}</p>
+        ${eyebrow}
         <h1>${escapeHtml(page.hero.h1)}</h1>
         <p class="hero-lead">${escapeHtml(page.hero.lead)}</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="${escapeHtml(primaryHref)}">${escapeHtml(page.hero.primaryCta)}</a>
-          <a class="button button-ghost" href="${escapeHtml(secondaryHref)}">${escapeHtml(page.hero.secondaryCta)}</a>
+          ${primaryAction}
+          ${secondaryAction}
         </div>
         <p class="hero-note">${escapeHtml(page.hero.note)}</p>
       </div>
@@ -29,8 +38,8 @@ function renderHero(page, site) {
       <div class="dashboard-card" aria-label="Mockup CRM-дашборда" data-animate="reveal">
         <div class="dashboard-top">
           <div>
-            <p class="dashboard-label">Контроль сегодня</p>
-            <strong>amoCRM порядок</strong>
+            <p class="dashboard-label">${escapeHtml(dashboardLabel)}</p>
+            <strong>${escapeHtml(dashboardTitle)}</strong>
           </div>
           <span>live</span>
         </div>
@@ -206,10 +215,15 @@ function renderWhy(page) {
 }
 
 function renderLeadForm(page) {
+  const form = page.form || {};
+  const offer = form.offer || "no_crm_loss_map";
+  const buttonText = form.buttonText || "Получить карту потерь и разбор";
+  const eyebrow = form.eyebrow ? `<p class="eyebrow">${escapeHtml(form.eyebrow)}</p>` : "";
+
   return `
     <section class="section lead-section" id="lead">
       <div class="lead-copy">
-        <p class="eyebrow">Лид-магнит</p>
+        ${eyebrow}
         <h2>${escapeHtml(page.sections.leadMagnetTitle)}</h2>
         <p>${escapeHtml(page.sections.leadMagnetText)}</p>
       </div>
@@ -249,8 +263,8 @@ function renderLeadForm(page) {
         <input type="hidden" name="referrer">
         <input type="hidden" name="landing_page">
         <input type="hidden" name="timestamp">
-        <input type="hidden" name="offer" value="no_crm_loss_map">
-        <button class="button button-primary full" type="submit">Получить карту потерь и разбор</button>
+        <input type="hidden" name="offer" value="${escapeHtml(offer)}">
+        <button class="button button-primary full" type="submit">${escapeHtml(buttonText)}</button>
         <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
       </form>
     </section>`;
