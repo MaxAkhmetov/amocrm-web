@@ -1,53 +1,58 @@
 # WORKLOG.md
 
-## Current project state
+## Current state
 
-- Current amoCRM service page is created.
-- UI polish has been applied to the amoCRM service page.
+- Project is a static HTML/CSS/JS site for ilma.pro, without React, Next.js, Vite, Tailwind or other heavy frameworks.
+- Current amoCRM page is a service page for the amoCRM direction, temporarily published through `index.html`.
+- Architecture is prepared for future migration of this page to `/services/amocrm/`.
 - SITE_SPEC.md and CODEX.md contain rules for scalable multi-service and SEO architecture.
-- AMOCRM_INTEGRATION.md is created as the project-specific amoCRM integration guide.
-- Security rules for amoCRM are documented: tokens and secrets must not be exposed in frontend code or committed to the repository.
-- The site remains a static HTML/CSS/JS project without React, Next.js, Vite, Tailwind or heavy libraries.
-- The amoCRM page can temporarily live at `index.html`, but architecturally it is prepared for future migration to `/services/amocrm/`.
+- AMOCRM_INTEGRATION.md exists as the project-specific amoCRM integration guide.
+- Security rules for amoCRM are documented: no tokens or secrets in frontend code or committed files.
+- Frontend form sends lead payload to `/api/lead`.
+- Cloudflare Pages Function `functions/api/lead.js` is implemented and is the only layer that calls amoCRM API.
+- amoCRM settings are read only from environment variables.
 
-## Current implementation notes
+## Completed recently
 
-- The frontend form currently must not show fake success if no real endpoint is connected.
-- Future form submissions must go only to `/api/lead`.
-- amoCRM API calls must happen only in server-side code, for example Cloudflare Pages Functions.
-- Real amoCRM tokens, refresh tokens, client secrets and Cloudflare credentials must be stored only as environment variables.
+- Created AMOCRM_INTEGRATION.md with the safe form -> `/api/lead` -> Cloudflare Pages Function -> amoCRM API architecture.
+- Added continuation/recovery rules to CODEX.md.
+- Created WORKLOG.md as the project state handoff file.
+- Implemented secure lead submission infrastructure:
+  - updated `js/script.js` so `submitLead(payload)` posts to `/api/lead`;
+  - created `functions/api/lead.js`;
+  - added env validation and honest configuration errors;
+  - added server-side payload validation;
+  - added amoCRM lead creation via `POST /api/v4/leads`;
+  - added lead note creation via `POST /api/v4/leads/{lead_id}/notes`;
+  - kept tokens out of frontend code.
+- Syntax checks passed for `js/script.js` and `functions/api/lead.js`.
+- Manual function checks confirmed honest JSON errors for missing env, validation errors and invalid amoCRM URL.
 
-## Next logical stage
+## Next tasks
 
-Implement `/api/lead` as a Cloudflare Pages Function without real secrets in the repository.
+- Run git status in an environment where Git is available and review all changed files before committing.
+- Add real environment variables in Cloudflare Pages settings, not in the repository:
+  - `AMOCRM_BASE_URL`;
+  - `AMOCRM_ACCESS_TOKEN`;
+  - optional `AMOCRM_PIPELINE_ID`;
+  - optional `AMOCRM_STATUS_ID`;
+  - optional `AMOCRM_RESPONSIBLE_USER_ID`.
+- Deploy to Cloudflare Pages or run through `wrangler pages dev .`.
+- Send a real test form submission.
+- Verify that amoCRM receives a lead in the correct pipeline/status.
+- Verify that the lead note contains form fields, UTM, referrer, landing page, timestamp and request id.
+- Decide whether the first release keeps contacts manual or adds contact search/create logic.
+- Consider adding anti-spam protection, for example Cloudflare Turnstile or rate limiting.
 
-Expected scope:
+## Risks / notes
 
-- create `functions/api/lead.js`;
-- validate POST JSON payload;
-- read amoCRM configuration from environment variables;
-- create an amoCRM lead via API;
-- add a note with form data, UTM, referrer, landing page and timestamp;
-- return honest success only after amoCRM accepts the lead;
-- return clear errors when configuration or amoCRM request fails;
-- keep frontend secrets-free.
+- Git is not available in the current PowerShell PATH, so `git status` and `git diff --name-only` could not be executed here.
+- Do not commit `_codex_refs/` or any real amoCRM/Cloudflare credentials.
+- Do not show fake frontend success unless `/api/lead` returns `ok: true`.
+- Without Cloudflare env variables, `/api/lead` intentionally returns a configuration error.
+- OAuth refresh flow is not implemented yet; current function expects a valid `AMOCRM_ACCESS_TOKEN`.
+- Contact creation is intentionally not implemented until field mapping and duplicate rules are confirmed.
 
-## Stage after that
+## Next Codex prompt
 
-- Get real amoCRM environment variables from the account owner.
-- Add them in Cloudflare Pages settings, not in git.
-- Test a real website form submission.
-- Verify that a real lead appears in the correct amoCRM pipeline and status.
-- Verify that the note contains form data and UTM context.
-- Decide whether contacts should remain manual for the first release or be created/searched automatically.
-
-## Important recovery reminder
-
-If work continues in a new session, read these files before making changes:
-
-- `CODEX.md`
-- `SITE_SPEC.md`
-- `AMOCRM_INTEGRATION.md`
-- `WORKLOG.md`
-
-Then run `git status`, inspect the current repository state and continue from what is already implemented.
+- Check repository status, review current diffs, then prepare local/Cloudflare verification for `/api/lead` with env variables supplied outside git. Do not add secrets to the repository and do not push without explicit permission.
