@@ -1,7 +1,7 @@
 (function () {
   var UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
   var STORAGE_KEY = "graf_poryadkov_utm";
-  var LEAD_API_URL = window.LEAD_API_URL || "TODO_YANDEX_FUNCTION_URL";
+  var LEAD_API_URL = window.LEAD_API_URL || "https://functions.yandexcloud.net/d4e9csenibv3gfmm6sjb";
 
   var navToggle = document.querySelector(".nav-toggle");
   var navMenu = document.querySelector("#nav-menu");
@@ -282,7 +282,7 @@
   }
 
   async function submitLead(payload) {
-    if (!LEAD_API_URL || LEAD_API_URL === "https://functions.yandexcloud.net/d4e9csenibv3gfmm6sjb") {
+    if (!LEAD_API_URL || LEAD_API_URL === "TODO_YANDEX_FUNCTION_URL") {
       throw new Error("Форма пока не подключена. Напишите напрямую в Telegram, WhatsApp или на info@ilma.pro.");
     }
 
